@@ -48,7 +48,6 @@ const { ariaLabel } = getTranslation(switcherContent, locale);
 <script>
   import { setLocaleInStorageClient, type LocalesValues } from "intlayer";
 
-  // Remember the user's locale preference (stored in a cookie).
   document.querySelectorAll("[data-locale]").forEach((link) => {
     link.addEventListener("click", () => {
       const targetLocale = link.getAttribute("data-locale") as LocalesValues;
