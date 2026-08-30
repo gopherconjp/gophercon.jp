@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { generateSitemap, type SitemapUrlEntry } from "intlayer";
+import { isProd } from "../utils/site";
 
 const pageModules = import.meta.glob("/src/pages/**/*.astro");
 
@@ -14,12 +15,15 @@ const pathList: SitemapUrlEntry[] = Object.keys(pageModules)
   .sort()
   .map((path) => ({ path }));
 
-const SITE_URL = import.meta.env.SITE ?? "http://localhost:4321";
+export const GET: APIRoute = async ({ site }) => {
+  if (!site || !isProd(site)) {
+    return new Response(null, { status: 204 });
+  }
 
-export const GET: APIRoute = async () => {
-  const xmlOutput = generateSitemap(pathList, { siteUrl: SITE_URL });
+  // The `siteUrl` needs to be without trailing slash
+  const sitemap = generateSitemap(pathList, { siteUrl: site.href.replace(/\/+$/, "") });
 
-  return new Response(xmlOutput, {
+  return new Response(sitemap, {
     headers: { "Content-Type": "application/xml" },
   });
 };

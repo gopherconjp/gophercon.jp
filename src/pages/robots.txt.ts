@@ -1,14 +1,14 @@
 import type { APIRoute } from "astro";
-
-const PROD_HOST = "gophercon.jp";
+import { isProd } from "../utils/site";
 
 export const GET: APIRoute = ({ site }) => {
-  const isProd = site?.host === PROD_HOST;
-
   const lines = ["User-agent: *"];
-  lines.push(isProd ? "Allow: /" : "Disallow: /");
-  if (isProd) {
-    lines.push("", `Sitemap: ${new URL("/sitemap.xml", site).href}`);
+  if (isProd(site)) {
+    lines.push("Allow: /");
+    lines.push("");
+    lines.push(`Sitemap: ${new URL("/sitemap.xml", site).href}`);
+  } else {
+    lines.push("Disallow: /");
   }
 
   return new Response(lines.join("\n"), {
