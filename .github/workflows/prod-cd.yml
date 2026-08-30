@@ -1,0 +1,25 @@
+name: Prod CD
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Setup Bun environment
+        uses: gopherconjp/actions-toolkit/setup-bun@cfc025b3ebf1785ecf72a7ef77f4040863d45fb4 # main
+      - name: Deploy to Cloudflare Workers
+        run: bun run deploy
+        env:
+          SITE_URL: https://gophercon.jp
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
