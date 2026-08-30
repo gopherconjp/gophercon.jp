@@ -9,7 +9,7 @@
     "preview": "astro preview",
     "preview:cf": "astro build && wrangler dev",
     "deploy": "astro build && wrangler deploy",
-    "check": "tsc --noEmit && astro check",
+    "check": "astro check && tsc --noEmit",
     "lint:ox": "oxlint --fix",
     "lint:eslint": "eslint --fix \"src/**/*.astro\"",
     "lint": "bun run lint:eslint && bun run lint:ox",
