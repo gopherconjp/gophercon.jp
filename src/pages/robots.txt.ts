@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+
 import { isProd } from "../utils/site";
 
 export const GET: APIRoute = ({ site }) => {

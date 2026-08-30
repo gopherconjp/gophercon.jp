@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { generateSitemap, type SitemapUrlEntry } from "intlayer";
+
 import { isProd } from "../utils/site";
 
 const pageModules = import.meta.glob("/src/pages/**/*.astro");
