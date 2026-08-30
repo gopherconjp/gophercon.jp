@@ -1,0 +1,17 @@
+name: Verify (Actions)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: verify-actions-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify-actions:
+    uses: gopherconjp/actions-toolkit/.github/workflows/verify-actions.yaml@cfc025b3ebf1785ecf72a7ef77f4040863d45fb4 # main
+    permissions:
+      contents: read
+      checks: write
