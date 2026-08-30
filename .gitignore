@@ -2,6 +2,10 @@
 dist/
 # generated types
 .astro/
+# intlayer generated files
+.intlayer/
+# storybook build output
+storybook-static/
 # wrangler local state
 .wrangler/
 
@@ -23,3 +27,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# vscode setting folder
+.vscode/

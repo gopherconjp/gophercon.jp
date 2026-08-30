@@ -1,21 +1,29 @@
 {
   "name": "gophercon.jp",
   "version": "0.0.1",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "deploy": "astro build && wrangler deploy"
+    "preview:cf": "astro build && wrangler dev",
+    "deploy": "astro build && wrangler deploy",
+    "check": "astro check",
+    "storybook": "NODE_OPTIONS=--disable-warning=DEP0205 storybook dev -p 6006",
+    "build-storybook": "NODE_OPTIONS=--disable-warning=DEP0205 storybook build"
   },
   "dependencies": {
-    "astro": "^7.1.6"
+    "astro": "7.2.9",
+    "astro-intlayer": "9.4.1",
+    "intlayer": "9.4.1"
   },
   "devDependencies": {
-    "wrangler": "^4.119.0"
-  },
-  "engines": {
-    "node": ">=22.12.0"
+    "@astrojs/check": "0.9.10",
+    "@storybook-astro/framework": "1.11.0",
+    "@storybook/builder-vite": "10.5.10",
+    "storybook": "10.5.10",
+    "typescript": "6.0.3",
+    "wrangler": "4.127.1"
   }
 }
