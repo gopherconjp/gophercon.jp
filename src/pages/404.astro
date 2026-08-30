@@ -1,0 +1,51 @@
+---
+import Layout from "../layouts/Layout.astro";
+import {
+  getLocaleFromPath,
+  getTranslation,
+  type LocalesValues,
+  type StrictModeLocaleMap,
+} from "intlayer";
+
+const notFoundContent = {
+  en: {
+    title: "404 - Page not found",
+    description: "The page you are looking for does not exist.",
+    heading: "Page not found",
+    body: "Sorry, the page you are looking for does not exist.",
+  },
+  ja: {
+    title: "404 - ページが見つかりません",
+    description: "お探しのページは見つかりませんでした。",
+    heading: "ページが見つかりません",
+    body: "お探しのページは見つかりませんでした。",
+  },
+} satisfies StrictModeLocaleMap<{
+  title: string;
+  description: string;
+  heading: string;
+  body: string;
+}>;
+
+const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
+const { title, description, heading, body } = getTranslation(
+  notFoundContent,
+  locale,
+);
+---
+
+<Layout title={title} description={description}>
+  <section class="not-found">
+    <h1>{heading}</h1>
+    <p>{body}</p>
+  </section>
+</Layout>
+
+<style>
+  .not-found {
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 6rem 1rem;
+    text-align: center;
+  }
+</style>

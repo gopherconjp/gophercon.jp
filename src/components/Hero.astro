@@ -1,0 +1,88 @@
+---
+import {
+  getTranslation,
+  type LocalesValues,
+  type StrictModeLocaleMap,
+} from "intlayer";
+
+interface Props {
+  locale?: LocalesValues;
+}
+
+const { locale = "en" } = Astro.props;
+
+// --- File-embedded dictionary ---
+const heroContent = {
+  en: {
+    badge: "GopherCon Japan 2026",
+    title: "Let the world's passion reach Japan.",
+    subtitle: "Let Japan's untapped wisdom travel to the world.",
+    description:
+      "GopherCon Japan offers a space where Gophers from around the world connect and enjoy without barriers.",
+  },
+  ja: {
+    badge: "GopherCon Japan 2026",
+    title: "世界の情熱を日本へ。",
+    subtitle: "日本の未発見の叡智を世界へ。",
+    description:
+      "GopherCon Japan は、世界中の Gopher が垣根なくつながり、楽しめる場所を提供します。",
+  },
+} satisfies StrictModeLocaleMap<{
+  badge: string;
+  title: string;
+  subtitle: string;
+  description: string;
+}>;
+
+const { badge, title, subtitle, description } = getTranslation(
+  heroContent,
+  locale,
+);
+---
+
+<section class="hero">
+  <p class="hero__badge">{badge}</p>
+  <h1 class="hero__title">{title}</h1>
+  <p class="hero__subtitle">{subtitle}</p>
+  <p class="hero__description">{description}</p>
+</section>
+
+<style>
+  .hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 1rem;
+    text-align: center;
+  }
+
+  .hero__badge {
+    display: inline-block;
+    margin: 0 0 1rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: #ffe8e3;
+    color: #ff6a52;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .hero__title {
+    margin: 0 0 1rem;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .hero__subtitle {
+    margin: 0 0 1.5rem;
+    font-size: 1.25rem;
+    color: #444;
+  }
+
+  .hero__description {
+    margin: 0 auto;
+    max-width: 40rem;
+    color: #666;
+    line-height: 1.75;
+  }
+</style>

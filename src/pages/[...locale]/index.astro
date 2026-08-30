@@ -1,0 +1,19 @@
+---
+import {
+  localeMap,
+  getPrefix,
+  getLocalizedUrl,
+  getLocaleFromPath,
+  type LocalesValues,
+} from "intlayer";
+
+export const getStaticPaths = () => {
+  return localeMap(({ locale }) => ({
+    params: { locale: getPrefix(locale).localePrefix },
+  }));
+};
+
+const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
+
+return Astro.redirect(getLocalizedUrl("/2027", locale));
+---

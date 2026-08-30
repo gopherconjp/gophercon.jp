@@ -1,0 +1,73 @@
+---
+import {
+  getLocaleFromPath,
+  getLocaleName,
+  getLocalizedUrl,
+  getPathWithoutLocale,
+  getTranslation,
+  locales,
+  type LocalesValues,
+  type StrictModeLocaleMap,
+} from "intlayer";
+
+interface Props {
+  locale?: LocalesValues;
+}
+
+const { locale: propLocale } = Astro.props;
+const locale = (propLocale ??
+  getLocaleFromPath(Astro.url.pathname)) as LocalesValues;
+const pathWithoutLocale = getPathWithoutLocale(Astro.url.pathname);
+
+const switcherContent = {
+  en: { ariaLabel: "Change language" },
+  ja: { ariaLabel: "言語を切り替える" },
+} satisfies StrictModeLocaleMap<{ ariaLabel: string }>;
+
+const { ariaLabel } = getTranslation(switcherContent, locale);
+---
+
+<nav class="locale-switcher" aria-label={ariaLabel}>
+  <ul>
+    {
+      locales.map((item: LocalesValues) => (
+        <li>
+          <a
+            href={getLocalizedUrl(pathWithoutLocale, item)}
+            data-locale={item}
+            aria-current={item === locale ? "page" : undefined}
+          >
+            {getLocaleName(item)}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script>
+  import { setLocaleInStorageClient, type LocalesValues } from "intlayer";
+
+  // Remember the user's locale preference (stored in a cookie).
+  document.querySelectorAll("[data-locale]").forEach((link) => {
+    link.addEventListener("click", () => {
+      const targetLocale = link.getAttribute("data-locale") as LocalesValues;
+      if (targetLocale) setLocaleInStorageClient(targetLocale);
+    });
+  });
+</script>
+
+<style>
+  .locale-switcher ul {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a[aria-current="page"] {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+</style>

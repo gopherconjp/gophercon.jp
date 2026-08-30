@@ -1,0 +1,72 @@
+---
+import {
+  getLocaleFromPath,
+  getPrefix,
+  getTranslation,
+  localeMap,
+  type LocalesValues,
+  type StrictModeLocaleMap,
+} from "intlayer";
+import Layout from "../../../layouts/Layout.astro";
+import Hero from "../../../components/Hero.astro";
+
+export const getStaticPaths = () =>
+  localeMap(({ locale }) => ({
+    params: { locale: getPrefix(locale).localePrefix },
+  }));
+
+const pageContent = {
+  en: {
+    title: "GopherCon Japan",
+    description: "GopherCon Japan Official Website",
+    missionTitle: "Our Mission",
+    mission:
+      "Let the world's passion reach Japan. Let Japan's untapped wisdom travel to the world.",
+  },
+  ja: {
+    title: "GopherCon Japan",
+    description: "GopherCon Japan 公式ウェブサイト",
+    missionTitle: "私たちのミッション",
+    mission: "世界の情熱を日本へ。日本の未発見の叡智を世界へ。",
+  },
+} satisfies StrictModeLocaleMap<{
+  title: string;
+  description: string;
+  missionTitle: string;
+  mission: string;
+}>;
+
+const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
+const { title, description, missionTitle, mission } = getTranslation(
+  pageContent,
+  locale,
+);
+---
+
+<Layout title={title} description={description}>
+  <Hero locale={locale} />
+  <section class="mission">
+    <h2 class="mission__title">{missionTitle}</h2>
+    <p class="mission__statement">{mission}</p>
+  </section>
+</Layout>
+
+<style>
+  .mission {
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+    text-align: center;
+  }
+
+  .mission__title {
+    margin: 0 0 1rem;
+    font-size: 1.5rem;
+  }
+
+  .mission__statement {
+    margin: 0;
+    color: #555;
+    line-height: 1.9;
+  }
+</style>
