@@ -12,11 +12,7 @@ const pathList: SitemapUrlEntry[] = Object.keys(pageModules)
   .filter((filePath) => filePath.includes("/[...locale]/"))
   .map(toCanonicalPath)
   .sort()
-  .map((path) => ({
-    path,
-    changefreq: path === "/" ? "daily" : "monthly",
-    priority: path === "/" ? 1 : 0.7,
-  }));
+  .map((path) => ({ path }));
 
 const SITE_URL = import.meta.env.SITE ?? "http://localhost:4321";
 

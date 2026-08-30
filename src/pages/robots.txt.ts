@@ -1,14 +1,17 @@
 import type { APIRoute } from "astro";
 
-export const GET: APIRoute = ({ site }) => {
-  const robotsTxt = [
-    "User-agent: *",
-    "Allow: /",
-    "",
-    `Sitemap: ${new URL("/sitemap.xml", site).href}`,
-  ].join("\n");
+const PROD_HOST = "gophercon.jp";
 
-  return new Response(robotsTxt, {
+export const GET: APIRoute = ({ site }) => {
+  const isProd = site?.host === PROD_HOST;
+
+  const lines = ["User-agent: *"];
+  lines.push(isProd ? "Allow: /" : "Disallow: /");
+  if (isProd) {
+    lines.push("", `Sitemap: ${new URL("/sitemap.xml", site).href}`);
+  }
+
+  return new Response(lines.join("\n"), {
     headers: { "Content-Type": "text/plain" },
   });
 };

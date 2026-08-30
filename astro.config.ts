@@ -2,7 +2,7 @@ import { intlayer } from "astro-intlayer";
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://gophercon.jp",
+  site: process.env.SITE_URL ?? "https://gophercon.jp",
   trailingSlash: "always",
   output: "static",
   integrations: [intlayer()],
