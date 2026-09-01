@@ -8,13 +8,16 @@ import {
   type Dictionary,
   type LocalesValues,
 } from "intlayer";
+
+import Home from "../../../components/2027/home/index.astro";
 import Layout from "../../../layouts/Layout.astro";
-import Hero from "../../../components/Hero.astro";
 
 export const getStaticPaths = () =>
   localeMap(({ locale }) => ({
     params: { locale: getPrefix(locale).localePrefix },
   }));
+
+const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
 
 const content = {
   key: "local",
@@ -27,48 +30,11 @@ const content = {
       en: "GopherCon Japan Official Website",
       ja: "GopherCon Japan 公式ウェブサイト",
     }),
-    missionTitle: t({
-      en: "Our Mission",
-      ja: "私たちのミッション",
-    }),
-    mission: t({
-      en: "Let the world's passion reach Japan. Let Japan's untapped wisdom travel to the world.",
-      ja: "世界の情熱を日本へ。日本の未発見の叡智を世界へ。",
-    }),
   },
 } satisfies Dictionary;
-
-const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
-const { title, description, missionTitle, mission } = getDictionary(
-  content,
-  locale,
-);
+const { title, description } = getDictionary(content, locale);
 ---
 
 <Layout title={title} description={description}>
-  <Hero locale={locale} />
-  <section class="mission">
-    <h2 class="mission__title">{missionTitle}</h2>
-    <p class="mission__statement">{mission}</p>
-  </section>
+  <Home locale={locale} />
 </Layout>
-
-<style>
-  .mission {
-    max-width: 40rem;
-    margin: 0 auto;
-    padding: 2rem 1rem 4rem;
-    text-align: center;
-  }
-
-  .mission__title {
-    margin: 0 0 1rem;
-    font-size: 1.5rem;
-  }
-
-  .mission__statement {
-    margin: 0;
-    color: #555;
-    line-height: 1.9;
-  }
-</style>

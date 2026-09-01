@@ -1,0 +1,58 @@
+---
+import {
+  getDictionary,
+  t,
+  type Dictionary,
+  type LocalesValues,
+} from "intlayer";
+
+import Hero from "../../Hero.astro";
+import KeyVisual from "./key-visual/index.astro";
+
+interface Props {
+  locale: LocalesValues;
+}
+const { locale } = Astro.props;
+
+const content = {
+  key: "local",
+  content: {
+    missionTitle: t({
+      en: "Our Mission",
+      ja: "私たちのミッション",
+    }),
+    mission: t({
+      en: "Let the world's passion reach Japan. Let Japan's untapped wisdom travel to the world.",
+      ja: "世界の情熱を日本へ。日本の未発見の叡智を世界へ。",
+    }),
+  },
+} satisfies Dictionary;
+const { missionTitle, mission } = getDictionary(content, locale);
+---
+
+<KeyVisual />
+<Hero locale={locale} />
+<section class="mission">
+  <h2 class="mission__title">{missionTitle}</h2>
+  <p class="mission__statement">{mission}</p>
+</section>
+
+<style>
+  .mission {
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+    text-align: center;
+  }
+
+  .mission__title {
+    margin: 0 0 1rem;
+    font-size: 1.5rem;
+  }
+
+  .mission__statement {
+    margin: 0;
+    color: #555;
+    line-height: 1.9;
+  }
+</style>
