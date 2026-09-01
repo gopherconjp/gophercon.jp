@@ -97,9 +97,10 @@ const layers: {
     overflow: hidden;
   }
 
-  /* Covers the frame, center-cropped. width/height required: an absolutely
-     positioned img keeps its intrinsic size without them, so inset: 0 alone
-     would pin it to the top-left. */
+  /* Covers the frame, center-cropped.
+
+     width/height required: an absolutely positioned img keeps its intrinsic size
+     without them, so inset: 0 alone would pin it to the top-left. */
   .kv__background {
     position: absolute;
     inset: 0;
@@ -107,6 +108,7 @@ const layers: {
     height: 100%;
     object-fit: cover;
     object-position: center;
+    transform: scale(0.99); /* avoid subpixel gaps at edges */
   }
 
   /* 1350x900 design space, centered; scales the whole composition when W < break */
