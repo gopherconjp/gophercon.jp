@@ -16,13 +16,15 @@ const basePath = "storybook"; // URL base path
 
 // 1) Copy every webp under src/ to dist/storybook/<rel>.
 const webpImgs = [...new Bun.Glob("**/*.webp").scanSync({ cwd: srcDir })];
-for (const rel of webpImgs) {
-  console.log(`Copying src/${rel}...`);
+await Promise.all(
+  webpImgs.map(async (rel) => {
+    console.log(`Copying src/${rel}...`);
 
-  const to = path.join(dest, rel);
-  await mkdir(path.dirname(to), { recursive: true });
-  await Bun.write(to, Bun.file(path.join(srcDir, rel)));
-}
+    const to = path.join(dest, rel);
+    await mkdir(path.dirname(to), { recursive: true });
+    await Bun.write(to, Bun.file(path.join(srcDir, rel)));
+  }),
+);
 
 // 2) Rewrite pre-rendered image URLs to the copies.
 //    Example:

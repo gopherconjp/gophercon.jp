@@ -13,7 +13,7 @@ const toCanonicalPath = (filePath: string): string => {
 const pathList: SitemapUrlEntry[] = Object.keys(pageModules)
   .filter((filePath) => filePath.includes("/[...locale]/"))
   .map(toCanonicalPath)
-  .sort()
+  .toSorted()
   .map((path) => ({ path }));
 
 export const GET: APIRoute = async ({ site }) => {
