@@ -4,7 +4,6 @@ import cssVariables from "lightningcss-plugin-css-variables";
 
 export default defineConfig({
   site: process.env.SITE_URL ?? "http://localhost:4321",
-  trailingSlash: "always",
   output: "static",
   integrations: [intlayer()],
   vite: {
