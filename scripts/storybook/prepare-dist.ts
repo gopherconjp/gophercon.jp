@@ -25,26 +25,28 @@ for (const rel of webpImgs) {
 }
 
 // 2) Rewrite pre-rendered image URLs to the copies.
-//    Exclude `\` so the JSON's escaped closing quote (`\"`) survives.
+//    Example:
+//      @fs/Users/.../src/components/path/to/sample.webp?hash=...
+//      => /storybook/components/path/to/sample.webp
 const jsonPath = path.join(dest, "astro-prerendered-stories.json");
 const json = await Bun.file(jsonPath).text();
-
-const out = json.replace(/@fs\/([^"']+?\.webp)\?[^"'\\]*/g, (full, abs) => {
-  const absPath = path.join("/", abs);
-  if (!absPath.startsWith(srcDir + path.sep)) {
-    return full;
-  }
-
-  return `${basePath}/${path.relative(srcDir, absPath).split(path.sep).join("/")}`;
-});
-await Bun.write(jsonPath, out);
+await Bun.write(
+  jsonPath,
+  json.replace(
+    /\/?(?:@fs\/[^"']*?\/src\/)?([^"']+?\.webp)(?:\?[^"'\\]*)?/g,
+    (_full, rel) => `/${basePath}/${rel}`,
+  ),
+);
 
 // 3) Anchor the manager to /storybook.
 const indexPath = path.join(dest, "index.html");
 let indexHtml = await Bun.file(indexPath).text();
-indexHtml = indexHtml.replace("<head>", `<head>\n\t\t<base href="/${basePath}/" />`);
-await Bun.write(indexPath, indexHtml);
+await Bun.write(
+  indexPath,
+  indexHtml.replace("<head>", `<head>\n\t\t<base href="/${basePath}/" />`),
+);
 
 console.log(
-  `\nPrepared ${path.relative(root, dest)}: ${webpImgs.length} images copied, base href set to /${basePath}/`,
+  `\nPrepared ${path.relative(root, dest)}:`,
+  `${webpImgs.length} images copied, base anchored to /${basePath}/`,
 );
