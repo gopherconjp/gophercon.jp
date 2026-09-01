@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:dev": "bun run build && bun run build:storybook",
     "preview": "astro preview",
     "preview:cf": "astro build && wrangler dev",
     "deploy": "astro build && wrangler deploy",
@@ -16,19 +17,14 @@
     "format:ox": "oxfmt --write",
     "format:prettier": "prettier --write \"src/**/*.astro\"",
     "format": "bun run format:prettier && bun run format:ox",
-    "storybook": "NODE_OPTIONS=--disable-warning=DEP0205 storybook dev -p 6006",
-    "build-storybook": "NODE_OPTIONS=--disable-warning=DEP0205 storybook build"
-  },
-  "dependencies": {
-    "astro": "7.2.9",
-    "astro-intlayer": "9.4.1",
-    "intlayer": "9.4.1",
-    "lightningcss-plugin-css-variables": "0.1.0"
+    "storybook": "storybook dev -p 6006",
+    "build:storybook": "storybook build --output-dir dist/storybook && bun run scripts/storybook/prepare-dist.ts"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
     "@storybook-astro/framework": "1.11.0",
     "@storybook/builder-vite": "10.5.10",
+    "@types/bun": "1.4.0",
     "@typescript-eslint/parser": "8.68.0",
     "astro": "7.2.9",
     "astro-intlayer": "9.4.1",
