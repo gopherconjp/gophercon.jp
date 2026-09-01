@@ -120,12 +120,15 @@ const layers: {
       scale(min(1, calc(100cqw / var(--_kv-break))));
   }
 
-  /* Shared stage-img base; :where() zeroes specificity so .kv__rectangle can override left/width */
+  /* Shared stage-img base.
+     Sizing is read from per-layer custom properties (--kv-left / --kv-width) instead of
+     being overridden directly: Astro scopes this selector with [data-astro-cid] attributes,
+     which adds specificity and would beat `.kv__rectangle`'s direct left/width. */
   .kv__stage :where(img) {
     position: absolute;
     top: 0;
-    left: 0;
-    width: var(--_kv-max);
+    left: var(--kv-left, 0);
+    width: var(--kv-width, var(--_kv-max));
     height: 900px;
   }
 
@@ -214,8 +217,9 @@ const layers: {
 
   /* 1530px rectangle centered in the design space; scaleX to frame width at break */
   .kv__rectangle {
-    left: calc((var(--_kv-max) - 1530px) / 2);
-    width: 1530px;
+    --kv-left: calc((var(--_kv-max) - 1530px) / 2);
+    --kv-width: 1530px;
+
     z-index: 4;
     transform-origin: center;
     transform: scaleX(calc(1 - var(--t) * (1 - var(--_kv-break) / 1530px)));
