@@ -1,11 +1,12 @@
 ---
 import {
+  getDictionary,
   getLocaleFromPath,
   getPrefix,
-  getTranslation,
   localeMap,
+  t,
+  type Dictionary,
   type LocalesValues,
-  type StrictModeLocaleMap,
 } from "intlayer";
 import Layout from "../../../layouts/Layout.astro";
 import Hero from "../../../components/Hero.astro";
@@ -15,30 +16,31 @@ export const getStaticPaths = () =>
     params: { locale: getPrefix(locale).localePrefix },
   }));
 
-const pageContent = {
-  en: {
-    title: "GopherCon Japan",
-    description: "GopherCon Japan Official Website",
-    missionTitle: "Our Mission",
-    mission:
-      "Let the world's passion reach Japan. Let Japan's untapped wisdom travel to the world.",
+const content = {
+  key: "local",
+  content: {
+    title: t({
+      en: "GopherCon Japan",
+      ja: "GopherCon Japan",
+    }),
+    description: t({
+      en: "GopherCon Japan Official Website",
+      ja: "GopherCon Japan 公式ウェブサイト",
+    }),
+    missionTitle: t({
+      en: "Our Mission",
+      ja: "私たちのミッション",
+    }),
+    mission: t({
+      en: "Let the world's passion reach Japan. Let Japan's untapped wisdom travel to the world.",
+      ja: "世界の情熱を日本へ。日本の未発見の叡智を世界へ。",
+    }),
   },
-  ja: {
-    title: "GopherCon Japan",
-    description: "GopherCon Japan 公式ウェブサイト",
-    missionTitle: "私たちのミッション",
-    mission: "世界の情熱を日本へ。日本の未発見の叡智を世界へ。",
-  },
-} satisfies StrictModeLocaleMap<{
-  title: string;
-  description: string;
-  missionTitle: string;
-  mission: string;
-}>;
+} satisfies Dictionary;
 
 const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
-const { title, description, missionTitle, mission } = getTranslation(
-  pageContent,
+const { title, description, missionTitle, mission } = getDictionary(
+  content,
   locale,
 );
 ---

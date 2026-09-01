@@ -1,13 +1,14 @@
 ---
 import {
+  getDictionary,
   getLocaleFromPath,
   getLocaleName,
   getLocalizedUrl,
   getPathWithoutLocale,
-  getTranslation,
   locales,
+  t,
+  type Dictionary,
   type LocalesValues,
-  type StrictModeLocaleMap,
 } from "intlayer";
 
 interface Props {
@@ -19,12 +20,17 @@ const locale = (propLocale ??
   getLocaleFromPath(Astro.url.pathname)) as LocalesValues;
 const pathWithoutLocale = getPathWithoutLocale(Astro.url.pathname);
 
-const switcherContent = {
-  en: { ariaLabel: "Change language" },
-  ja: { ariaLabel: "言語を切り替える" },
-} satisfies StrictModeLocaleMap<{ ariaLabel: string }>;
+const content = {
+  key: "local",
+  content: {
+    ariaLabel: t({
+      en: "Change language",
+      ja: "言語を切り替える",
+    }),
+  },
+} satisfies Dictionary;
 
-const { ariaLabel } = getTranslation(switcherContent, locale);
+const { ariaLabel } = getDictionary(content, locale);
 ---
 
 <nav class="locale-switcher" aria-label={ariaLabel}>
