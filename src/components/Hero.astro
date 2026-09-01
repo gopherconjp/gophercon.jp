@@ -7,10 +7,9 @@ import {
 } from "intlayer";
 
 interface Props {
-  locale?: LocalesValues;
+  locale: LocalesValues;
 }
-
-const { locale = "en" } = Astro.props;
+const { locale } = Astro.props;
 
 const content = {
   key: "local",
@@ -33,7 +32,6 @@ const content = {
     }),
   },
 } satisfies Dictionary;
-
 const { badge, title, subtitle, description } = getDictionary(content, locale);
 ---
 
