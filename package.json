@@ -18,7 +18,7 @@
     "format:prettier": "prettier --write \"src/**/*.astro\"",
     "format": "bun run format:prettier && bun run format:ox",
     "storybook": "storybook dev -p 6006",
-    "build:storybook": "storybook build --output-dir dist/storybook && bun run scripts/storybook/prepare-dist.ts"
+    "build:storybook": "storybook build -o dist/storybook && bun run scripts/storybook/prepare-dist.ts"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
