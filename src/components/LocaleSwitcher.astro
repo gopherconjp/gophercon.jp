@@ -12,12 +12,10 @@ import {
 } from "intlayer";
 
 interface Props {
-  locale?: LocalesValues;
+  locale: LocalesValues;
 }
-const { locale: propLocale } = Astro.props;
+const { locale } = Astro.props;
 
-const locale = (propLocale ??
-  getLocaleFromPath(Astro.url.pathname)) as LocalesValues;
 const pathWithoutLocale = getPathWithoutLocale(Astro.url.pathname);
 
 const content = {
@@ -32,7 +30,11 @@ const content = {
 const { ariaLabel } = getDictionary(content, locale);
 ---
 
-<nav class="locale-switcher" aria-label={ariaLabel}>
+<nav
+  class="locale-switcher"
+  aria-label={ariaLabel}
+  data-current-locale={locale}
+>
   <ul>
     {
       locales.map((item: LocalesValues) => (
@@ -51,12 +53,34 @@ const { ariaLabel } = getDictionary(content, locale);
 </nav>
 
 <script>
-  import { setLocaleInStorageClient, type LocalesValues } from "intlayer";
+  import { localeStorageOptions } from "@intlayer/core/utils";
+  import {
+    getBrowserLocale,
+    setLocaleInStorageClient,
+    type LocalesValues,
+  } from "intlayer";
+
+  const nav = document.querySelector<HTMLElement>(".locale-switcher");
+  const currentLocale = nav?.dataset.currentLocale as LocalesValues | undefined;
+
+  const browserLocale = getBrowserLocale();
+  if (currentLocale && browserLocale !== currentLocale) {
+    setLocaleInStorageClient(browserLocale, localeStorageOptions);
+
+    const link = nav?.querySelector<HTMLAnchorElement>(
+      `[data-locale="${browserLocale}"]`,
+    );
+    if (link) {
+      window.location.replace(link.href);
+    }
+  }
 
   document.querySelectorAll("[data-locale]").forEach((link) => {
     link.addEventListener("click", () => {
       const targetLocale = link.getAttribute("data-locale") as LocalesValues;
-      if (targetLocale) setLocaleInStorageClient(targetLocale);
+      if (targetLocale) {
+        setLocaleInStorageClient(targetLocale, localeStorageOptions);
+      }
     });
   });
 </script>

@@ -13,10 +13,7 @@ const config: IntlayerConfig = {
   },
   routing: {
     mode: "prefix-no-default",
-    storage: [
-      { type: "localStorage", name: "intlayer_locale" },
-      { type: "sessionStorage", name: "intlayer_locale" },
-    ],
+    storage: [{ type: "localStorage", name: "intlayer_locale" }],
   },
   content: {
     contentDir: ["src"],
