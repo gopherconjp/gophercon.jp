@@ -14,8 +14,8 @@ import {
 interface Props {
   locale?: LocalesValues;
 }
-
 const { locale: propLocale } = Astro.props;
+
 const locale = (propLocale ??
   getLocaleFromPath(Astro.url.pathname)) as LocalesValues;
 const pathWithoutLocale = getPathWithoutLocale(Astro.url.pathname);
@@ -29,7 +29,6 @@ const content = {
     }),
   },
 } satisfies Dictionary;
-
 const { ariaLabel } = getDictionary(content, locale);
 ---
 

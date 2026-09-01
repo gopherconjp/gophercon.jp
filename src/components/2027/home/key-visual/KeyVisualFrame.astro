@@ -1,0 +1,14 @@
+---
+import KeyVisual from "./index.astro";
+
+interface Props {
+  /** Container width in px used to exercise the responsive phases. */
+  width?: number;
+}
+
+const { width = 1350 } = Astro.props;
+---
+
+<div style={`width: ${width}px; margin: 0 auto;`}>
+  <KeyVisual />
+</div>
