@@ -8,7 +8,7 @@
     "build": "astro build",
     "build:dev": "bun run build && bun run build:storybook",
     "preview": "astro preview",
-    "preview:cf": "astro build && wrangler dev",
+    "preview:cf": "wrangler dev",
     "deploy": "astro build && wrangler deploy",
     "check": "astro check && tsc --noEmit && knip",
     "lint:ox": "oxlint --fix",
