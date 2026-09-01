@@ -64,33 +64,35 @@ const layers: {
 
 <style>
   .kv {
-    /* Tunable design tokens */
-    --kv-max: 1350px; /* max frame width */
-    --kv-break: 700px; /* below this, composition scales down */
-    --kv-cloud-l-turn: 1150px; /* cloud_l starts receding below this */
-    --kv-cloud-l-hide: 900px; /* cloud_l fully hidden below this */
-    --kv-onago-x: 60px; /* onago content left edge at W = break */
+    /* Tunable design tokens. Convention: `--_`-prefixed names are build-time
+       constants inlined by lightningcss-plugin-css-variables (default include
+       /^--_/). Derived / responsive vars (--kv-*, --t*) stay as runtime vars. */
+    --_kv-max: 1350px; /* max frame width */
+    --_kv-break: 700px; /* below this, composition scales down */
+    --_kv-cloud-l-turn: 1150px; /* cloud_l starts receding below this */
+    --_kv-cloud-l-hide: 900px; /* cloud_l fully hidden below this */
+    --_kv-onago-x: 60px; /* onago content left edge at W = break */
 
-    --kv-cloud-swing-period: 6s; /* cloud wiggle period */
-    --kv-cloud-swing-amp: 24px; /* cloud wiggle width (total travel) */
+    --_kv-cloud-swing-period: 6s; /* cloud wiggle period */
+    --_kv-cloud-swing-amp: 24px; /* cloud wiggle width (total travel) */
 
     --kv-shrink: calc(
-      (var(--kv-max) - var(--kv-break)) / 2
+      (var(--_kv-max) - var(--_kv-break)) / 2
     ); /* per-edge frame shrink */
 
     /* Phase-2 progress (0..1); stays 1 below break */
     --t: clamp(
       0,
-      (var(--kv-max) - 100cqw) / (var(--kv-max) - var(--kv-break)),
+      (var(--_kv-max) - 100cqw) / (var(--_kv-max) - var(--_kv-break)),
       1
     );
 
     container-type: inline-size;
     position: relative;
-    width: min(100%, var(--kv-max));
+    width: min(100%, var(--_kv-max));
     margin: 0 auto;
     /* 700:900 ratio; height 900px in phases 1-2, proportional in phase 3 */
-    aspect-ratio: calc(var(--kv-break) / 900px);
+    aspect-ratio: calc(var(--_kv-break) / 900px);
     max-height: 900px;
     overflow: hidden;
   }
@@ -112,10 +114,10 @@ const layers: {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: var(--kv-max);
+    width: var(--_kv-max);
     height: 900px;
     transform: translate(-50%, -50%)
-      scale(min(1, calc(100cqw / var(--kv-break))));
+      scale(min(1, calc(100cqw / var(--_kv-break))));
   }
 
   /* Shared stage-img base; :where() zeroes specificity so .kv__rectangle can override left/width */
@@ -123,13 +125,13 @@ const layers: {
     position: absolute;
     top: 0;
     left: 0;
-    width: var(--kv-max);
+    width: var(--_kv-max);
     height: 900px;
   }
 
   .kv__cloud {
     z-index: 1;
-    animation: kv-cloud-swing var(--kv-cloud-swing-period) ease-in-out infinite;
+    animation: kv-cloud-swing var(--_kv-cloud-swing-period) ease-in-out infinite;
   }
 
   /* Wiggle the two clouds around their base translateX (--kv-cloud-x) */
@@ -137,25 +139,25 @@ const layers: {
     0%,
     100% {
       transform: translateX(
-        calc(var(--kv-cloud-x) - var(--kv-cloud-swing-amp) / 2)
+        calc(var(--kv-cloud-x) - var(--_kv-cloud-swing-amp) / 2)
       );
     }
     50% {
       transform: translateX(
-        calc(var(--kv-cloud-x) + var(--kv-cloud-swing-amp) / 2)
+        calc(var(--kv-cloud-x) + var(--_kv-cloud-swing-amp) / 2)
       );
     }
   }
 
-  /* cloud_l: pinned to the frame's left edge above --kv-cloud-l-turn, then recedes
-     (eased) to fully hidden at --kv-cloud-l-hide. Recession = cloud width (220px) −
+  /* cloud_l: pinned to the frame's left edge above --_kv-cloud-l-turn, then recedes
+     (eased) to fully hidden at --_kv-cloud-l-hide. Recession = cloud width (220px) −
      per-edge shrink over turn..hide, so its right edge clears the frame at hide. */
   .kv__cloud--l {
     /* recession progress (0 at turn, 1 at hide) */
     --t-cloud-l: clamp(
       0,
-      (var(--kv-cloud-l-turn) - 100cqw) /
-        (var(--kv-cloud-l-turn) - var(--kv-cloud-l-hide)),
+      (var(--_kv-cloud-l-turn) - 100cqw) /
+        (var(--_kv-cloud-l-turn) - var(--_kv-cloud-l-hide)),
       1
     );
     /* smoothstep easing */
@@ -164,10 +166,10 @@ const layers: {
     );
 
     --kv-cloud-l-base: calc(
-      (var(--kv-max) - var(--kv-cloud-l-turn)) / 2
+      (var(--_kv-max) - var(--_kv-cloud-l-turn)) / 2
     ); /* pin at turn */
     --kv-cloud-l-recede: calc(
-      228px - (var(--kv-cloud-l-turn) - var(--kv-cloud-l-hide)) / 2
+      228px - (var(--_kv-cloud-l-turn) - var(--_kv-cloud-l-hide)) / 2
     ); /* total recession */
     --kv-cloud-x: min(
       calc(var(--t) * var(--kv-shrink)),
@@ -185,7 +187,7 @@ const layers: {
     transform: translateX(var(--kv-cloud-x));
 
     animation-delay: calc(
-      var(--kv-cloud-swing-period) / -2
+      var(--_kv-cloud-swing-period) / -2
     ); /* anti-phase to cloud_l */
   }
 
@@ -196,11 +198,11 @@ const layers: {
       translateY(calc(var(--t) * -80px));
   }
 
-  /* onago: moves right; content left edge reaches --kv-onago-x at W = break */
+  /* onago: moves right; content left edge reaches --_kv-onago-x at W = break */
   .kv__onago {
     z-index: 3;
     transform: translateX(
-      calc(var(--t) * (var(--kv-onago-x) + var(--kv-shrink) - 130px))
+      calc(var(--t) * (var(--_kv-onago-x) + var(--kv-shrink) - 130px))
     );
   }
 
@@ -212,11 +214,11 @@ const layers: {
 
   /* 1530px rectangle centered in the design space; scaleX to frame width at break */
   .kv__rectangle {
-    left: calc((var(--kv-max) - 1530px) / 2);
+    left: calc((var(--_kv-max) - 1530px) / 2);
     width: 1530px;
     z-index: 4;
     transform-origin: center;
-    transform: scaleX(calc(1 - var(--t) * (1 - var(--kv-break) / 1530px)));
+    transform: scaleX(calc(1 - var(--t) * (1 - var(--_kv-break) / 1530px)));
   }
 
   /* logo: follows the right edge together with cloud_r (no wiggle) */
@@ -228,6 +230,6 @@ const layers: {
   /* samurai: centered at W = break -> right 198.5px */
   .kv__samurai {
     z-index: 6;
-    transform: translateX(calc(var(--t) * (var(--kv-max) / 2 - 476.5px)));
+    transform: translateX(calc(var(--t) * (var(--_kv-max) / 2 - 476.5px)));
   }
 </style>

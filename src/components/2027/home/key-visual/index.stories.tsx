@@ -45,7 +45,7 @@ export const Width1000 = {
   name: "1000px — Phase 2: cloud_l recede",
 };
 
-/** cloud_l fully hidden at the --kv-cloud-l-hide boundary. */
+/** cloud_l fully hidden at the --_kv-cloud-l-hide boundary. */
 export const Width900 = {
   args: { width: 900 },
   name: "900px — Phase 2: cloud_l fully hidden",

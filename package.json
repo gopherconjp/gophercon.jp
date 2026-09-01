@@ -22,7 +22,8 @@
   "dependencies": {
     "astro": "7.2.9",
     "astro-intlayer": "9.4.1",
-    "intlayer": "9.4.1"
+    "intlayer": "9.4.1",
+    "lightningcss-plugin-css-variables": "0.1.0"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
