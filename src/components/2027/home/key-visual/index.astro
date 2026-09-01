@@ -66,9 +66,9 @@ const layers: {
 
 <style>
   .kv {
-    /* Tunable design tokens. Convention: `--_`-prefixed names are build-time
-       constants inlined by lightningcss-plugin-css-variables (default include
-       /^--_/). Derived / responsive vars (--kv-*, --t*) stay as runtime vars. */
+    /* Tunable design tokens.
+       Convention: `--_`-prefixed names are build-time constants inlined by
+       lightningcss-plugin-css-variables (default include /^--_/). */
     --_kv-max: 1350px; /* max frame width */
     --_kv-break: 700px; /* below this, composition scales down */
     --_kv-cloud-l-turn: 1150px; /* cloud_l starts receding below this */
@@ -100,7 +100,6 @@ const layers: {
   }
 
   /* Covers the frame, center-cropped.
-
      width/height required: an absolutely positioned img keeps its intrinsic size
      without them, so inset: 0 alone would pin it to the top-left. */
   .kv__background {
@@ -141,7 +140,6 @@ const layers: {
     animation: kv-cloud-swing var(--_kv-cloud-swing-period) ease-in-out infinite;
   }
 
-  /* Wiggle the two clouds around their base translateX (--kv-cloud-x) */
   @keyframes kv-cloud-swing {
     0%,
     100% {
@@ -157,8 +155,9 @@ const layers: {
   }
 
   /* cloud_l: pinned to the frame's left edge above --_kv-cloud-l-turn, then recedes
-     (eased) to fully hidden at --_kv-cloud-l-hide. Recession = cloud width (220px) −
-     per-edge shrink over turn..hide, so its right edge clears the frame at hide. */
+     (eased) to fully hidden at --_kv-cloud-l-hide.
+     Recession = cloud width − per-edge shrink over turn..hide, so its right edge
+     clears the frame at hide. */
   .kv__cloud--l {
     /* recession progress (0 at turn, 1 at hide) */
     --t-cloud-l: clamp(
@@ -172,19 +171,21 @@ const layers: {
       var(--t-cloud-l) * var(--t-cloud-l) * (3 - 2 * var(--t-cloud-l))
     );
 
-    --kv-cloud-l-base: calc(
-      (var(--_kv-max) - var(--_kv-cloud-l-turn)) / 2
-    ); /* pin at turn */
+    /* pin at turn */
+    --kv-cloud-l-base: calc((var(--_kv-max) - var(--_kv-cloud-l-turn)) / 2);
+    /* total recession */
     --kv-cloud-l-recede: calc(
       228px - (var(--_kv-cloud-l-turn) - var(--_kv-cloud-l-hide)) / 2
-    ); /* total recession */
+    );
+
+    /* base translateX (pinned or receding) */
     --kv-cloud-x: min(
       calc(var(--t) * var(--kv-shrink)),
       calc(
         var(--kv-cloud-l-base) - var(--t-cloud-l-eased) *
           var(--kv-cloud-l-recede)
       )
-    ); /* base translateX (pinned or receding) */
+    );
     transform: translateX(var(--kv-cloud-x));
   }
 
