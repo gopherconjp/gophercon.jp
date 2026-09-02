@@ -15,8 +15,14 @@ reviews:
       instructions: |
         Local-only, single-user tooling that drives a self-hosted Penpot Docker stack on `localhost`; never deployed or multi-user.
         Accept by design (do not report):
-        - fixed documented credentials (`creative@gophercon.jp` / `password`)
-        - password printed in local terminal output
-        - hardcoded config (no env overrides)
-        - plain HTTP to the local Penpot service
-        - minimal transport hardening (no https-only or asset-origin validation required)
+        - Fixed documented credentials (`creative@gophercon.jp` / `password`)
+        - Password printed in local terminal output
+        - Hardcoded config (no env overrides)
+        - Plain HTTP to the local Penpot service
+        - Minimal transport hardening (no https-only or asset-origin validation required)
+    - path: "src/components/common/i18n/**"
+      instructions: |
+        Intentional locale behavior; accept by design (do not report):
+        - `LocaleRedirector` auto-redirects by browser locale on every page, not only the root
+        - Unsupported locales fall back to `defaultLocale` (keep the guard; never hardcode `ENGLISH`)
+        - `LocaleSwitcher` persists the clicked locale so auto-redirect does not bounce the user back
