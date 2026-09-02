@@ -1,6 +1,7 @@
 <script>
   import { localeStorageOptions } from "@intlayer/core/utils";
   import {
+    defaultLocale,
     getBrowserLocale,
     getLocaleFromPath,
     getLocalizedUrl,
@@ -14,18 +15,18 @@
     window.location.pathname,
   ) as LocalesValues;
 
-  let preferredLocale = getBrowserLocale();
-  if (locales.includes(preferredLocale)) {
-    preferredLocale = locales.ENGLISH;
-  }
+  const browserLocale = getBrowserLocale();
+  const targetLocale = locales.includes(browserLocale)
+    ? browserLocale
+    : defaultLocale;
 
-  if (preferredLocale !== currentLocale) {
-    setLocaleInStorageClient(preferredLocale, localeStorageOptions);
+  if (targetLocale !== currentLocale) {
+    setLocaleInStorageClient(targetLocale, localeStorageOptions);
 
     window.location.replace(
       getLocalizedUrl(
         getPathWithoutLocale(window.location.pathname),
-        preferredLocale,
+        targetLocale,
       ),
     );
   }
