@@ -154,6 +154,12 @@ const layers: {
     }
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .kv__cloud {
+      animation: none;
+    }
+  }
+
   /* cloud_l: pinned to the frame's left edge above --_kv-cloud-l-turn, then recedes
      (eased) to fully hidden at --_kv-cloud-l-hide.
      Recession = cloud width − per-edge shrink over turn..hide, so its right edge
