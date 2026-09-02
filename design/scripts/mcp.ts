@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname } from "node:path";
 import { createInterface } from "node:readline";
 
@@ -37,9 +37,19 @@ const loadMcpConfig = (): Record<string, unknown> => {
 };
 
 const main = async (): Promise<void> => {
-  const url = (await ask("MCP URL (Account -> Integrations -> MCP Server): ")).trim();
-  if (!url) {
+  const input = (await ask("MCP URL (Account -> Integrations -> MCP Server): ")).trim();
+  if (!input) {
     throw new Error("No URL given");
+  }
+
+  let url: URL;
+  try {
+    url = new URL(input);
+  } catch {
+    throw new Error(`Invalid MCP URL: ${input}`);
+  }
+  if (url.protocol !== "http:" && url.protocol !== "https:") {
+    throw new Error(`Invalid MCP URL: only http: and https: are supported (got ${url.protocol})`);
   }
 
   const config = loadMcpConfig();
@@ -52,11 +62,13 @@ const main = async (): Promise<void> => {
 
   config.servers = {
     ...existingServers,
-    penpot: { type: "http", url },
+    penpot: { type: "http", url: url.toString() },
   };
 
   mkdirSync(dirname(paths.vscodeMcp), { recursive: true });
-  await Bun.write(paths.vscodeMcp, `${JSON.stringify(config, null, 2)}\n`);
+  // The URL embeds an MCP key; keep the file readable only by the owner.
+  await Bun.write(paths.vscodeMcp, `${JSON.stringify(config, null, 2)}\n`, { mode: 0o600 });
+  chmodSync(paths.vscodeMcp, 0o600);
 
   console.log(`Wrote ${paths.vscodeMcp}`);
   console.log("Reload the VS Code window (Developer: Reload Window), then verify with");
