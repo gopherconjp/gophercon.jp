@@ -1,6 +1,5 @@
 import { resolve } from "node:path";
 
-// Local-only Penpot setup: fixed values, no environment overrides.
 export const cfg = {
   url: "http://localhost:9001",
   email: "creative@gophercon.jp",
