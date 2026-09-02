@@ -22,7 +22,7 @@ volumes:
 
 services:
   penpot-frontend:
-    image: "penpotapp/frontend:2.17.0"
+    image: "penpotapp/frontend:2.17.2"
     restart: always
     # Run the bundled nginx as root:
     # the image's default user cannot write its root-owned log directory.
@@ -41,7 +41,7 @@ services:
       <<: [*penpot-flags, *penpot-http-body-size, *penpot-public-uri]
 
   penpot-backend:
-    image: "penpotapp/backend:2.17.0"
+    image: "penpotapp/backend:2.17.2"
     restart: always
     volumes:
       - penpot_assets:/opt/data/assets
@@ -64,13 +64,13 @@ services:
       PENPOT_TELEMETRY_REFERER: compose
 
   penpot-mcp:
-    image: "penpotapp/mcp:2.17.0"
+    image: "penpotapp/mcp:2.17.2"
     restart: always
     networks:
       - penpot
 
   penpot-exporter:
-    image: "penpotapp/exporter:2.17.0"
+    image: "penpotapp/exporter:2.17.2"
     restart: always
     depends_on:
       penpot-valkey:
