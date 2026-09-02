@@ -1,4 +1,11 @@
 ---
+import {
+  getDictionary,
+  t,
+  type Dictionary,
+  type LocalesValues,
+} from "intlayer";
+
 import background from "./background.webp";
 import cloudL from "./cloud_l.webp";
 import cloudR from "./cloud_r.webp";
@@ -8,6 +15,22 @@ import onago from "./onago.webp";
 import rectangle from "./rectangle.webp";
 import samurai from "./samurai.webp";
 import warabe from "./warabe.webp";
+
+interface Props {
+  locale: LocalesValues;
+}
+const { locale } = Astro.props;
+
+const content = {
+  key: "local",
+  content: {
+    ariaLabel: t({
+      en: "GopherCon Japan 2027 key visual",
+      ja: "GopherCon Japan 2027 キービジュアル",
+    }),
+  },
+} satisfies Dictionary;
+const { ariaLabel } = getDictionary(content, locale);
 
 // Stage layers in stacking order (bottom → top).
 const layers: {
@@ -35,7 +58,7 @@ const layers: {
   - W < 700px: whole composition scales by W/700
 */
 }
-<div class="kv" role="img" aria-label="GopherCon Japan 2027 key visual">
+<div class="kv" role="img" aria-label={ariaLabel}>
   <img
     class="kv__background"
     src={background.src}

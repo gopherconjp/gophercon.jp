@@ -1,14 +1,18 @@
 ---
+import { type LocalesValues } from "intlayer";
+
 import KeyVisual from "./index.astro";
 
 interface Props {
   /** Container width in px used to exercise the responsive phases. */
   width?: number;
+  /** UI language used for the accessible label. */
+  locale: LocalesValues;
 }
 
-const { width = 1350 } = Astro.props;
+const { width = 1350, locale } = Astro.props;
 ---
 
 <div style={`width: ${width}px; margin: 0 auto;`}>
-  <KeyVisual />
+  <KeyVisual locale={locale} />
 </div>
