@@ -31,7 +31,7 @@ Run these from the repo root.
 | `bun run penpot:mcp`    | Writes the MCP URL into `.vscode/mcp.json`.          |
 | `bun run penpot:down`   | Stops the stack; volumes and snapshot are kept.      |
 
-Account defaults are `creative@gophercon.jp` / `password`, overridable with `PENPOT_*` env vars.
+The local stack uses the fixed account `creative@gophercon.jp` / `password`.
 
 ## MCP
 

@@ -3,9 +3,6 @@ import { existsSync } from "node:fs";
 import { cfg, paths } from "./config.ts";
 import { type Penpot } from "./penpot.ts";
 
-const importSnapshot = async (penpot: Penpot, projectId: string): Promise<string> =>
-  penpot.importFile(projectId, cfg.file, Bun.file(paths.snapshot));
-
 interface EnsureResult {
   projectId: string;
   fileId: string;
@@ -32,7 +29,7 @@ export const ensureDesign = async (penpot: Penpot): Promise<EnsureResult> => {
   }
 
   if (existsSync(paths.snapshot)) {
-    const fileId = await importSnapshot(penpot, project.id);
+    const fileId = await penpot.importFile(project.id, cfg.file, Bun.file(paths.snapshot));
     return { projectId: project.id, fileId, action: "imported" };
   }
 

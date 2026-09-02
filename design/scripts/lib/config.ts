@@ -1,11 +1,11 @@
 import { resolve } from "node:path";
 
 export const cfg = {
-  url: (process.env.PENPOT_PUBLIC_URI ?? "http://localhost:9001").replace(/\/+$/, ""),
-  email: process.env.PENPOT_EMAIL ?? "creative@gophercon.jp",
-  password: process.env.PENPOT_PASSWORD ?? "password",
-  project: process.env.PENPOT_PROJECT ?? "gophercon.jp",
-  file: process.env.PENPOT_FILE ?? "gophercon.jp",
+  url: "http://localhost:9001",
+  email: "creative@gophercon.jp",
+  password: "password",
+  project: "gophercon.jp",
+  file: "gophercon.jp",
 };
 
 const LIB = import.meta.dir; // design/scripts/lib

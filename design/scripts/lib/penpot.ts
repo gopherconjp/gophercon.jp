@@ -30,47 +30,12 @@ export class PenpotError extends Error {
 
 const UUID = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
 
-const isLoopbackHost = (hostname: string): boolean => {
-  const octets = hostname.split(".");
-  const isLoopbackIpv4 =
-    octets.length === 4 &&
-    octets.every((octet) => /^\d{1,3}$/.test(octet) && Number(octet) <= 255) &&
-    octets[0] === "127";
-
-  return (
-    hostname === "localhost" ||
-    isLoopbackIpv4 ||
-    hostname === "::1" ||
-    hostname === "[::1]" ||
-    hostname.endsWith(".localhost")
-  );
-};
-
 // Minimal client for Penpot's RPC API: POST /api/main/methods/<name>,
 // auth via the `auth-token` cookie returned by login().
 export class Penpot {
   private token: string | null = null;
-  private readonly origin: string;
 
-  constructor(readonly url: string) {
-    let parsed: URL;
-    try {
-      parsed = new URL(this.url);
-    } catch {
-      throw new PenpotError(`invalid Penpot URL: ${this.url}`);
-    }
-
-    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
-      throw new PenpotError(`invalid Penpot URL protocol: ${parsed.protocol}`);
-    }
-    if (parsed.protocol === "http:" && !isLoopbackHost(parsed.hostname)) {
-      throw new PenpotError(
-        `refusing cleartext http:// to ${parsed.hostname}; use https:// or a loopback address`,
-      );
-    }
-
-    this.origin = parsed.origin;
-  }
+  constructor(readonly url: string) {}
 
   private authHeaders(): Record<string, string> {
     return this.token ? { Cookie: `auth-token=${this.token}` } : {};
@@ -206,12 +171,7 @@ export class Penpot {
       throw new Error("export-binfile: no asset URL in response");
     }
 
-    const target = new URL(uri, this.url);
-    if (target.origin !== this.origin) {
-      throw new PenpotError(`export-binfile: unexpected asset origin: ${target.origin}`);
-    }
-
-    const res = await fetch(target, { headers: this.headers(), redirect: "error" });
+    const res = await fetch(uri, { headers: this.headers(), redirect: "error" });
     if (!res.ok) {
       throw new PenpotError(`download -> HTTP ${res.status}`, res.status);
     }
