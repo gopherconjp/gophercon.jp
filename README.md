@@ -25,7 +25,7 @@ bun run dev               # http://localhost:4321 (en at /, ja at /ja)
 ## Commands
 
 | Command              | Description                                                                                      |
-| ---------------------| -------------------------------------------------------------------------------------------------|
+| -------------------- | ------------------------------------------------------------------------------------------------ |
 | `bun run dev`        | Astro dev server (`localhost:4321`)                                                              |
 | `bun run build`      | Build the static site to `./dist/`                                                               |
 | `bun run preview`    | Preview the production build locally                                                             |
