@@ -24,14 +24,15 @@ bun run dev               # http://localhost:4321 (en at /, ja at /ja)
 
 ## Commands
 
-| Command             | Description                                                                                      |
-| ------------------- | ------------------------------------------------------------------------------------------------ |
-| `bun run dev`       | Astro dev server (`localhost:4321`)                                                              |
-| `bun run build`     | Build the static site to `./dist/`                                                               |
-| `bun run preview`   | Preview the production build locally                                                             |
-| `bun run check`     | Type-check (`astro check`, `tsc --noEmit`) + static analysis (`knip`: unused files/exports/deps) |
-| `bun run storybook` | Component preview (`localhost:6006`)                                                             |
-| `bun run deploy`    | Build then deploy to Cloudflare Workers                                                          |
+| Command              | Description                                                                                      |
+| ---------------------| -------------------------------------------------------------------------------------------------|
+| `bun run dev`        | Astro dev server (`localhost:4321`)                                                              |
+| `bun run build`      | Build the static site to `./dist/`                                                               |
+| `bun run preview`    | Preview the production build locally                                                             |
+| `bun run preview:cf` | Build then preview through Wrangler (Workers)                                                    |
+| `bun run check`      | Type-check (`astro check`, `tsc --noEmit`) + static analysis (`knip`: unused files/exports/deps) |
+| `bun run storybook`  | Component preview (`localhost:6006`)                                                             |
+| `bun run deploy`     | Build then deploy to Cloudflare Workers                                                          |
 
 ## Project structure
 
@@ -51,7 +52,7 @@ src/
 
 - Routing: `intlayer.config.ts` → `routing.mode: "prefix-no-default"` (en at `/`, ja at `/ja`).
 - Dictionaries are embedded in components as locale-keyed objects, resolved with
-  `getTranslation`. `requiredLocales: [en, ja]` makes TypeScript complain about
+  `getDictionary`. `requiredLocales: [en, ja]` makes TypeScript complain about
   missing translations.
 - `LocaleRedirector` detects the browser locale (unsupported → `defaultLocale`)
   and redirects; `LocaleSwitcher` renders the language links and persists the choice.

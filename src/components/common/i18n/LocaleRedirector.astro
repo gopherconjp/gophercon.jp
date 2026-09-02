@@ -23,11 +23,11 @@
   if (targetLocale !== currentLocale) {
     setLocaleInStorageClient(targetLocale, localeStorageOptions);
 
-    window.location.replace(
-      getLocalizedUrl(
-        getPathWithoutLocale(window.location.pathname),
-        targetLocale,
-      ),
+    const destination = new URL(window.location.href);
+    destination.pathname = getLocalizedUrl(
+      getPathWithoutLocale(destination.pathname),
+      targetLocale,
     );
+    window.location.replace(destination.href);
   }
 </script>
