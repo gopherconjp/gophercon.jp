@@ -66,8 +66,11 @@ mise exec -- bun run dev      # http://localhost:4321 (en at /, ja at /ja)
     ├── components/
     │   ├── Hero.astro             # Component with an embedded dictionary
     │   ├── Hero.stories.ts
-    │   ├── LocaleSwitcher.astro
-    │   └── LocaleSwitcher.stories.ts
+    │   └── common/
+    │       └── i18n/
+    │           ├── LocaleRedirector.astro
+    │           ├── LocaleSwitcher.astro
+    │           └── LocaleSwitcher.stories.ts
     └── pages/
         ├── [...locale]/index.astro   # Home: `/` (en) and `/ja`
         ├── 404.astro

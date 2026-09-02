@@ -9,7 +9,8 @@ import {
   type LocalesValues,
 } from "intlayer";
 
-import LocaleSwitcher from "../components/LocaleSwitcher.astro";
+import LocaleRedirector from "../components/common/i18n/LocaleRedirector.astro";
+import LocaleSwitcher from "../components/common/i18n/LocaleSwitcher.astro";
 
 interface Props {
   title: string;
@@ -70,6 +71,7 @@ const xDefaultHref = new URL(
     }
     <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
     <title>{title}</title>
+    <LocaleRedirector />
   </head>
   <body>
     <header class="site-header">
