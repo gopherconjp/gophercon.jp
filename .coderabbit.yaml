@@ -2,7 +2,6 @@ language: "en-US"
 
 reviews:
   profile: assertive
-  # Request changes to block merging when critical issues are found
   request_changes_workflow: true
 
   auto_review:
