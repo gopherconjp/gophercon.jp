@@ -32,11 +32,15 @@ export class Penpot {
 
   constructor(readonly url: string) {}
 
+  private authHeaders(): Record<string, string> {
+    return this.token ? { Cookie: `auth-token=${this.token}` } : {};
+  }
+
   private headers(): Record<string, string> {
     return {
       Accept: "application/json",
       "Content-Type": "application/json",
-      ...(this.token ? { Cookie: `auth-token=${this.token}` } : {}),
+      ...this.authHeaders(),
     };
   }
 
@@ -105,6 +109,10 @@ export class Penpot {
   }
 
   async importFile(projectId: string, name: string, file: Blob): Promise<string> {
+    if (!this.token) {
+      throw new PenpotError("import-binfile: not logged in");
+    }
+
     const form = new FormData();
     form.append("name", name);
     form.append("project-id", projectId);
@@ -112,7 +120,7 @@ export class Penpot {
 
     const res = await fetch(`${this.url}/api/main/methods/import-binfile`, {
       method: "POST",
-      headers: { Accept: "application/json", Cookie: `auth-token=${this.token}` },
+      headers: { Accept: "application/json", ...this.authHeaders() },
       body: form,
     });
 
