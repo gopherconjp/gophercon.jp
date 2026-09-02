@@ -29,4 +29,4 @@ jobs:
       - name: Setup Bun environment
         uses: gopherconjp/actions-toolkit/setup-bun@ea9ca5ba188f739ffba47548d4b807370d836900 # main
       - name: Build
-        run: bun run build
+        run: bun run build:dev
