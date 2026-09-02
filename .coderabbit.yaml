@@ -12,7 +12,7 @@ reviews:
       - "renovate[bot]"
 
   path_instructions:
-    - path: "design/scripts/**"
+    - path: "**/scripts/**"
       instructions: |
         Local-only, single-user tooling that drives a self-hosted Penpot Docker stack on `localhost`; never deployed or multi-user.
         Within `design/scripts/**`, accept by design (do not report):
