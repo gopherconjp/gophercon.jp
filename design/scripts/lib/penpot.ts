@@ -157,7 +157,12 @@ export class Penpot {
       throw new Error("export-binfile: no asset URL in response");
     }
 
-    const res = await fetch(uri, { headers: this.headers(), redirect: "follow" });
+    const target = new URL(uri, this.url);
+    if (target.origin !== new URL(this.url).origin) {
+      throw new PenpotError(`export-binfile: unexpected asset origin: ${target.origin}`);
+    }
+
+    const res = await fetch(target, { headers: this.headers(), redirect: "follow" });
     if (!res.ok) {
       throw new PenpotError(`download -> HTTP ${res.status}`, res.status);
     }
