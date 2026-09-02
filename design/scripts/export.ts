@@ -9,10 +9,7 @@ const main = async (): Promise<void> => {
   const penpot = new Penpot(cfg.url);
   await penpot.login(cfg.email, cfg.password);
 
-  const project = (await penpot.getAllProjects()).find((p) => p.name === cfg.project);
-  const file = project
-    ? (await penpot.getProjectFiles(project.id)).find((f) => f.name === cfg.file)
-    : undefined;
+  const file = (await penpot.findDesign(cfg.project, cfg.file))?.file;
   if (!file) {
     throw new Error("No design file yet. Run: bun run penpot");
   }

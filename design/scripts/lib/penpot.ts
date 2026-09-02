@@ -1,16 +1,21 @@
-export interface Team {
+interface Team {
   id: string;
   isDefault?: boolean;
 }
 
-export interface Project {
+interface Project {
   id: string;
   name: string;
 }
 
-export interface DesignFile {
+interface DesignFile {
   id: string;
   name: string;
+}
+
+interface DesignTarget {
+  project: Project;
+  file?: DesignFile;
 }
 
 export class PenpotError extends Error {
@@ -25,18 +30,57 @@ export class PenpotError extends Error {
 
 const UUID = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
 
+const isLoopbackHost = (hostname: string): boolean => {
+  const octets = hostname.split(".");
+  const isLoopbackIpv4 =
+    octets.length === 4 &&
+    octets.every((octet) => /^\d{1,3}$/.test(octet) && Number(octet) <= 255) &&
+    octets[0] === "127";
+
+  return (
+    hostname === "localhost" ||
+    isLoopbackIpv4 ||
+    hostname === "::1" ||
+    hostname === "[::1]" ||
+    hostname.endsWith(".localhost")
+  );
+};
+
 // Minimal client for Penpot's RPC API: POST /api/main/methods/<name>,
 // auth via the `auth-token` cookie returned by login().
 export class Penpot {
   private token: string | null = null;
+  private readonly origin: string;
 
-  constructor(readonly url: string) {}
+  constructor(readonly url: string) {
+    let parsed: URL;
+    try {
+      parsed = new URL(this.url);
+    } catch {
+      throw new PenpotError(`invalid Penpot URL: ${this.url}`);
+    }
+
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+      throw new PenpotError(`invalid Penpot URL protocol: ${parsed.protocol}`);
+    }
+    if (parsed.protocol === "http:" && !isLoopbackHost(parsed.hostname)) {
+      throw new PenpotError(
+        `refusing cleartext http:// to ${parsed.hostname}; use https:// or a loopback address`,
+      );
+    }
+
+    this.origin = parsed.origin;
+  }
+
+  private authHeaders(): Record<string, string> {
+    return this.token ? { Cookie: `auth-token=${this.token}` } : {};
+  }
 
   private headers(): Record<string, string> {
     return {
       Accept: "application/json",
       "Content-Type": "application/json",
-      ...(this.token ? { Cookie: `auth-token=${this.token}` } : {}),
+      ...this.authHeaders(),
     };
   }
 
@@ -67,18 +111,17 @@ export class Penpot {
       method: "POST",
       headers: { Accept: "application/json", "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
+      redirect: "error",
     });
     if (!res.ok) {
       throw new PenpotError(`login -> HTTP ${res.status}`, res.status);
     }
 
-    const setCookies =
-      typeof res.headers.getSetCookie === "function"
-        ? res.headers.getSetCookie()
-        : [res.headers.get("set-cookie") ?? ""];
-
     this.token =
-      setCookies.map((cookie) => cookie.match(/auth-token=([^;]+)/)?.[1]).find(Boolean) ?? null;
+      res.headers
+        .getSetCookie()
+        .map((cookie) => cookie.match(/auth-token=([^;]+)/)?.[1])
+        .find(Boolean) ?? null;
     if (!this.token) {
       throw new Error("login: no auth-token cookie returned");
     }
@@ -104,7 +147,21 @@ export class Penpot {
     return this.request("create-file", { projectId, name });
   }
 
+  async findDesign(projectName: string, fileName: string): Promise<DesignTarget | undefined> {
+    const project = (await this.getAllProjects()).find((p) => p.name === projectName);
+    if (!project) {
+      return undefined;
+    }
+
+    const file = (await this.getProjectFiles(project.id)).find((f) => f.name === fileName);
+    return { project, file };
+  }
+
   async importFile(projectId: string, name: string, file: Blob): Promise<string> {
+    if (!this.token) {
+      throw new PenpotError("import-binfile: not logged in");
+    }
+
     const form = new FormData();
     form.append("name", name);
     form.append("project-id", projectId);
@@ -112,7 +169,7 @@ export class Penpot {
 
     const res = await fetch(`${this.url}/api/main/methods/import-binfile`, {
       method: "POST",
-      headers: { Accept: "application/json", Cookie: `auth-token=${this.token}` },
+      headers: { Accept: "application/json", ...this.authHeaders() },
       body: form,
     });
 
@@ -149,7 +206,12 @@ export class Penpot {
       throw new Error("export-binfile: no asset URL in response");
     }
 
-    const res = await fetch(uri, { headers: this.headers(), redirect: "follow" });
+    const target = new URL(uri, this.url);
+    if (target.origin !== this.origin) {
+      throw new PenpotError(`export-binfile: unexpected asset origin: ${target.origin}`);
+    }
+
+    const res = await fetch(target, { headers: this.headers(), redirect: "error" });
     if (!res.ok) {
       throw new PenpotError(`download -> HTTP ${res.status}`, res.status);
     }

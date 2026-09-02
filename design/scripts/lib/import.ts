@@ -15,8 +15,12 @@ interface EnsureResult {
 // Ensure the gophercon.jp project + design file exist, restoring the git
 // snapshot when the file is missing.
 export const ensureDesign = async (penpot: Penpot): Promise<EnsureResult> => {
-  const projects = await penpot.getAllProjects();
-  let project = projects.find((p) => p.name === cfg.project);
+  const found = await penpot.findDesign(cfg.project, cfg.file);
+  if (found?.file) {
+    return { projectId: found.project.id, fileId: found.file.id, action: "exists" };
+  }
+
+  let project = found?.project;
   if (!project) {
     const teams = await penpot.getTeams();
     const team = teams.find((t) => t.isDefault) ?? teams[0];
@@ -25,12 +29,6 @@ export const ensureDesign = async (penpot: Penpot): Promise<EnsureResult> => {
     }
 
     project = await penpot.createProject(team.id, cfg.project);
-  }
-
-  const files = await penpot.getProjectFiles(project.id);
-  const existing = files.find((f) => f.name === cfg.file);
-  if (existing) {
-    return { projectId: project.id, fileId: existing.id, action: "exists" };
   }
 
   if (existsSync(paths.snapshot)) {

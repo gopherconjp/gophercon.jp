@@ -1,3 +1,5 @@
+import { Locales } from "intlayer";
+
 import KeyVisualFrame from "./KeyVisualFrame.astro";
 
 /**
@@ -17,8 +19,12 @@ export default {
     width: {
       control: { type: "range", min: 200, max: 2000, step: 10 },
     },
+    locale: {
+      control: "inline-radio",
+      options: [Locales.ENGLISH, Locales.JAPANESE],
+    },
   },
-  args: { width: 1350 },
+  args: { width: 1350, locale: Locales.ENGLISH },
 };
 
 /** Parent wider than 1350px; the display width is capped at 1350px. */
