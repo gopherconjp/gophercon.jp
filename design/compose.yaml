@@ -28,7 +28,7 @@ services:
     # the image's default user cannot write its root-owned log directory.
     user: "root"
     ports:
-      - "9001:8080"
+      - "127.0.0.1:9001:8080"
     volumes:
       - penpot_assets:/opt/data/assets
     depends_on:
