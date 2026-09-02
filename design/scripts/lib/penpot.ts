@@ -162,7 +162,7 @@ export class Penpot {
       throw new PenpotError(`export-binfile: unexpected asset origin: ${target.origin}`);
     }
 
-    const res = await fetch(target, { headers: this.headers(), redirect: "follow" });
+    const res = await fetch(target, { headers: this.headers(), redirect: "error" });
     if (!res.ok) {
       throw new PenpotError(`download -> HTTP ${res.status}`, res.status);
     }
