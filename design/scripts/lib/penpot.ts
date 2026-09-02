@@ -25,12 +25,34 @@ export class PenpotError extends Error {
 
 const UUID = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
 
+const isLoopbackHost = (hostname: string): boolean =>
+  hostname === "localhost" ||
+  hostname === "127.0.0.1" ||
+  hostname === "::1" ||
+  hostname === "[::1]" ||
+  hostname.endsWith(".localhost");
+
 // Minimal client for Penpot's RPC API: POST /api/main/methods/<name>,
 // auth via the `auth-token` cookie returned by login().
 export class Penpot {
   private token: string | null = null;
 
-  constructor(readonly url: string) {}
+  constructor(readonly url: string) {
+    let parsed: URL;
+    try {
+      parsed = new URL(this.url);
+    } catch {
+      throw new PenpotError(`invalid Penpot URL: ${this.url}`);
+    }
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+      throw new PenpotError(`invalid Penpot URL protocol: ${parsed.protocol}`);
+    }
+    if (parsed.protocol === "http:" && !isLoopbackHost(parsed.hostname)) {
+      throw new PenpotError(
+        `refusing cleartext http:// to ${parsed.hostname}; use https:// or a loopback address`,
+      );
+    }
+  }
 
   private authHeaders(): Record<string, string> {
     return this.token ? { Cookie: `auth-token=${this.token}` } : {};

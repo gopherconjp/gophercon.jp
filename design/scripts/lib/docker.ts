@@ -1,6 +1,6 @@
 import { $ } from "bun";
 
-import { paths } from "./config.ts";
+import { cfg, paths } from "./config.ts";
 
 export const runCompose = async (...args: string[]): Promise<string> => {
   const cmd = [
@@ -18,9 +18,10 @@ export const runCompose = async (...args: string[]): Promise<string> => {
   const out = await $`${cmd}`.cwd(paths.design).nothrow().quiet();
   if (out.exitCode !== 0) {
     const detail = out.stderr.toString().trim() || out.stdout.toString().trim();
-    throw new Error(
-      `${cmd.map((arg) => JSON.stringify(arg)).join(" ")} failed (exit ${out.exitCode})${detail ? `: ${detail}` : ""}`,
-    );
+    const printCmd = cmd
+      .map((arg) => (arg === cfg.password ? "[REDACTED]" : JSON.stringify(arg)))
+      .join(" ");
+    throw new Error(`${printCmd} failed (exit ${out.exitCode})${detail ? `: ${detail}` : ""}`);
   }
 
   return out.stdout.toString().trim();
