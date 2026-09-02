@@ -1,4 +1,5 @@
 import { Locales } from "intlayer";
+
 import KeyVisualFrame from "./KeyVisualFrame.astro";
 
 /**
