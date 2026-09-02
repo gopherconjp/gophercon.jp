@@ -15,8 +15,14 @@
     {
       "description": "No minimum release age for gopherconjp/*",
       "matchManagers": ["github-actions"],
-      "matchPackageNames": ["gopherconjp/**"],
+      "matchDepNames": ["gopherconjp/**"],
       "minimumReleaseAge": "0 days"
+    },
+    {
+      "description": "Keep all the Penpot images in lockstep",
+      "matchManagers": ["docker-compose"],
+      "matchDepNames": ["penpotapp/*"],
+      "groupName": "Penpot (docker compose)"
     }
   ]
 }
