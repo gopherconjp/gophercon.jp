@@ -12,10 +12,10 @@ reviews:
       - "renovate[bot]"
 
   path_instructions:
-    - path: "**/scripts/**"
+    - path: "design/scripts/**"
       instructions: |
         Local-only, single-user tooling that drives a self-hosted Penpot Docker stack on `localhost`; never deployed or multi-user.
-        Within `design/scripts/**`, accept by design (do not report):
+        Accept by design (do not report):
         - fixed documented credentials (`creative@gophercon.jp` / `password`)
         - password printed in local terminal output
         - hardcoded config (no env overrides)
