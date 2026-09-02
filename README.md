@@ -13,24 +13,25 @@ The official website for GopherCon Japan.
 ## Getting started
 
 ```sh
-mise install                # install pinned runtimes
-mise exec -- bun install
-mise exec -- bun run dev    # http://localhost:4321 (en at /, ja at /ja)
+mise install              # install pinned runtimes
+eval "$(mise activate)"   # enable mise shims (add to your shell rc to persist)
+bun install
+bun run dev               # http://localhost:4321 (en at /, ja at /ja)
 ```
 
-> Commands below use `mise exec -- bun ...`. With the mise shims active
-> (`eval "$(mise activate)"`) you can run `bun` directly.
+> The commands below assume the mise shims are active. Without shims, prefix
+> them with `mise exec --` (e.g. `mise exec -- bun run dev`).
 
 ## Commands
 
-| Command             | Description                                 |
-| ------------------- | ------------------------------------------- |
-| `bun run dev`       | Astro dev server (`localhost:4321`)         |
-| `bun run build`     | Build the static site to `./dist/`          |
-| `bun run preview`   | Preview the production build locally        |
-| `bun run check`     | Type-check (`astro check` + `tsc` + `knip`) |
-| `bun run storybook` | Component preview (`localhost:6006`)        |
-| `bun run deploy`    | Build then deploy to Cloudflare Workers     |
+| Command             | Description                                                                                      |
+| ------------------- | ------------------------------------------------------------------------------------------------ |
+| `bun run dev`       | Astro dev server (`localhost:4321`)                                                              |
+| `bun run build`     | Build the static site to `./dist/`                                                               |
+| `bun run preview`   | Preview the production build locally                                                             |
+| `bun run check`     | Type-check (`astro check`, `tsc --noEmit`) + static analysis (`knip`: unused files/exports/deps) |
+| `bun run storybook` | Component preview (`localhost:6006`)                                                             |
+| `bun run deploy`    | Build then deploy to Cloudflare Workers                                                          |
 
 ## Project structure
 
