@@ -111,6 +111,7 @@ export class Penpot {
       method: "POST",
       headers: { Accept: "application/json", "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
+      redirect: "error",
     });
     if (!res.ok) {
       throw new PenpotError(`login -> HTTP ${res.status}`, res.status);
