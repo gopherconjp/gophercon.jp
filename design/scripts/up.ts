@@ -63,7 +63,7 @@ const main = async (): Promise<void> => {
   console.log("");
   console.log("Penpot is ready:");
   console.log(`  URL:     ${cfg.url}`);
-  console.log(`  Account: ${cfg.email} / ${cfg.password}`);
+  console.log(`  Account: ${cfg.email} / [REDACTED]`);
   console.log(`  Project: ${cfg.project} (${design.projectId})`);
   console.log(`  File:    ${cfg.file} (${design.fileId})   [${design.action}]`);
   console.log("");
