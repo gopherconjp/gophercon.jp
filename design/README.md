@@ -53,12 +53,6 @@ apply version bumps
 bun run penpot:down && bun run penpot
 ```
 
-follow the backend logs (optional, stack must be up)
-
-```sh
-docker compose -f design/compose.yaml -p penpot logs -f penpot-backend
-```
-
 full reset (DB wiped)
 
 ```sh
