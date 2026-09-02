@@ -14,11 +14,10 @@ reviews:
   path_instructions:
     - path: "design/scripts/**"
       instructions: |
-        These scripts are local-only, single-user developer tooling: they start and control a self-hosted Penpot Docker stack on `localhost` for the gopherconjp project, and are never deployed or exposed as a multi-user service.
-        Treat the following as accepted by design within this path (do not report them as findings):
-        - fixed, documented credentials (`creative@gophercon.jp` / `password`)
-        - printing the password / credentials to local terminal output and logs;
-        - hardcoded config without `PENPOT_*` environment-variable overrides;
-        - plain HTTP to the local Penpot service on `localhost`;
-        - intentionally minimal transport hardening: no requirement to add https-only or asset-origin validation (`redirect: "error"` is kept as an intentional, cheap guard).
-        Do not apply this exception outside `design/scripts/**`.
+        Local-only, single-user tooling that drives a self-hosted Penpot Docker stack on `localhost`; never deployed or multi-user.
+        Within `design/scripts/**`, accept by design (do not report):
+        - fixed documented credentials (`creative@gophercon.jp` / `password`)
+        - password printed in local terminal output
+        - hardcoded config (no env overrides)
+        - plain HTTP to the local Penpot service
+        - minimal transport hardening (no https-only or asset-origin validation required)
