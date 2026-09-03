@@ -28,16 +28,31 @@ const main = async (): Promise<void> => {
     }
   }
 
-  const project = design?.project ?? (await ensureProject(penpot));
-
   console.log(`Importing ${paths.snapshot} ...`);
 
+  const project = design?.project ?? (await ensureProject(penpot));
   const fileId = await penpot.importFile(project.id, cfg.file, Bun.file(paths.snapshot));
 
-  if (design?.file && design.file.id !== fileId) {
-    console.log(`Deleting the previous "${cfg.file}" file (${design.file.id}) ...`);
+  const previousFileId = design?.file?.id;
+  if (previousFileId && previousFileId !== fileId) {
+    console.log(`Deleting the previous "${cfg.file}" file (${previousFileId}) ...`);
 
-    await penpot.deleteFile(design.file.id);
+    // oxlint-disable no-await-in-loop -- sequential delete retries on purpose
+    for (let attempt = 1; ; attempt++) {
+      try {
+        await penpot.deleteFile(previousFileId);
+        break;
+      } catch (error) {
+        if (attempt >= 3) {
+          throw new Error(
+            `Imported "${cfg.file}" (${fileId}) but failed to delete previous file (${previousFileId}).`,
+            { cause: error },
+          );
+        }
+
+        await Bun.sleep(1000);
+      }
+    }
   }
 
   console.log("");

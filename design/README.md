@@ -24,14 +24,14 @@ bun run penpot:export
 
 Run these from the repo root.
 
-| Command                 | What it does                                                            |
-| ----------------------- | ----------------------------------------------------------------------- |
-| `bun run penpot`        | Starts the stack and prints the next steps.                             |
-| `bun run penpot:export` | Exports the design to `snapshot/gopherconjp.penpot`.                    |
-| `bun run penpot:import` | Force-imports `snapshot/gopherconjp.penpot`, replacing the design file. |
-| `bun run penpot:mcp`    | Writes the MCP URL into `.vscode/mcp.json`.                             |
-| `bun run penpot:down`   | Stops the stack; volumes and snapshot are kept.                         |
-| `bun run penpot:reset`  | Wipes all Penpot data (docker volumes, DB wiped); snapshot is kept.     |
+| Command                 | What it does                                                                   |
+| ----------------------- | ------------------------------------------------------------------------------ |
+| `bun run penpot`        | Starts the stack and prints the next steps.                                    |
+| `bun run penpot:export` | Exports the design to `design/snapshot/gopherconjp.penpot`.                    |
+| `bun run penpot:import` | Force-imports `design/snapshot/gopherconjp.penpot`, replacing the design file. |
+| `bun run penpot:mcp`    | Writes the MCP URL into `.vscode/mcp.json`.                                    |
+| `bun run penpot:down`   | Stops the stack; volumes and snapshot are kept.                                |
+| `bun run penpot:reset`  | Wipes all Penpot data (docker volumes, DB wiped); snapshot is kept.            |
 
 The local stack uses the fixed account `creative@gophercon.jp` / `password`.
 
