@@ -1,19 +1,8 @@
 import { chmodSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname } from "node:path";
-import { createInterface } from "node:readline";
 
-import { runMain } from "./lib/cli.ts";
+import { ask, runMain } from "./lib/cli.ts";
 import { paths } from "./lib/config.ts";
-
-const ask = (prompt: string): Promise<string> =>
-  new Promise((resolve) => {
-    const rl = createInterface({ input: process.stdin, output: process.stdout });
-
-    rl.question(prompt, (answer) => {
-      rl.close();
-      resolve(answer);
-    });
-  });
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null && !Array.isArray(value);
