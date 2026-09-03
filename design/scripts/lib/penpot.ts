@@ -3,7 +3,7 @@ interface Team {
   isDefault?: boolean;
 }
 
-interface Project {
+export interface Project {
   id: string;
   name: string;
 }
@@ -110,6 +110,10 @@ export class Penpot {
 
   createFile(projectId: string, name: string): Promise<DesignFile> {
     return this.request("create-file", { projectId, name });
+  }
+
+  deleteFile(fileId: string): Promise<null> {
+    return this.request("delete-file", { id: fileId });
   }
 
   async findDesign(projectName: string, fileName: string): Promise<DesignTarget | undefined> {

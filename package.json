@@ -21,6 +21,7 @@
     "build:storybook": "storybook build -o dist/storybook && bun run scripts/storybook/prepare-dist.ts",
     "penpot": "bun ./design/scripts/up.ts",
     "penpot:export": "bun ./design/scripts/export.ts",
+    "penpot:import": "bun ./design/scripts/import.ts",
     "penpot:down": "bun ./design/scripts/down.ts",
     "penpot:mcp": "bun ./design/scripts/mcp.ts"
   },
