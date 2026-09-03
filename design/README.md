@@ -24,12 +24,14 @@ bun run penpot:export
 
 Run these from the repo root.
 
-| Command                 | What it does                                         |
-| ----------------------- | ---------------------------------------------------- |
-| `bun run penpot`        | Starts the stack and prints the next steps.          |
-| `bun run penpot:export` | Exports the design to `snapshot/gopherconjp.penpot`. |
-| `bun run penpot:mcp`    | Writes the MCP URL into `.vscode/mcp.json`.          |
-| `bun run penpot:down`   | Stops the stack; volumes and snapshot are kept.      |
+| Command                 | What it does                                                            |
+| ----------------------- | ----------------------------------------------------------------------- |
+| `bun run penpot`        | Starts the stack and prints the next steps.                             |
+| `bun run penpot:export` | Exports the design to `snapshot/gopherconjp.penpot`.                    |
+| `bun run penpot:import` | Force-imports `snapshot/gopherconjp.penpot`, replacing the design file. |
+| `bun run penpot:mcp`    | Writes the MCP URL into `.vscode/mcp.json`.                             |
+| `bun run penpot:down`   | Stops the stack; volumes and snapshot are kept.                         |
+| `bun run penpot:reset`  | Wipes all Penpot data (docker volumes, DB wiped); snapshot is kept.     |
 
 The local stack uses the fixed account `creative@gophercon.jp` / `password`.
 
@@ -44,6 +46,7 @@ The local stack uses the fixed account `creative@gophercon.jp` / `password`.
 - `bun run penpot:export` overwrites `design/snapshot/gopherconjp.penpot`; commit the change to save it.
   - Use Git LFS if the file grows large.
 - `bun run penpot` auto-imports the snapshot whenever the design file is missing (fresh volume or checkout).
+- `bun run penpot:import` force-restores the snapshot, replacing the current design file (asks for confirmation first).
 
 ## Updating / resetting
 
@@ -56,13 +59,13 @@ bun run penpot:down && bun run penpot
 full reset (DB wiped)
 
 ```sh
-docker compose -f design/compose.yaml -p penpot down -v
+bun run penpot:reset
 ```
 
 ## Layout
 
-| Path                          | What it is                                                                  |
-| ----------------------------- | --------------------------------------------------------------------------- |
-| `compose.yaml`                | Whole stack: Penpot + built-in MCP + Postgres + Valkey                      |
-| `scripts/`                    | TS commands: `up.ts` / `export.ts` / `mcp.ts` / `down.ts`, helpers in `lib` |
-| `snapshot/gopherconjp.penpot` | Exported design snapshot (stable file name)                                 |
+| Path                          | What it is                                                                                             |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `compose.yaml`                | Whole stack: Penpot + built-in MCP + Postgres + Valkey                                                 |
+| `scripts/`                    | TS commands: `up.ts` / `export.ts` / `import.ts` / `mcp.ts` / `down.ts` / `reset.ts`, helpers in `lib` |
+| `snapshot/gopherconjp.penpot` | Exported design snapshot (stable file name)                                                            |
