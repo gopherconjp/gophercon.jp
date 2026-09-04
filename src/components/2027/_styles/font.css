@@ -1,0 +1,42 @@
+@font-face {
+  font-family: bizter;
+  src: url("/font/BIZTER-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: bizter;
+  src: url("/font/BIZTER-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: cica;
+  src: url("/font/Cica-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: cica;
+  src: url("/font/Cica-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  font-family: var(--_font-family-bizter);
+}
+
+pre,
+code,
+kbd,
+samp {
+  font-family: var(--_font-family-code);
+}

@@ -1,0 +1,64 @@
+/**
+ * Design tokens from Penpot
+ * NOTE: `lightningcss-plugin-css-variables` inlines `--_` tokens
+ */
+:root {
+  /* color */
+  --_color-base: #ffffff;
+  --_color-text: #333333;
+  --_color-light: #d9d9d9;
+  --_color-sub: #68cce7;
+  --_color-dark: #00547d;
+  --_color-accent: #ff7a65;
+
+  /* font family (BIZTER = Inter + BIZ UDPGothic) */
+  --_font-family-bizter: bizter, "Inter", "BIZ UDPGothic", sans-serif;
+  --_font-family-code: cica, monospace;
+
+  /* font size */
+  --_font-size-h1: 36px;
+  --_font-size-h2: 28px;
+  --_font-size-h3: 22px;
+  --_font-size-body: 16px;
+  --_font-size-caret: 12px;
+
+  /* font weight */
+  --_font-weight-regular: 400;
+  --_font-weight-bold: 700;
+
+  /* line height (number tokens) */
+  --_line-height-1: 1; /* 単体要素(1行のみ) */
+  --_line-height-1-4: 1.4; /* h1 */
+  --_line-height-1-5: 1.5; /* h2 */
+  --_line-height-1-6: 1.6; /* h3 */
+  --_line-height-1-8: 1.8; /* body */
+
+  /* spacing */
+  --_spacing-4: 4px;
+  --_spacing-8: 8px;
+  --_spacing-12: 12px;
+  --_spacing-16: 16px;
+  --_spacing-24: 24px;
+  --_spacing-32: 32px;
+  --_spacing-40: 40px;
+  --_spacing-48: 48px;
+  --_spacing-64: 64px;
+  --_spacing-80: 80px;
+  --_spacing-96: 96px;
+
+  /* border radius */
+  --_radius-8: 8px;
+
+  /* border width */
+  --_border-width-2: 2px;
+
+  /* dimension */
+  --_logo-height: 60px;
+  --_header-height: 80px;
+  --_frame-desktop: 1440px;
+  --_frame-mobile: 390px;
+  --_hamburger-size: 24px;
+
+  /* shadow */
+  --_shadow-popup: 0 4px 12px -4px #00547d;
+}
