@@ -96,7 +96,11 @@ const { id, label } = Astro.props;
     });
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape" && isOpen) {
+        const restoreFocus = content.contains(document.activeElement);
+        setOpen(false);
+        if (restoreFocus) trigger.focus();
+      }
     });
   });
 </script>
