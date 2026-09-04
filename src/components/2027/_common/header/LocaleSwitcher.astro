@@ -38,18 +38,15 @@ const otherLocale =
   locales.find((item: LocalesValues) => item !== locale) ?? locale;
 ---
 
-<Popover id="locale-switcher" label={ariaLabel} role="menu">
+<Popover id="locale-switcher" label={ariaLabel}>
   <span slot="trigger" class="locale-switcher__label">
     <span class="locale-switcher__label-prefix">Lang:</span>
     <span class="locale-switcher__label-name">{getLocaleName(locale)}</span>
-    <span slot="trigger" class="locale-switcher__caret" aria-hidden="true">
-      ▼
-    </span>
+    <span class="locale-switcher__caret" aria-hidden="true">▼</span>
   </span>
 
   <a
     slot="content"
-    id="locale-switcher-content"
     class="locale-switcher__item"
     href={getLocalizedUrl(pathWithoutLocale, otherLocale)}
     data-locale={otherLocale}

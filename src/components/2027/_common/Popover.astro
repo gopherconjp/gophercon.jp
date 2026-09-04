@@ -15,10 +15,9 @@
 interface Props {
   id: string;
   label: string;
-  role?: "menu" | "listbox" | "tree" | "grid";
 }
 
-const { id, label, role = "menu" } = Astro.props;
+const { id, label } = Astro.props;
 ---
 
 <div class="popover" data-popover>
@@ -26,14 +25,13 @@ const { id, label, role = "menu" } = Astro.props;
     type="button"
     class="popover__trigger"
     aria-label={label}
-    aria-haspopup={role}
     aria-expanded="false"
     aria-controls={`${id}-content`}
     data-popover-trigger
   >
     <slot name="trigger" />
   </button>
-  <span id={`${id}-content`} role={role} hidden data-popover-content>
+  <span id={`${id}-content`} hidden data-popover-content>
     <slot name="content" />
   </span>
 </div>

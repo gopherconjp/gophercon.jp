@@ -6,7 +6,6 @@ export default {
   args: {
     id: "demo",
     label: "Open popover",
-    role: "menu",
   },
 };
 

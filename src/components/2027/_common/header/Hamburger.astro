@@ -15,7 +15,7 @@ interface Props {
 const { label, links } = Astro.props;
 ---
 
-<Popover id="hamburger" label={label} role="menu">
+<Popover id="hamburger" label={label}>
   <span slot="trigger" class="hamburger__icon" aria-hidden="true">
     <span class="hamburger__line"></span>
     <span class="hamburger__line"></span>
