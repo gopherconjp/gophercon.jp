@@ -39,4 +39,4 @@ reviews:
       instructions: |
         Intentional design; accept by design (do not report):
         - Nav link labels are intentionally English for every locale; only destinations are localized via `getLocalizedUrl`
-        - Logo links to the localized 2027 home (`getLocalizedUrl("/2027", locale)`)
+        - `NavLink` sets `tabindex={-1}` on the current-page link (`active`) to keep it out of the sequential tab order; `aria-current="page"` identifies the current page

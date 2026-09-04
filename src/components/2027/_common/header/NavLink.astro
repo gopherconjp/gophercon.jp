@@ -7,13 +7,14 @@ interface Props {
   fullWidth?: boolean;
 }
 
-const { label, href, active = true, fullWidth = false } = Astro.props;
+const { label, href, active = false, fullWidth = false } = Astro.props;
 ---
 
 <a
   class:list={["nav-link", { "nav-link--full": fullWidth }]}
   href={href}
   aria-current={active ? "page" : undefined}
+  tabindex={active ? -1 : undefined}
 >
   <span class="nav-link__label">
     {label}
