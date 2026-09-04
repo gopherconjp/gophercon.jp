@@ -57,9 +57,13 @@ const main = async (): Promise<void> => {
     }
   }
 
-  console.log("Ensuring the gophercon.jp project / design file ...");
+  console.log("Ensuring the gophercon.jp project / design files ...");
 
-  const design = await ensureDesign(penpot);
+  const designs: { file: string; fileId: string; action: string }[] = [];
+  for (const file of cfg.files) {
+    const design = await ensureDesign(penpot, file);
+    designs.push({ file, fileId: design.fileId, action: design.action });
+  }
 
   console.log("Uploading fonts from public/font ...");
 
@@ -73,8 +77,10 @@ const main = async (): Promise<void> => {
   console.log("Penpot is ready:");
   console.log(`  URL:     ${cfg.url}`);
   console.log(`  Account: ${cfg.email} / ${cfg.password}`);
-  console.log(`  Project: ${cfg.project} (${design.projectId})`);
-  console.log(`  File:    ${cfg.file} (${design.fileId})   [${design.action}]`);
+  console.log(`  Project: ${cfg.project}`);
+  for (const design of designs) {
+    console.log(`  File:    ${design.file} (${design.fileId})   [${design.action}]`);
+  }
   console.log("");
   console.log("To design with VS Code Copilot Chat (via MCP):");
   console.log(`  1. Open ${cfg.url} and sign in with the account above.`);
