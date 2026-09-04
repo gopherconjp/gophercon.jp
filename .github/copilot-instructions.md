@@ -17,10 +17,10 @@
 
 - `LocaleRedirector` (auto redirect) and `LocaleSwitcher` (explicit switch) are intentionally separate; do not merge.
 
-## PRs
+## Skills
 
-- Split into logical commits.
-- Auto-merge with a merge commit, never squash.
+- `git-commit-and-pr`: commit / push / create PR workflow. Only run when the user explicitly asks.
+- `cleanup-merged-branch`: switch to main and delete the branch after a merge. Run proactively after a PR merge.
 
 ## Verification
 
