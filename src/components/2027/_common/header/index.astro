@@ -1,0 +1,123 @@
+---
+/**
+ * Site header.
+ *
+ * Desktop: logo + nav links on the left, locale switcher on the right.
+ * Mobile: logo on the left, locale switcher + hamburger on the right.
+ */
+import {
+  getDictionary,
+  t,
+  type Dictionary,
+  type LocalesValues,
+} from "intlayer";
+
+import Hamburger from "./Hamburger.astro";
+import LocaleSwitcher from "./LocaleSwitcher.astro";
+import logo from "./logo.webp";
+import NavLink from "./NavLink.astro";
+
+interface Props {
+  locale: LocalesValues;
+}
+const { locale } = Astro.props;
+
+const content = {
+  key: "local",
+  content: {
+    navLabel: t({
+      en: "Main navigation",
+      ja: "メインナビゲーション",
+    }),
+    menuLabel: t({
+      en: "Open menu",
+      ja: "メニューを開く",
+    }),
+  },
+} satisfies Dictionary;
+const { navLabel, menuLabel } = getDictionary(content, locale);
+
+const links = [
+  { label: "About", href: "#about" },
+  { label: "Schedule", href: "#schedule" },
+  { label: "Speakers", href: "#speakers" },
+  { label: "Sponsors", href: "#sponsors" },
+  { label: "FAQ", href: "#faq" },
+  { label: "Committee", href: "#committee" },
+  { label: "Contact/Socials", href: "#contact" },
+];
+
+const HEADER_BREAK_PX = 1168; // desktop/mobile switch
+const HEADER_COMPACT_MIN_PX = 400; // shrink start
+---
+
+<header class="header">
+  <div class="header__left">
+    <a class="header__logo" href="/">
+      <img src={logo.src} alt="GopherCon Japan" width={150} height={60} />
+    </a>
+    <nav class="header__nav" aria-label={navLabel}>
+      {links.map((link) => <NavLink label={link.label} href={link.href} />)}
+    </nav>
+  </div>
+  <div class="header__right">
+    <LocaleSwitcher locale={locale} />
+    <span class="header__hamburger">
+      <Hamburger label={menuLabel} links={links} />
+    </span>
+  </div>
+</header>
+
+<style>
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--_spacing-24);
+    height: var(--_header-height);
+    padding: 0 var(--_spacing-24);
+    background: var(--_color-base);
+  }
+
+  .header__left {
+    display: flex;
+    align-items: center;
+    gap: var(--_spacing-24);
+  }
+
+  .header__logo {
+    display: block;
+    height: var(--_logo-height);
+  }
+
+  .header__nav {
+    display: none;
+    align-items: center;
+    gap: var(--_spacing-24);
+  }
+
+  .header__right {
+    display: flex;
+    align-items: center;
+    gap: var(--_spacing-16);
+  }
+
+  .header__hamburger {
+    display: flex;
+    align-items: center;
+  }
+</style>
+
+<style
+  set:html={`
+  @media (min-width: ${HEADER_BREAK_PX}px) {
+    .header.header { gap: 40px; }
+    .header__nav.header__nav { display: flex; }
+    .header__hamburger.header__hamburger { display: none; }
+  }
+
+  @media (max-width: ${HEADER_COMPACT_MIN_PX}px) {
+    .header.header { zoom: calc(100vw / ${HEADER_COMPACT_MIN_PX}px); }
+  }
+`}
+></style>

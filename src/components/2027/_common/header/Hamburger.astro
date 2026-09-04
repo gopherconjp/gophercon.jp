@@ -1,0 +1,60 @@
+---
+import Popover from "../Popover.astro";
+import NavLink from "./NavLink.astro";
+
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  label: string;
+  links: NavItem[];
+}
+
+const { label, links } = Astro.props;
+---
+
+<Popover id="hamburger" label={label} role="menu">
+  <span slot="trigger" class="hamburger__icon" aria-hidden="true">
+    <span class="hamburger__line"></span>
+    <span class="hamburger__line"></span>
+    <span class="hamburger__line"></span>
+  </span>
+
+  <nav slot="content" class="hamburger__menu">
+    {links.map((link) => <NavLink label={link.label} href={link.href} />)}
+  </nav>
+</Popover>
+
+<style>
+  .hamburger__icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--_spacing-8);
+    width: var(--_hamburger-size);
+    height: var(--_hamburger-size);
+  }
+
+  .hamburger__line {
+    width: var(--_hamburger-size);
+    height: var(--_border-width-2);
+    background: var(--_color-dark);
+  }
+
+  .hamburger__menu {
+    position: absolute;
+    top: calc(100% + var(--_spacing-8));
+    right: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--_spacing-16);
+    padding: var(--_spacing-16) var(--_spacing-24);
+    background: var(--_color-base);
+    border-radius: var(--_radius-8);
+    box-shadow: var(--_shadow-popup);
+  }
+</style>

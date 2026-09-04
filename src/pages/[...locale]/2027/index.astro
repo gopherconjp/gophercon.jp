@@ -1,16 +1,12 @@
 ---
 import {
-  getDictionary,
   getLocaleFromPath,
   getPrefix,
   localeMap,
-  t,
-  type Dictionary,
   type LocalesValues,
 } from "intlayer";
 
 import Home from "../../../components/2027/home/index.astro";
-import Layout from "../../../layouts/Layout.astro";
 
 export const getStaticPaths = () =>
   localeMap(({ locale }) => ({
@@ -18,23 +14,6 @@ export const getStaticPaths = () =>
   }));
 
 const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
-
-const content = {
-  key: "local",
-  content: {
-    title: t({
-      en: "GopherCon Japan",
-      ja: "GopherCon Japan",
-    }),
-    description: t({
-      en: "GopherCon Japan Official Website",
-      ja: "GopherCon Japan 公式ウェブサイト",
-    }),
-  },
-} satisfies Dictionary;
-const { title, description } = getDictionary(content, locale);
 ---
 
-<Layout title={title} description={description}>
-  <Home locale={locale} />
-</Layout>
+<Home locale={locale} />
