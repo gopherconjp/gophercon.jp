@@ -1,6 +1,7 @@
 import { runMain } from "./lib/cli.ts";
 import { cfg } from "./lib/config.ts";
 import { runCompose } from "./lib/docker.ts";
+import { uploadFonts } from "./lib/fonts.ts";
 import { ensureDesign } from "./lib/import.ts";
 import { Penpot, PenpotError } from "./lib/penpot.ts";
 
@@ -59,6 +60,14 @@ const main = async (): Promise<void> => {
   console.log("Ensuring the gophercon.jp project / design file ...");
 
   const design = await ensureDesign(penpot);
+
+  console.log("Uploading fonts from public/font ...");
+
+  const teams = await penpot.getTeams();
+  const team = teams.find((t) => t.isDefault) ?? teams[0];
+  if (team) {
+    await uploadFonts(penpot, team.id);
+  }
 
   console.log("");
   console.log("Penpot is ready:");

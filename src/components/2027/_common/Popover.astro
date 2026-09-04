@@ -1,0 +1,129 @@
+---
+interface Props {
+  id: string;
+  label: string;
+}
+
+const { id, label } = Astro.props;
+---
+
+<div class="popover" data-popover>
+  <button
+    type="button"
+    class="popover__trigger"
+    aria-label={label}
+    aria-expanded="false"
+    aria-controls={`${id}-content`}
+    data-popover-trigger
+  >
+    <slot name="trigger" />
+  </button>
+
+  <div id={`${id}-content`} hidden data-popover-content>
+    <slot name="content" />
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll("[data-popover]").forEach((popover) => {
+    const trigger = popover.querySelector("[data-popover-trigger]");
+    const content = popover.querySelector("[data-popover-content]");
+    if (
+      !(popover instanceof HTMLElement) ||
+      !(trigger instanceof HTMLElement) ||
+      !(content instanceof HTMLElement)
+    ) {
+      return;
+    }
+
+    let isOpen = false;
+    let closeTimer: ReturnType<typeof setTimeout> | undefined;
+
+    const setOpen = (open: boolean) => {
+      if (open) {
+        document.dispatchEvent(
+          new CustomEvent("popover:close-others", {
+            detail: { source: popover },
+          }),
+        );
+      }
+
+      isOpen = open;
+      content.hidden = !open;
+      trigger.setAttribute("aria-expanded", String(open));
+
+      trigger.firstElementChild?.toggleAttribute("data-popover-open", open);
+    };
+
+    // Close when another popover opens (only one visible at a time).
+    document.addEventListener("popover:close-others", (event) => {
+      const { source } = (event as CustomEvent).detail;
+      if (source !== popover) {
+        setOpen(false);
+      }
+    });
+
+    const cancelClose = () => {
+      clearTimeout(closeTimer);
+      closeTimer = undefined;
+    };
+
+    trigger.addEventListener("click", () => {
+      setOpen(!isOpen);
+    });
+
+    popover.addEventListener("pointerenter", (event) => {
+      if (event.pointerType !== "mouse") return;
+
+      cancelClose();
+      setOpen(true);
+    });
+
+    popover.addEventListener("pointerleave", (event) => {
+      if (event.pointerType !== "mouse") return;
+
+      // Moving into the popover content: keep it open.
+      const related = event.relatedTarget;
+      if (related instanceof Node && popover.contains(related)) {
+        return;
+      }
+
+      closeTimer = setTimeout(() => setOpen(false), 150);
+    });
+
+    document.addEventListener("click", (event) => {
+      if (event.target instanceof Node && !popover.contains(event.target))
+        setOpen(false);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && isOpen) {
+        const restoreFocus = content.contains(document.activeElement);
+        setOpen(false);
+
+        if (restoreFocus) {
+          trigger.focus();
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+  .popover {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .popover__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--_spacing-8);
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+</style>

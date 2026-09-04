@@ -1,0 +1,84 @@
+---
+interface Props {
+  label: string;
+  href: string;
+  current?: boolean;
+  /** Stretch the link to fill the full width of its container. */
+  fullWidth?: boolean;
+}
+
+const { label, href, current = false, fullWidth = false } = Astro.props;
+---
+
+<a
+  class:list={["nav-link", { "nav-link--full": fullWidth }]}
+  href={href}
+  aria-current={current ? "page" : undefined}
+  tabindex={current ? -1 : undefined}
+>
+  <span class="nav-link__label">
+    {label}
+    <span class="nav-link__underline" aria-hidden="true"></span>
+  </span>
+</a>
+
+<style>
+  .nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    height: 24px;
+    text-decoration: none;
+  }
+
+  .nav-link--full {
+    width: 100%;
+    align-items: center;
+  }
+
+  .nav-link__label {
+    position: relative;
+    display: inline-block;
+    font-size: var(--_font-size-body);
+    font-weight: var(--_font-weight-bold);
+    line-height: var(--_line-height-1);
+    color: var(--_color-text);
+    padding-bottom: 2px;
+  }
+
+  .nav-link__underline {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: var(--_border-width-2);
+    background: var(--_color-dark);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .nav-link:hover {
+    & .nav-link__label {
+      color: var(--_color-accent);
+    }
+
+    & .nav-link__underline {
+      transform: scaleX(1);
+    }
+  }
+
+  .nav-link[aria-current="page"] {
+    pointer-events: none;
+    cursor: default;
+
+    & .nav-link__label {
+      color: var(--_color-dark);
+    }
+
+    & .nav-link__underline {
+      transform: scaleX(1);
+    }
+  }
+</style>

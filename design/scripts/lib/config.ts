@@ -10,8 +10,9 @@ export const cfg = {
 
 const LIB = import.meta.dir; // design/scripts/lib
 export const paths = {
-  design: resolve(LIB, "../.."), // design
+  design: resolve(LIB, "../.."),
   compose: resolve(LIB, "../../compose.yaml"),
   snapshot: resolve(LIB, "../../snapshot/gopherconjp.penpot"),
+  fonts: resolve(LIB, "../../../public/font"),
   vscodeMcp: resolve(LIB, "../../../.vscode/mcp.json"),
 };

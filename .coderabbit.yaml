@@ -4,6 +4,15 @@ reviews:
   profile: assertive
   request_changes_workflow: true
 
+  path_filters:
+    - "!design/snapshot/**"
+    - "!**/*.penpot"
+    - "!public/font/**"
+    - "!**/*.ttf"
+    - "!**/*.otf"
+    - "!**/*.woff"
+    - "!**/*.woff2"
+
   auto_review:
     enabled: true
     drafts: false
@@ -26,3 +35,8 @@ reviews:
         - `LocaleRedirector` auto-redirects by browser locale on every page, not only the root
         - Unsupported locales fall back to `defaultLocale` (keep the guard; never hardcode `ENGLISH`)
         - `LocaleSwitcher` persists the clicked locale so auto-redirect does not bounce the user back
+    - path: "src/components/2027/_common/header/**"
+      instructions: |
+        Intentional design; accept by design (do not report):
+        - Nav link labels are intentionally English for every locale; only destinations are localized via `getLocalizedUrl`
+        - `NavLink` sets `tabindex={-1}` on the current-page link (`current`) to keep it out of the sequential tab order; `aria-current="page"` identifies the current page
