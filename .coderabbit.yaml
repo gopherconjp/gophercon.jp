@@ -4,6 +4,15 @@ reviews:
   profile: assertive
   request_changes_workflow: true
 
+  path_filters:
+    - "!design/snapshot/**"
+    - "!**/*.penpot"
+    - "!public/font/**"
+    - "!**/*.ttf"
+    - "!**/*.otf"
+    - "!**/*.woff"
+    - "!**/*.woff2"
+
   auto_review:
     enabled: true
     drafts: false
