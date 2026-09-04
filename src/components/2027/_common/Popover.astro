@@ -44,7 +44,6 @@ const { id, label } = Astro.props;
       return;
 
     let isOpen = false;
-    let isHovering = false;
     let closeTimer: ReturnType<typeof setTimeout> | undefined;
 
     const setOpen = (open: boolean) => {
@@ -73,19 +72,15 @@ const { id, label } = Astro.props;
     };
 
     trigger.addEventListener("click", () => {
-      // While hovering, mouseenter/mouseleave own the open state.
-      if (isHovering) return;
       setOpen(!isOpen);
     });
 
     popover.addEventListener("mouseenter", () => {
-      isHovering = true;
       cancelClose();
       setOpen(true);
     });
 
     popover.addEventListener("mouseleave", (event) => {
-      isHovering = false;
       // Moving into the popover content: keep it open.
       const related = (event as MouseEvent).relatedTarget;
       if (related instanceof Node && popover.contains(related)) {
