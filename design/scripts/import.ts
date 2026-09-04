@@ -61,7 +61,8 @@ const main = async (): Promise<void> => {
 
   console.log("Uploading fonts from public/font ...");
 
-  const team = (await penpot.getTeams()).find((t) => t.isDefault) ?? (await penpot.getTeams())[0];
+  const teams = await penpot.getTeams();
+  const team = teams.find((t) => t.isDefault) ?? teams[0];
   if (team) {
     await uploadFonts(penpot, team.id);
   }
