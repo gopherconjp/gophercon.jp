@@ -46,7 +46,9 @@ const links = [
   { label: "FAQ", href: getLocalizedUrl("/2027/faq", locale) },
   { label: "Committee", href: getLocalizedUrl("/2027/committee", locale) },
   { label: "Contact/Socials", href: getLocalizedUrl("/2027/contact", locale) },
-].map((link) => ({ ...link, current: Astro.url.pathname === link.href }));
+].map((link) =>
+  Object.assign(link, { current: Astro.url.pathname === link.href }),
+);
 
 const HEADER_BREAK_PX = 1168; // desktop/mobile switch
 const HEADER_COMPACT_MIN_PX = 400; // shrink start
