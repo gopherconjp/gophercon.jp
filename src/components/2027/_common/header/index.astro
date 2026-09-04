@@ -80,7 +80,6 @@ const HEADER_COMPACT_MIN_PX = 400; // shrink start
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--_spacing-24);
     height: var(--_header-height);
     padding: 0 var(--_spacing-24);
     background: var(--_color-base);
@@ -94,6 +93,7 @@ const HEADER_COMPACT_MIN_PX = 400; // shrink start
 
   .header__logo {
     display: block;
+    margin-right: var(--_spacing-8);
   }
 
   .header__nav {
@@ -117,7 +117,6 @@ const HEADER_COMPACT_MIN_PX = 400; // shrink start
 <style
   set:html={`
   @media (min-width: ${HEADER_BREAK_PX}px) {
-    .header.header { gap: 40px; }
     .header__nav.header__nav { display: flex; }
     .header__hamburger.header__hamburger { display: none; }
   }
