@@ -31,6 +31,7 @@ const { id, label } = Astro.props;
   >
     <slot name="trigger" />
   </button>
+
   <div id={`${id}-content`} hidden data-popover-content>
     <slot name="content" />
   </div>
@@ -40,8 +41,12 @@ const { id, label } = Astro.props;
   document.querySelectorAll("[data-popover]").forEach((popover) => {
     const trigger = popover.querySelector("[data-popover-trigger]");
     const content = popover.querySelector("[data-popover-content]");
-    if (!(trigger instanceof HTMLElement) || !(content instanceof HTMLElement))
+    if (
+      !(trigger instanceof HTMLElement) ||
+      !(content instanceof HTMLElement)
+    ) {
       return;
+    }
 
     let isOpen = false;
     let closeTimer: ReturnType<typeof setTimeout> | undefined;
@@ -63,7 +68,9 @@ const { id, label } = Astro.props;
     // Close when another popover opens (only one visible at a time).
     document.addEventListener("popover:close-others", (event) => {
       const { source } = (event as CustomEvent).detail;
-      if (source !== popover) setOpen(false);
+      if (source !== popover) {
+        setOpen(false);
+      }
     });
 
     const cancelClose = () => {
@@ -99,7 +106,10 @@ const { id, label } = Astro.props;
       if (event.key === "Escape" && isOpen) {
         const restoreFocus = content.contains(document.activeElement);
         setOpen(false);
-        if (restoreFocus) trigger.focus();
+
+        if (restoreFocus) {
+          trigger.focus();
+        }
       }
     });
   });
