@@ -17,5 +17,4 @@ export const paths = {
   vscodeMcp: resolve(LIB, "../../../.vscode/mcp.json"),
 };
 
-// Snapshot path for a design file: design/snapshot/<file>.penpot
 export const snapshotPath = (file: string): string => `${paths.snapshotDir}/${file}.penpot`;
