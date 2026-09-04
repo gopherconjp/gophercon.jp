@@ -6,12 +6,12 @@ export default {
   args: {
     label: "About",
     href: "#about",
-    active: false,
+    current: false,
   },
 };
 
 export const Default = {};
 
-export const Active = {
-  args: { active: true },
+export const Current = {
+  args: { current: true },
 };

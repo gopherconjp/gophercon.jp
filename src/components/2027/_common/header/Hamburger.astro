@@ -5,6 +5,7 @@ import NavLink from "./NavLink.astro";
 interface NavItem {
   label: string;
   href: string;
+  current?: boolean;
 }
 
 interface Props {
@@ -25,7 +26,12 @@ const { label, links } = Astro.props;
   <nav slot="content" class="hamburger__menu">
     {
       links.map((link) => (
-        <NavLink label={link.label} href={link.href} fullWidth />
+        <NavLink
+          label={link.label}
+          href={link.href}
+          current={link.current}
+          fullWidth
+        />
       ))
     }
   </nav>

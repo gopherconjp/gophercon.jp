@@ -39,4 +39,4 @@ reviews:
       instructions: |
         Intentional design; accept by design (do not report):
         - Nav link labels are intentionally English for every locale; only destinations are localized via `getLocalizedUrl`
-        - `NavLink` sets `tabindex={-1}` on the current-page link (`active`) to keep it out of the sequential tab order; `aria-current="page"` identifies the current page
+        - `NavLink` sets `tabindex={-1}` on the current-page link (`current`) to keep it out of the sequential tab order; `aria-current="page"` identifies the current page

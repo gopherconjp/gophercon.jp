@@ -46,7 +46,7 @@ const links = [
   { label: "FAQ", href: getLocalizedUrl("/2027/faq", locale) },
   { label: "Committee", href: getLocalizedUrl("/2027/committee", locale) },
   { label: "Contact/Socials", href: getLocalizedUrl("/2027/contact", locale) },
-];
+].map((link) => ({ ...link, current: Astro.url.pathname === link.href }));
 
 const HEADER_BREAK_PX = 1168; // desktop/mobile switch
 const HEADER_COMPACT_MIN_PX = 400; // shrink start
@@ -58,7 +58,11 @@ const HEADER_COMPACT_MIN_PX = 400; // shrink start
       <img src={logo.src} alt="GopherCon Japan" width={150} height={60} />
     </a>
     <nav class="header__nav" aria-label={navLabel}>
-      {links.map((link) => <NavLink label={link.label} href={link.href} />)}
+      {
+        links.map((link) => (
+          <NavLink label={link.label} href={link.href} current={link.current} />
+        ))
+      }
     </nav>
   </div>
   <div class="header__right">

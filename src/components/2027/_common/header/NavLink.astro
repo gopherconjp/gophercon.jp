@@ -2,19 +2,19 @@
 interface Props {
   label: string;
   href: string;
-  active?: boolean;
+  current?: boolean;
   /** Stretch the link to fill the full width of its container. */
   fullWidth?: boolean;
 }
 
-const { label, href, active = false, fullWidth = false } = Astro.props;
+const { label, href, current = false, fullWidth = false } = Astro.props;
 ---
 
 <a
   class:list={["nav-link", { "nav-link--full": fullWidth }]}
   href={href}
-  aria-current={active ? "page" : undefined}
-  tabindex={active ? -1 : undefined}
+  aria-current={current ? "page" : undefined}
+  tabindex={current ? -1 : undefined}
 >
   <span class="nav-link__label">
     {label}
