@@ -2,6 +2,7 @@ import { definePreview } from "@storybook-astro/framework";
 
 import "../src/components/2027/_styles/token.css";
 import "../src/components/2027/_styles/font.css";
+import "../src/components/2027/_styles/heading.css";
 
 const preview = definePreview({
   parameters: {
