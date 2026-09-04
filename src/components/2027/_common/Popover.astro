@@ -1,17 +1,4 @@
 ---
-/**
- * Headless popover primitive.
- *
- * Opens on hover (and click), closes on outside click, Escape, or a second
- * click. Open state is exposed via `aria-expanded`.
- * No styles are applied — the consumer positions and styles the trigger and
- * content.
- *
- * Slots:
- *  - `trigger`: rendered inside the trigger button
- *  - `content`: rendered inside the popover wrapper; pass any element
- *    (e.g. an `<a>`) to make the whole area clickable
- */
 interface Props {
   id: string;
   label: string;
@@ -42,6 +29,7 @@ const { id, label } = Astro.props;
     const trigger = popover.querySelector("[data-popover-trigger]");
     const content = popover.querySelector("[data-popover-content]");
     if (
+      !(popover instanceof HTMLElement) ||
       !(trigger instanceof HTMLElement) ||
       !(content instanceof HTMLElement)
     ) {
@@ -63,6 +51,8 @@ const { id, label } = Astro.props;
       isOpen = open;
       content.hidden = !open;
       trigger.setAttribute("aria-expanded", String(open));
+
+      trigger.firstElementChild?.toggleAttribute("data-popover-open", open);
     };
 
     // Close when another popover opens (only one visible at a time).
@@ -82,14 +72,18 @@ const { id, label } = Astro.props;
       setOpen(!isOpen);
     });
 
-    popover.addEventListener("mouseenter", () => {
+    popover.addEventListener("pointerenter", (event) => {
+      if (event.pointerType !== "mouse") return;
+
       cancelClose();
       setOpen(true);
     });
 
-    popover.addEventListener("mouseleave", (event) => {
+    popover.addEventListener("pointerleave", (event) => {
+      if (event.pointerType !== "mouse") return;
+
       // Moving into the popover content: keep it open.
-      const related = (event as MouseEvent).relatedTarget;
+      const related = event.relatedTarget;
       if (related instanceof Node && popover.contains(related)) {
         return;
       }
