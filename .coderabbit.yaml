@@ -12,6 +12,8 @@ reviews:
     - "!**/*.otf"
     - "!**/*.woff"
     - "!**/*.woff2"
+    - "!.github/skills/**"
+    - "!.github/copilot-instructions.md"
 
   auto_review:
     enabled: true
