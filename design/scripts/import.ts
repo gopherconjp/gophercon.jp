@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 
 import { ask, runMain } from "./lib/cli.ts";
 import { cfg, paths } from "./lib/config.ts";
+import { uploadFonts } from "./lib/fonts.ts";
 import { ensureProject } from "./lib/import.ts";
 import { Penpot } from "./lib/penpot.ts";
 
@@ -57,6 +58,13 @@ const main = async (): Promise<void> => {
 
   console.log("");
   console.log(`Imported "${cfg.file}" (${fileId}) into project "${cfg.project}".`);
+
+  console.log("Uploading fonts from public/font ...");
+
+  const team = (await penpot.getTeams()).find((t) => t.isDefault) ?? (await penpot.getTeams())[0];
+  if (team) {
+    await uploadFonts(penpot, team.id);
+  }
 };
 
 runMain(main);

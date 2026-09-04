@@ -18,6 +18,14 @@ interface DesignTarget {
   file?: DesignFile;
 }
 
+interface FontVariant {
+  id: string;
+  fontId: string;
+  fontFamily: string;
+  fontWeight: number;
+  fontStyle: string;
+}
+
 export class PenpotError extends Error {
   constructor(
     message: string,
@@ -96,6 +104,10 @@ export class Penpot {
     return this.request("get-teams");
   }
 
+  getFontVariants(teamId: string): Promise<FontVariant[]> {
+    return this.request("get-font-variants", { teamId });
+  }
+
   getAllProjects(): Promise<Project[]> {
     return this.request("get-all-projects");
   }
@@ -161,6 +173,47 @@ export class Penpot {
     }
 
     throw new Error("import-binfile: no created file id in response");
+  }
+
+  async createUploadSession(totalChunks: number): Promise<string> {
+    const res = await this.request<{ sessionId: string }>("create-upload-session", {
+      totalChunks,
+    });
+    return res.sessionId;
+  }
+
+  async uploadChunk(sessionId: string, index: number, file: Blob): Promise<void> {
+    const form = new FormData();
+    form.append("session-id", sessionId);
+    form.append("index", String(index));
+    form.append("content", file, `chunk-${index}`);
+
+    const res = await fetch(`${this.url}/api/main/methods/upload-chunk`, {
+      method: "POST",
+      headers: { Accept: "application/json", ...this.authHeaders() },
+      body: form,
+    });
+    if (!res.ok) {
+      throw new PenpotError(`upload-chunk -> HTTP ${res.status}`, res.status);
+    }
+  }
+
+  async createFontVariant(params: {
+    teamId: string;
+    fontId: string;
+    family: string;
+    weight: number;
+    style: "normal" | "italic";
+    uploads: Record<string, string>;
+  }): Promise<void> {
+    await this.post("create-font-variant", {
+      teamId: params.teamId,
+      fontId: params.fontId,
+      fontFamily: params.family,
+      fontWeight: params.weight,
+      fontStyle: params.style,
+      uploads: params.uploads,
+    });
   }
 
   async exportFile(fileId: string): Promise<Response> {
