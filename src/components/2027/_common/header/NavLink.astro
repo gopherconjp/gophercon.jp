@@ -3,19 +3,23 @@ interface Props {
   label: string;
   href: string;
   active?: boolean;
+  /** Stretch the link to fill the full width of its container. */
+  fullWidth?: boolean;
 }
 
-const { label, href, active = false } = Astro.props;
+const { label, href, active = false, fullWidth = false } = Astro.props;
 ---
 
 <a
-  class="nav-link"
+  class:list={["nav-link", { "nav-link--full": fullWidth }]}
   href={href}
   aria-current={active ? "page" : undefined}
   tabindex={active ? -1 : undefined}
 >
-  <span class="nav-link__label">{label}</span>
-  <span class="nav-link__underline" aria-hidden="true"></span>
+  <span class="nav-link__label">
+    {label}
+    <span class="nav-link__underline" aria-hidden="true"></span>
+  </span>
 </a>
 
 <style>
@@ -28,7 +32,14 @@ const { label, href, active = false } = Astro.props;
     text-decoration: none;
   }
 
+  .nav-link--full {
+    width: 100%;
+    align-items: center;
+  }
+
   .nav-link__label {
+    position: relative;
+    display: inline-block;
     font-size: var(--_font-size-body);
     font-weight: var(--_font-weight-bold);
     line-height: var(--_line-height-1);
@@ -37,6 +48,9 @@ const { label, href, active = false } = Astro.props;
   }
 
   .nav-link__underline {
+    position: absolute;
+    left: 0;
+    bottom: 0;
     width: 100%;
     height: var(--_border-width-2);
     background: var(--_color-dark);

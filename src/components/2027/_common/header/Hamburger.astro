@@ -23,7 +23,11 @@ const { label, links } = Astro.props;
   </span>
 
   <nav slot="content" class="hamburger__menu">
-    {links.map((link) => <NavLink label={link.label} href={link.href} />)}
+    {
+      links.map((link) => (
+        <NavLink label={link.label} href={link.href} fullWidth />
+      ))
+    }
   </nav>
 </Popover>
 
