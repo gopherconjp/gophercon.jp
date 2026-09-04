@@ -1,25 +1,20 @@
 import { existsSync } from "node:fs";
 
 import { ask, runMain } from "./lib/cli.ts";
-import { cfg, paths } from "./lib/config.ts";
+import { cfg, snapshotPath } from "./lib/config.ts";
 import { uploadFonts } from "./lib/fonts.ts";
 import { ensureProject } from "./lib/import.ts";
 import { Penpot } from "./lib/penpot.ts";
 
-const main = async (): Promise<void> => {
-  if (!existsSync(paths.snapshot)) {
-    throw new Error(`No snapshot found: ${paths.snapshot}. Run: bun run penpot:export`);
-  }
+// oxlint-disable no-await-in-loop -- files import sequentially on purpose
 
-  const penpot = new Penpot(cfg.url);
-  await penpot.login(cfg.email, cfg.password);
+const importOne = async (penpot: Penpot, file: string): Promise<void> => {
+  const snapshot = snapshotPath(file);
 
-  const design = await penpot.findDesign(cfg.project, cfg.file);
+  const design = await penpot.findDesign(cfg.project, file);
   if (design?.file) {
     const answer = (
-      await ask(
-        `The design file "${cfg.file}" will be overwritten with ${paths.snapshot}. Continue? [y/N] `,
-      )
+      await ask(`The design file "${file}" will be overwritten with ${snapshot}. Continue? [y/N] `)
     )
       .trim()
       .toLowerCase();
@@ -29,16 +24,15 @@ const main = async (): Promise<void> => {
     }
   }
 
-  console.log(`Importing ${paths.snapshot} ...`);
+  console.log(`Importing ${snapshot} ...`);
 
   const project = design?.project ?? (await ensureProject(penpot));
-  const fileId = await penpot.importFile(project.id, cfg.file, Bun.file(paths.snapshot));
+  const fileId = await penpot.importFile(project.id, file, Bun.file(snapshot));
 
   const previousFileId = design?.file?.id;
   if (previousFileId && previousFileId !== fileId) {
-    console.log(`Deleting the previous "${cfg.file}" file (${previousFileId}) ...`);
+    console.log(`Deleting the previous "${file}" file (${previousFileId}) ...`);
 
-    // oxlint-disable no-await-in-loop -- sequential delete retries on purpose
     for (let attempt = 1; ; attempt++) {
       try {
         await penpot.deleteFile(previousFileId);
@@ -46,7 +40,7 @@ const main = async (): Promise<void> => {
       } catch (error) {
         if (attempt >= 3) {
           throw new Error(
-            `Imported "${cfg.file}" (${fileId}) but failed to delete previous file (${previousFileId}).`,
+            `Imported "${file}" (${fileId}) but failed to delete previous file (${previousFileId}).`,
             { cause: error },
           );
         }
@@ -57,7 +51,24 @@ const main = async (): Promise<void> => {
   }
 
   console.log("");
-  console.log(`Imported "${cfg.file}" (${fileId}) into project "${cfg.project}".`);
+  console.log(`Imported "${file}" (${fileId}) into project "${cfg.project}".`);
+};
+
+const main = async (): Promise<void> => {
+  const files = process.argv[2] ? [process.argv[2]] : cfg.files;
+  const missing = files.find((file) => !existsSync(snapshotPath(file)));
+  if (missing) {
+    throw new Error(
+      `No snapshot found: ${snapshotPath(missing)}. Run: bun run penpot:export ${missing}`,
+    );
+  }
+
+  const penpot = new Penpot(cfg.url);
+  await penpot.login(cfg.email, cfg.password);
+
+  for (const file of files) {
+    await importOne(penpot, file);
+  }
 
   console.log("Uploading fonts from public/font ...");
 

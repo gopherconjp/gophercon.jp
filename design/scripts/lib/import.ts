@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 
-import { cfg, paths } from "./config.ts";
+import { cfg, snapshotPath } from "./config.ts";
 import { type Penpot, type Project } from "./penpot.ts";
 
 interface EnsureResult {
@@ -10,9 +10,10 @@ interface EnsureResult {
 }
 
 export const ensureProject = async (penpot: Penpot): Promise<Project> => {
-  const found = await penpot.findDesign(cfg.project, cfg.file);
-  if (found?.project) {
-    return found.project;
+  const projects = await penpot.getAllProjects();
+  const found = projects.find((p) => p.name === cfg.project);
+  if (found) {
+    return found;
   }
 
   const teams = await penpot.getTeams();
@@ -24,21 +25,21 @@ export const ensureProject = async (penpot: Penpot): Promise<Project> => {
   return penpot.createProject(team.id, cfg.project);
 };
 
-// Ensure the gophercon.jp project + design file exist, restoring the git
-// snapshot when the file is missing.
-export const ensureDesign = async (penpot: Penpot): Promise<EnsureResult> => {
-  const found = await penpot.findDesign(cfg.project, cfg.file);
+// Ensure the project + design file exist for `file`, restoring its snapshot when the file is missing.
+export const ensureDesign = async (penpot: Penpot, file: string): Promise<EnsureResult> => {
+  const found = await penpot.findDesign(cfg.project, file);
   if (found?.file) {
     return { projectId: found.project.id, fileId: found.file.id, action: "exists" };
   }
 
   const project = await ensureProject(penpot);
+  const snapshot = snapshotPath(file);
 
-  if (existsSync(paths.snapshot)) {
-    const fileId = await penpot.importFile(project.id, cfg.file, Bun.file(paths.snapshot));
+  if (existsSync(snapshot)) {
+    const fileId = await penpot.importFile(project.id, file, Bun.file(snapshot));
     return { projectId: project.id, fileId, action: "imported" };
   }
 
-  const file = await penpot.createFile(project.id, cfg.file);
-  return { projectId: project.id, fileId: file.id, action: "created" };
+  const created = await penpot.createFile(project.id, file);
+  return { projectId: project.id, fileId: created.id, action: "created" };
 };

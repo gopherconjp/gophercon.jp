@@ -5,14 +5,16 @@ export const cfg = {
   email: "creative@gophercon.jp",
   password: "password",
   project: "gophercon.jp",
-  file: "gophercon.jp",
+  files: ["gopherconjp-2027"],
 };
 
 const LIB = import.meta.dir; // design/scripts/lib
 export const paths = {
   design: resolve(LIB, "../.."),
   compose: resolve(LIB, "../../compose.yaml"),
-  snapshot: resolve(LIB, "../../snapshot/gopherconjp.penpot"),
+  snapshotDir: resolve(LIB, "../../snapshot"),
   fonts: resolve(LIB, "../../../public/font"),
   vscodeMcp: resolve(LIB, "../../../.vscode/mcp.json"),
 };
+
+export const snapshotPath = (file: string): string => `${paths.snapshotDir}/${file}.penpot`;
