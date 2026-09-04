@@ -31,9 +31,9 @@ const { id, label } = Astro.props;
   >
     <slot name="trigger" />
   </button>
-  <span id={`${id}-content`} hidden data-popover-content>
+  <div id={`${id}-content`} hidden data-popover-content>
     <slot name="content" />
-  </span>
+  </div>
 </div>
 
 <script>
