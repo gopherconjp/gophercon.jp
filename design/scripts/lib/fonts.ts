@@ -12,14 +12,13 @@ const FONTS: { file: string; family: string; weight: number; style: "normal" | "
 
 export const uploadFonts = async (penpot: Penpot, teamId: string): Promise<void> => {
   const existing = await penpot.getFontVariants(teamId);
-  // Penpot groups variants into a family by font-id (update/delete/download
-  // operate per font-id), so all weights/styles of a family must share one.
   const familyToFontId = new Map<string, string>();
   for (const v of existing) {
     if (!familyToFontId.has(v.fontFamily)) {
       familyToFontId.set(v.fontFamily, v.fontId);
     }
   }
+
   for (const { file, family, weight, style } of FONTS) {
     const registered = existing.some(
       (v) => v.fontFamily === family && v.fontWeight === weight && v.fontStyle === style,
