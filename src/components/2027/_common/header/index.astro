@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import {
   getDictionary,
   getLocalizedUrl,
@@ -50,8 +51,13 @@ const HEADER_COMPACT_MIN_PX = 400; // shrink start
 
 <header class="header">
   <div class="header__left">
-    <a class="header__logo" href={getLocalizedUrl("/2027", locale)}>
-      <img src={logo.src} alt="GopherCon Japan" width={150} height={60} />
+    <a href={getLocalizedUrl("/2027", locale)}>
+      <Image
+        src={logo}
+        alt="GopherCon Japan 2027 logo"
+        height={72}
+        class="header__logo"
+      />
     </a>
     <nav class="header__nav" aria-label={navLabel}>
       {
@@ -88,7 +94,6 @@ const HEADER_COMPACT_MIN_PX = 400; // shrink start
 
   .header__logo {
     display: block;
-    height: var(--_logo-height);
   }
 
   .header__nav {
