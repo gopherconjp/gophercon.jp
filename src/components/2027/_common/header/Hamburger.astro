@@ -50,7 +50,7 @@ const { label, links } = Astro.props;
   .hamburger__menu {
     position: absolute;
     top: calc(100% + var(--_spacing-8));
-    right: 0;
+    right: calc(-1 * var(--_spacing-16));
     z-index: 10;
     display: flex;
     flex-direction: column;
