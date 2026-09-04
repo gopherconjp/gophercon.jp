@@ -10,9 +10,6 @@ import { Penpot } from "./lib/penpot.ts";
 
 const importOne = async (penpot: Penpot, file: string): Promise<void> => {
   const snapshot = snapshotPath(file);
-  if (!existsSync(snapshot)) {
-    throw new Error(`No snapshot found: ${snapshot}. Run: bun run penpot:export ${file}`);
-  }
 
   const design = await penpot.findDesign(cfg.project, file);
   if (design?.file) {
@@ -59,6 +56,12 @@ const importOne = async (penpot: Penpot, file: string): Promise<void> => {
 
 const main = async (): Promise<void> => {
   const files = process.argv[2] ? [process.argv[2]] : cfg.files;
+  const missing = files.find((file) => !existsSync(snapshotPath(file)));
+  if (missing) {
+    throw new Error(
+      `No snapshot found: ${snapshotPath(missing)}. Run: bun run penpot:export ${missing}`,
+    );
+  }
 
   const penpot = new Penpot(cfg.url);
   await penpot.login(cfg.email, cfg.password);
