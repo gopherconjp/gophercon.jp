@@ -53,10 +53,10 @@
   --_border-width-2: 2px;
 
   /* dimension */
-  --_logo-height: 60px;
-  --_header-height: 80px;
   --_frame-desktop: 1440px;
   --_frame-mobile: 390px;
+
+  --_header-height: 80px;
   --_hamburger-size: 24px;
 
   /* shadow */
