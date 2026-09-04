@@ -7,6 +7,7 @@
  */
 import {
   getDictionary,
+  getLocalizedUrl,
   t,
   type Dictionary,
   type LocalesValues,
@@ -38,13 +39,13 @@ const content = {
 const { navLabel, menuLabel } = getDictionary(content, locale);
 
 const links = [
-  { label: "About", href: "#about" },
-  { label: "Schedule", href: "#schedule" },
-  { label: "Speakers", href: "#speakers" },
-  { label: "Sponsors", href: "#sponsors" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Committee", href: "#committee" },
-  { label: "Contact/Socials", href: "#contact" },
+  { label: "About", href: getLocalizedUrl("/2027/about", locale) },
+  { label: "Schedule", href: getLocalizedUrl("/2027/schedule", locale) },
+  { label: "Speakers", href: getLocalizedUrl("/2027/speakers", locale) },
+  { label: "Sponsors", href: getLocalizedUrl("/2027/sponsors", locale) },
+  { label: "FAQ", href: getLocalizedUrl("/2027/faq", locale) },
+  { label: "Committee", href: getLocalizedUrl("/2027/committee", locale) },
+  { label: "Contact/Socials", href: getLocalizedUrl("/2027/contact", locale) },
 ];
 
 const HEADER_BREAK_PX = 1168; // desktop/mobile switch
@@ -53,7 +54,7 @@ const HEADER_COMPACT_MIN_PX = 400; // shrink start
 
 <header class="header">
   <div class="header__left">
-    <a class="header__logo" href="/">
+    <a class="header__logo" href={getLocalizedUrl("/2027", locale)}>
       <img src={logo.src} alt="GopherCon Japan" width={150} height={60} />
     </a>
     <nav class="header__nav" aria-label={navLabel}>
