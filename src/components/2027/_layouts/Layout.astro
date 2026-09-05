@@ -10,24 +10,46 @@ import {
 } from "intlayer";
 
 import Header from "../_common/header/index.astro";
-import LocaleRedirector from "../../common/i18n/LocaleRedirector.astro";
+import LocaleRedirector from "../../_common/LocaleRedirector.astro";
 
 import "../_styles/token.css";
 import "../_styles/font.css";
 import "../_styles/heading.css";
 
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
+  image?: string;
+  imageAlt?: string;
+  type?: "website" | "article";
 }
 
-const { title, description } = Astro.props;
+const {
+  title = "",
+  description,
+  image = "/2027/ogp.png",
+  imageAlt = "GopherCon Japan OGP",
+  type = "website",
+} = Astro.props;
+
 const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
 const pathWithoutLocale = getPathWithoutLocale(Astro.url.pathname);
+
+const SITE_NAME = "GopherCon Japan 2027";
+const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
+
+const ogImage = new URL(image, Astro.site);
+const OG_LOCALES: Record<LocalesValues, string> = {
+  en: "en_US",
+  ja: "ja_JP",
+};
+const ogLocale = OG_LOCALES[locale];
+
 const canonical = new URL(
   getLocalizedUrl(pathWithoutLocale, locale),
   Astro.site,
 );
+
 const alternates = localeMap(({ locale: alternateLocale }) => ({
   locale: alternateLocale,
   href: new URL(
@@ -35,6 +57,7 @@ const alternates = localeMap(({ locale: alternateLocale }) => ({
     Astro.site,
   ),
 }));
+
 const xDefaultHref = new URL(
   getLocalizedUrl(pathWithoutLocale, defaultLocale),
   Astro.site,
@@ -46,6 +69,9 @@ const xDefaultHref = new URL(
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#FF7A65" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -66,7 +92,34 @@ const xDefaultHref = new URL(
     <link rel="icon" href="/favicon/favicon.ico" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
     {description && <meta name="description" content={description} />}
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={fullTitle} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={ogLocale} />
+    {
+      alternates
+        .filter((alt) => OG_LOCALES[alt.locale] !== ogLocale)
+        .map((alt) => (
+          <meta
+            property="og:locale:alternate"
+            content={OG_LOCALES[alt.locale]}
+          />
+        ))
+    }
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@GopherConJP" />
+    <meta name="twitter:title" content={fullTitle} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
     <link rel="canonical" href={canonical} />
     {
       alternates.map((alt) => (
@@ -74,7 +127,6 @@ const xDefaultHref = new URL(
       ))
     }
     <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
-    <title>{title}</title>
     <LocaleRedirector />
   </head>
   <body>

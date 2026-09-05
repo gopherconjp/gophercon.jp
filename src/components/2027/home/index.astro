@@ -18,10 +18,6 @@ const { locale } = Astro.props;
 const content = {
   key: "local",
   content: {
-    title: t({
-      en: "GopherCon Japan 2027",
-      ja: "GopherCon Japan 2027",
-    }),
     description: t({
       en: "GopherCon Japan Official Website",
       ja: "GopherCon Japan 公式ウェブサイト",
@@ -36,13 +32,10 @@ const content = {
     }),
   },
 } satisfies Dictionary;
-const { title, description, missionTitle, mission } = getDictionary(
-  content,
-  locale,
-);
+const { description, missionTitle, mission } = getDictionary(content, locale);
 ---
 
-<Layout title={title} description={description}>
+<Layout description={description}>
   <KeyVisual locale={locale} />
   <Hero locale={locale} />
   <section class="mission">
