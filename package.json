@@ -36,7 +36,7 @@
     "@typescript-eslint/eslint-plugin": "8.69.0",
     "@typescript-eslint/parser": "8.69.0",
     "astro": "7.2.10",
-    "astro-intlayer": "9.4.1",
+    "astro-intlayer": "9.4.2",
     "eslint": "10.9.1",
     "eslint-plugin-astro": "3.1.0",
     "intlayer": "9.4.1",
