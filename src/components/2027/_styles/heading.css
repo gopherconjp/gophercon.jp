@@ -3,7 +3,7 @@ h2,
 h3 {
   font-family: var(--_font-family-bizter);
   font-weight: var(--_font-weight-bold);
-  color: var(--_color-text);
+  color: var(--_color-black);
   letter-spacing: 0;
   text-align: left;
 }
@@ -57,4 +57,13 @@ h3::after {
   height: 18px;
   background: url("/2027/h3.webp") no-repeat;
   background-size: 100% 100%;
+}
+
+h3.center {
+  text-align: center;
+}
+
+h3.center::after {
+  left: 50%;
+  transform: translateX(-50%);
 }

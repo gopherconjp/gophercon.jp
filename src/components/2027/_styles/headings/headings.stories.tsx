@@ -15,6 +15,7 @@ export default {
   args: {
     level: 1,
     text: "世界に宿る熱量を日本へ。日本に眠る叡智を世界へ。",
+    center: false,
   },
 };
 
@@ -22,24 +23,32 @@ export const H1 = {
   args: { level: 1 },
 };
 
+export const H2Short = {
+  args: { level: 2, text: "短い見出し" },
+};
+
+export const H2Medium = {
+  args: { level: 2, text: "Goの未来を語る。" },
+};
+
 export const H2 = {
   args: {
     level: 2,
-    text: "新しいGoのカンファレンス「GopherCon Japan」を開催いたします。",
+    text: "新しいGo体験をあなたに届けます。",
   },
-};
-
-export const H2Short = {
-  args: { level: 2, text: "短い見出し" },
 };
 
 export const H3 = {
   args: {
     level: 3,
-    text: "日本のGopherに「これが世界だ」という刺激を。世界のGopherに「これが日本だ」という誇りを。",
+    text: 'GopherCon Japanは、日本で行われる"半"国際カンファレンスです。',
   },
 };
 
-export const H3Short = {
-  args: { level: 3, text: "短い見出し" },
+export const H3Center = {
+  args: {
+    level: 3,
+    text: 'GopherCon Japanは、日本で行われる"半"国際カンファレンスです。',
+    center: true,
+  },
 };
