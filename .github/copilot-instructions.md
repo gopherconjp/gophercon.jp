@@ -15,8 +15,8 @@
 
 ## Code
 
-- `LocaleRedirector` (auto redirect) and `LocaleSwitcher` (explicit switch) are intentionally separate; do not merge.
-- Avoid code comments; add a concise one only when Why / Why Not of a specific behavior needs explanation.
+- `LocaleRedirector` and `LocaleSwitcher` are intentionally separate; do not merge.
+- Avoid comments; add one only for Why / Why Not of a behavior.
 
 ## Skills
 
