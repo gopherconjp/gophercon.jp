@@ -4,8 +4,8 @@
  */
 :root {
   /* color */
-  --_color-base: #ffffff;
-  --_color-text: #333333;
+  --_color-white: #ffffff;
+  --_color-black: #333333;
   --_color-light: #d9d9d9;
   --_color-sub: #68cce7;
   --_color-dark: #00547d;
