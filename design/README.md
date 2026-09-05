@@ -35,12 +35,6 @@ Run these from the repo root. `export` / `import` take an optional file name (de
 
 The local stack uses the fixed account `creative@gophercon.jp` / `password`.
 
-## MCP
-
-- MCP acts on the page currently focused in the active Penpot tab, so keep the design file open there.
-- Start read-only (e.g. "analyze this page") before any write.
-- `.vscode/` is git-ignored, so the MCP key never lands in the repository.
-
 ## Saving / restoring
 
 - `bun run penpot:export` overwrites `snapshot/<file>.penpot`; commit the change to save it.
