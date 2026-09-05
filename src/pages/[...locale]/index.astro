@@ -7,6 +7,8 @@ import {
   type LocalesValues,
 } from "intlayer";
 
+import Layout from "../../components/index/_layouts/Layout.astro";
+
 const mainPath = "/2027";
 
 export const getStaticPaths = () => {
@@ -16,12 +18,11 @@ export const getStaticPaths = () => {
 };
 
 const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
-
-// Astro emits Astro.redirect as a meta refresh HTML page during SSG builds.
-// The refresh delay is 2s for 302 and 0s for 301 (astro/dist/core/routing/3xx.js).
-// Thus, use 301 in production so the redirect happens instantly.
-// On the dev server, Astro.redirect returns a real HTTP redirect, and a 301 would be
-//  cached permanently by the browser, so use 302 in dev to avoid stale redirects.
-const redirectStatus = import.meta.env.DEV ? 302 : 301;
-return Astro.redirect(getLocalizedUrl(mainPath, locale), redirectStatus);
+const destination = getLocalizedUrl(mainPath, locale);
 ---
+
+<Layout redirectTo={destination} noindex>
+  <p>
+    Redirecting to <a href={destination}>{destination}</a>
+  </p>
+</Layout>
