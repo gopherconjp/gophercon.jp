@@ -9,12 +9,7 @@ import {
   type LocalesValues,
 } from "intlayer";
 
-import Header from "../_common/header/index.astro";
 import LocaleRedirector from "../../_common/LocaleRedirector.astro";
-
-import "../_styles/token.css";
-import "../_styles/font.css";
-import "../_styles/heading.css";
 
 interface Props {
   title?: string;
@@ -22,20 +17,24 @@ interface Props {
   image?: string;
   imageAlt?: string;
   type?: "website" | "article";
+  noindex?: boolean;
+  redirectTo?: string;
 }
 
 const {
   title = "",
   description,
-  image = "/2027/ogp.png",
+  image = "/index/ogp.png",
   imageAlt = "GopherCon Japan OGP",
   type = "website",
+  noindex = false,
+  redirectTo,
 } = Astro.props;
 
 const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
 const pathWithoutLocale = getPathWithoutLocale(Astro.url.pathname);
 
-const SITE_NAME = "GopherCon Japan 2027";
+const SITE_NAME = "GopherCon Japan";
 const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
 
 const ogImage = new URL(image, Astro.site);
@@ -46,7 +45,7 @@ const OG_LOCALES: Record<LocalesValues, string> = {
 const ogLocale = OG_LOCALES[locale];
 
 const canonical = new URL(
-  getLocalizedUrl(pathWithoutLocale, locale),
+  redirectTo ?? getLocalizedUrl(pathWithoutLocale, locale),
   Astro.site,
 );
 
@@ -92,6 +91,7 @@ const xDefaultHref = new URL(
     <link rel="icon" href="/favicon/favicon.ico" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
+    {noindex && <meta name="robots" content="noindex" />}
     <title>{fullTitle}</title>
     {description && <meta name="description" content={description} />}
     <meta property="og:type" content={type} />
@@ -127,10 +127,15 @@ const xDefaultHref = new URL(
       ))
     }
     <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
+    {
+      redirectTo && (
+        <meta http-equiv="refresh" content={`0;url=${redirectTo}`} />
+      )
+    }
+    <slot name="head" />
     <LocaleRedirector />
   </head>
   <body>
-    <Header locale={locale} />
     <main>
       <slot />
     </main>

@@ -1,7 +1,7 @@
 import Popover from "./Popover.astro";
 
 export default {
-  title: "2027/Common/Popover",
+  title: "Common/Popover",
   component: Popover,
   args: {
     id: "demo",

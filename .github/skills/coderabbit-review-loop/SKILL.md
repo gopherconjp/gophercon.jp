@@ -7,8 +7,8 @@ description: Run CodeRabbit reviews repeatedly until no findings remain before c
 
 Run before creating a PR to raise code quality. Only run when the user explicitly asks.
 
-1. Commit the worktree first (use `git-commit-and-pr`).
-2. Run `coderabbit review --agent --base-commit <last reviewed commit>`.
-3. Check findings. Ask the user if any need a human design decision; if a finding is invalid, ask the user to add it to `.coderabbit.yaml` `path_instructions`.
-4. Fix valid findings, run the standard checks (`bun run check`, `bun run lint`, `bun run format`), commit, and repeat until `findings: 0`.
-5. When findings are 0: reset the worktree to the last pushed commit, notify the user and wait, then commit again with proper granularity.
+1. Ensure a feature branch (create/switch if needed), record HEAD as `<loop-base>`, then commit the worktree.
+2. Run `coderabbit review --agent --base-commit <last reviewed>` (first: `<loop-base>`).
+3. Ask the user on design decisions; ask before adding invalid findings to `.coderabbit.yaml` `path_instructions`.
+4. Fix valid findings, run `bun run check`, `lint`, `format`, commit; repeat until `findings: 0`.
+5. `git reset <loop-base>` (mixed, keep worktree), notify and wait, then recommit granularly.
