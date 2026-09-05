@@ -29,7 +29,7 @@
   "devDependencies": {
     "@astrojs/check": "0.9.10",
     "@ianvs/prettier-plugin-sort-imports": "4.7.1",
-    "@intlayer/core": "9.4.1",
+    "@intlayer/core": "9.4.2",
     "@storybook-astro/framework": "1.11.0",
     "@storybook/builder-vite": "10.5.10",
     "@types/bun": "1.4.0",
