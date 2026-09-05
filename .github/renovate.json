@@ -23,6 +23,11 @@
       "matchManagers": ["docker-compose"],
       "matchDepNames": ["penpotapp/*"],
       "groupName": "Penpot (docker compose)"
+    },
+    {
+      "description": "Keep intlayer packages in lockstep",
+      "matchDepNames": ["intlayer", "astro-intlayer", "@intlayer/*"],
+      "groupName": "intlayer"
     }
   ]
 }
