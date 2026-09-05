@@ -21,6 +21,7 @@
 
 - `git-commit-and-pr`: commit / push / create PR workflow. Only run when the user explicitly asks.
 - `cleanup-merged-branch`: switch to main and delete the branch after a merge. Run proactively after a PR merge.
+- `coderabbit-review-loop`: run CodeRabbit reviews until no findings remain before a PR. Only run when the user explicitly asks.
 
 ## Verification
 
