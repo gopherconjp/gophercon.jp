@@ -6,12 +6,7 @@
 
 ## Design (Penpot)
 
-- After any Penpot change, run `bun run penpot:export` and commit the snapshot. Never skip.
-- Sync changed tokens to `src/components/2027/_styles/token.css` (`--_*`).
-- Pixels are multiples of 4 (multiples of 8 from 40 up; key-visual exempt); tokenize spacing/dimensions.
-- Image uploads are manual (human), not the agent.
-- No variant-switch interaction in Penpot; dynamic states are implemented in code.
-- Underlines use an inner stroke bound to the `borderWidth-2` token, not a fill.
+- See `penpot-design` skill for the full workflow. Only run when the user explicitly asks.
 
 ## Code
 
@@ -23,6 +18,8 @@
 - `git-commit-and-pr`: commit / push / create PR workflow. Only run when the user explicitly asks.
 - `cleanup-merged-branch`: switch to main and delete the branch after a merge. Run proactively after a PR merge.
 - `coderabbit-review-loop`: run CodeRabbit reviews until no findings remain before a PR. Only run when the user explicitly asks.
+- `penpot-design`: edit Penpot designs via the MCP plugin. Only run when the user explicitly asks.
+- `parallel-worktree`: open a sibling worktree in a new window for a parallel agent. Only run when the user explicitly asks.
 
 ## Verification
 
