@@ -67,3 +67,11 @@ h3.center::after {
   left: 50%;
   transform: translateX(-50%);
 }
+
+a {
+  color: var(--_color-accent);
+}
+
+a:hover {
+  color: var(--_color-sub);
+}
