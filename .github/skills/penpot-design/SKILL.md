@@ -9,7 +9,7 @@ Run only when the user explicitly asks for a design change.
 
 ## Preconditions
 
-- Read the high-level overview first; work via `execute_code` with ids in `storage`; prefer `penpotUtils`; `openPage` before edits. Cross-page `clone` / `appendChild` / `remove` fails; ask a human to move shapes.
+- Read the high-level overview first; work via `execute_code` with ids in `storage`; prefer `penpotUtils`; `openPage` before edits. Cross-page `clone`, `appendChild`, and `remove` are not allowed; if these actions are needed, consult a human to move shapes.
 
 ## Frames and spacing
 
