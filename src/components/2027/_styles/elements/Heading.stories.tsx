@@ -1,7 +1,7 @@
 import Heading from "./Heading.astro";
 
 export default {
-  title: "2027/Styles/Headings",
+  title: "2027/Styles/Elements/Heading",
   component: Heading,
   argTypes: {
     level: {
