@@ -69,9 +69,9 @@ h3.center::after {
 }
 
 a {
-  color: var(--_color-accent);
+  color: var(--_color-sub);
 }
 
 a:hover {
-  color: var(--_color-sub);
+  color: var(--_color-accent);
 }
