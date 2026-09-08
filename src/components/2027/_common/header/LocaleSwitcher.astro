@@ -2,22 +2,19 @@
 import {
   getDictionary,
   getLocaleName,
-  getLocalizedUrl,
-  getPathWithoutLocale,
-  locales,
   t,
   type Dictionary,
   type LocalesValues,
 } from "intlayer";
 
 import Popover from "../../../_common/Popover.astro";
+import { getLocalizedHref, getOtherLocale } from "../../../../utils/locale";
 
 interface Props {
   locale: LocalesValues;
 }
 const { locale } = Astro.props;
-
-const pathWithoutLocale = getPathWithoutLocale(Astro.url.pathname);
+const otherLocale = getOtherLocale(locale);
 
 const content = {
   key: "local",
@@ -33,9 +30,6 @@ const content = {
   },
 } satisfies Dictionary;
 const { ariaLabel, switchTo } = getDictionary(content, locale);
-
-const otherLocale =
-  locales.find((item: LocalesValues) => item !== locale) ?? locale;
 ---
 
 <Popover id="locale-switcher" label={ariaLabel}>
@@ -48,7 +42,7 @@ const otherLocale =
   <a
     slot="content"
     class="locale-switcher__item"
-    href={getLocalizedUrl(pathWithoutLocale, otherLocale)}
+    href={getLocalizedHref(Astro.url.pathname, otherLocale)}
     data-locale={otherLocale}
   >
     <span class="locale-switcher__item-frame">{switchTo}</span>
@@ -56,19 +50,9 @@ const otherLocale =
 </Popover>
 
 <script>
-  import { localeStorageOptions } from "@intlayer/core/utils";
-  import { setLocaleInStorageClient, type LocalesValues } from "intlayer";
+  import { setupLocalePersistence } from "../../../../utils/locale";
 
-  document
-    .querySelectorAll<HTMLAnchorElement>("[data-locale]")
-    .forEach((link) => {
-      link.addEventListener("click", () => {
-        const targetLocale = link.getAttribute("data-locale") as LocalesValues;
-        if (targetLocale) {
-          setLocaleInStorageClient(targetLocale, localeStorageOptions);
-        }
-      });
-    });
+  setupLocalePersistence();
 </script>
 
 <style>
