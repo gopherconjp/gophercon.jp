@@ -21,7 +21,7 @@ const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
 const destination = getLocalizedUrl(mainPath, locale);
 ---
 
-<Layout redirectTo={destination} noindex>
+<Layout locale={locale} redirectTo={destination} noindex>
   <p>
     Redirecting to <a href={destination}>{destination}</a>
   </p>

@@ -1,22 +1,16 @@
 ---
-import {
-  defaultLocale,
-  getHTMLTextDir,
-  getLocaleFromPath,
-  getLocalizedUrl,
-  getPathWithoutLocale,
-  localeMap,
-  type LocalesValues,
-} from "intlayer";
+import { getHTMLTextDir, type LocalesValues } from "intlayer";
 
 import Header from "../_common/header/index.astro";
 import LocaleRedirector from "../../_common/LocaleRedirector.astro";
+import { getSeo, OG_LOCALES } from "../../../utils/seo";
 
 import "../_styles/token.css";
 import "../_styles/font.css";
 import "../_styles/elements.css";
 
 interface Props {
+  locale: LocalesValues;
   title?: string;
   description?: string;
   image?: string;
@@ -25,6 +19,7 @@ interface Props {
 }
 
 const {
+  locale,
   title = "",
   description,
   image = "/2027/ogp.png",
@@ -32,36 +27,17 @@ const {
   type = "website",
 } = Astro.props;
 
-const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
-const pathWithoutLocale = getPathWithoutLocale(Astro.url.pathname);
-
 const SITE_NAME = "GopherCon Japan 2027";
-const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
 
-const ogImage = new URL(image, Astro.site);
-const OG_LOCALES: Record<LocalesValues, string> = {
-  en: "en_US",
-  ja: "ja_JP",
-};
-const ogLocale = OG_LOCALES[locale];
-
-const canonical = new URL(
-  getLocalizedUrl(pathWithoutLocale, locale),
-  Astro.site,
-);
-
-const alternates = localeMap(({ locale: alternateLocale }) => ({
-  locale: alternateLocale,
-  href: new URL(
-    getLocalizedUrl(pathWithoutLocale, alternateLocale),
-    Astro.site,
-  ),
-}));
-
-const xDefaultHref = new URL(
-  getLocalizedUrl(pathWithoutLocale, defaultLocale),
-  Astro.site,
-);
+const { fullTitle, ogImage, ogLocale, canonical, alternates, xDefaultHref } =
+  getSeo({
+    locale,
+    pathname: Astro.url.pathname,
+    site: Astro.site,
+    siteName: SITE_NAME,
+    title,
+    image,
+  });
 ---
 
 <!doctype html>

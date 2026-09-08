@@ -35,7 +35,7 @@ const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
 const { title, description, heading, body } = getDictionary(content, locale);
 ---
 
-<Layout title={title} description={description} noindex>
+<Layout locale={locale} title={title} description={description} noindex>
   <section class="not-found">
     <h1>{heading}</h1>
     <p>{body}</p>
