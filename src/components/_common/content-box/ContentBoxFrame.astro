@@ -1,0 +1,24 @@
+---
+import ContentBox from "./ContentBox.astro";
+
+interface Props {
+  width?: number;
+}
+
+const { width = 1200 } = Astro.props;
+---
+
+<div style={`width: ${width}px; margin: 0 auto; outline: 1px dashed #999;`}>
+  <ContentBox>
+    <div
+      slot="background"
+      style="height: 100%; background: rgba(104, 204, 231, 0.25);"
+    >
+    </div>
+    <div
+      style="min-height: 120px; display: grid; place-items: center; background: rgba(0, 84, 125, 0.15); outline: 1px solid #00547d;"
+    >
+      {width}px parent
+    </div>
+  </ContentBox>
+</div>
