@@ -1,8 +1,8 @@
 import {
+  defaultLocale,
   getLocalizedUrl,
   getPathWithoutLocale,
   localeMap,
-  Locales,
   type LocalesValues,
 } from "intlayer";
 
@@ -48,7 +48,7 @@ export const getSeo = ({
     href: new URL(getLocalizedUrl(pathWithoutLocale, alternateLocale), site),
   }));
 
-  const xDefaultHref = new URL(getLocalizedUrl(pathWithoutLocale, Locales.ENGLISH), site);
+  const xDefaultHref = new URL(getLocalizedUrl(pathWithoutLocale, defaultLocale), site);
 
   return {
     fullTitle,
