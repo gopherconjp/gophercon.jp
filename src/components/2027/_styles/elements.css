@@ -37,6 +37,16 @@ h2::after {
   background-size: 100% 100%;
 }
 
+/* h2.center: Short (text 168px or narrower) only. */
+h2.center {
+  text-align: center;
+}
+
+h2.center::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 /* h3: text + brush-stroke band overlapping the bottom of the text.
    Band width follows the OUTER box width: max 544px. */
 h3 {

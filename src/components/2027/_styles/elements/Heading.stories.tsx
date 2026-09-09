@@ -38,6 +38,14 @@ export const H2 = {
   },
 };
 
+export const H2Center = {
+  args: {
+    level: 2,
+    text: "短い見出し",
+    center: true,
+  },
+};
+
 export const H3 = {
   args: {
     level: 3,
