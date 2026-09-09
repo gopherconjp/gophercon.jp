@@ -3,13 +3,14 @@ import ContentBox from "./ContentBox.astro";
 
 interface Props {
   width?: number;
+  variant?: "default" | "text";
 }
 
-const { width = 1200 } = Astro.props;
+const { width = 1200, variant = "default" } = Astro.props;
 ---
 
 <div style={`width: ${width}px; margin: 0 auto; outline: 1px dashed #999;`}>
-  <ContentBox>
+  <ContentBox variant={variant}>
     <div
       slot="background"
       style="height: 100%; background: rgba(104, 204, 231, 0.25);"
