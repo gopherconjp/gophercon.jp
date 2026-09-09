@@ -1,4 +1,12 @@
-<div class="content-box">
+---
+interface Props {
+  variant?: "default" | "text";
+}
+
+const { variant = "default" } = Astro.props;
+---
+
+<div class:list={["content-box", variant === "text" && "content-box--text"]}>
   <div class="content-box__background">
     <slot name="background" />
   </div>
@@ -21,14 +29,18 @@
     width: 100%;
   }
 
+  .content-box--text {
+    --_cb-max: 720px;
+  }
+
   .content-box__background {
     position: absolute;
     inset: 0;
   }
 
-  /* C(W) = min(1200px, 360px + (W - 400px) * 42 / 55, W - 40px)
-     - W >= 1500px: fixed at 1200px
-     - 400px <= W <= 1500px: linear interpolation between (400, 360) and (1500, 1200)
+  /* C(W) = min(var(--_cb-max), 360px + (W - 400px) * 42 / 55, W - 40px)
+     - W >= 1500px (default) / 872px (text): fixed at max
+     - 400px <= W: linear interpolation between (400, 360) and the max cap
      - W <= 400px: full width minus 20px margins on each side */
   .content-box__content {
     position: relative;
