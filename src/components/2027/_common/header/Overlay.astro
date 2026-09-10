@@ -1,0 +1,55 @@
+---
+import type { LocalesValues } from "intlayer";
+
+import Header from "./index.astro";
+
+interface Props {
+  locale: LocalesValues;
+}
+const { locale } = Astro.props;
+---
+
+<div class="overlay" data-header-overlay>
+  <Header locale={locale} />
+</div>
+<div class="overlay__sentinel" data-header-sentinel aria-hidden="true"></div>
+
+<script>
+  const overlay = document.querySelector("[data-header-overlay]");
+  const sentinel = document.querySelector("[data-header-sentinel]");
+
+  if (overlay && sentinel) {
+    new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (entry) {
+        overlay.classList.toggle("is-hidden", entry.isIntersecting);
+      }
+    }).observe(sentinel);
+  }
+</script>
+
+<style>
+  .overlay {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    transition:
+      transform 0.3s ease,
+      visibility 0.3s;
+  }
+
+  .overlay.is-hidden {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .overlay {
+      transition: none;
+    }
+  }
+
+  .overlay__sentinel {
+    height: 1px;
+  }
+</style>

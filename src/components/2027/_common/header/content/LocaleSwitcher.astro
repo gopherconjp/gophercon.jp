@@ -7,8 +7,8 @@ import {
   type LocalesValues,
 } from "intlayer";
 
-import Popover from "../../../_common/Popover.astro";
-import { getLocalizedHref, getOtherLocale } from "../../../../utils/locale";
+import Popover from "../../../../_common/Popover.astro";
+import { getLocalizedHref, getOtherLocale } from "../../../../../utils/locale";
 
 interface Props {
   locale: LocalesValues;
@@ -50,7 +50,7 @@ const { ariaLabel, switchTo } = getDictionary(content, locale);
 </Popover>
 
 <script>
-  import { setupLocalePersistence } from "../../../../utils/locale";
+  import { setupLocalePersistence } from "../../../../../utils/locale";
 
   setupLocalePersistence();
 </script>

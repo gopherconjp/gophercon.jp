@@ -12,6 +12,7 @@
 
 - `LocaleRedirector` and `LocaleSwitcher` are intentionally separate; do not merge.
 - Avoid comments; add one only for Why / Why Not of a behavior.
+- In Astro files, order blocks as markup, `script`, then `style`.
 
 ## Verification
 

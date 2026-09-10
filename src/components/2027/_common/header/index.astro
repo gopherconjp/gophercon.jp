@@ -8,10 +8,10 @@ import {
   type LocalesValues,
 } from "intlayer";
 
-import Hamburger from "./Hamburger.astro";
-import LocaleSwitcher from "./LocaleSwitcher.astro";
-import logo from "./logo.webp";
-import NavLink from "./NavLink.astro";
+import Hamburger from "./content/Hamburger.astro";
+import LocaleSwitcher from "./content/LocaleSwitcher.astro";
+import logo from "./content/logo.webp";
+import NavLink from "./content/NavLink.astro";
 
 interface Props {
   locale: LocalesValues;
@@ -77,6 +77,9 @@ const HEADER_COMPACT_MIN_PX = 400; // shrink start
 
 <style>
   .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
     display: flex;
     align-items: center;
     justify-content: space-between;
