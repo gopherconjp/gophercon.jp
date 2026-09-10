@@ -37,7 +37,8 @@ h2::after {
   background-size: 100% 100%;
 }
 
-/* h2.center: Short (text 168px or narrower) only. */
+/* h2.center: Short (text 134px or narrower) only.
+   Band shifts right by 10% of its width; wider text overflows its left edge. */
 h2.center {
   text-align: center;
 }
