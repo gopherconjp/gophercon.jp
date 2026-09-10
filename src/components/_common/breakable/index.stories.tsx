@@ -3,7 +3,7 @@ import { Locales } from "intlayer";
 import Breakable from "./index.astro";
 
 export default {
-  title: "2027/Common/Breakable",
+  title: "Common/Breakable",
   component: Breakable,
   argTypes: {
     locale: {
