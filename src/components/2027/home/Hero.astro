@@ -1,0 +1,59 @@
+---
+import { getIntlayer, type LocalesValues } from "intlayer";
+
+import { key } from "./Hero.content";
+
+interface Props {
+  locale: LocalesValues;
+}
+const { locale } = Astro.props;
+
+const { badge, title, subtitle, description } = getIntlayer(key, locale);
+---
+
+<section class="hero">
+  <p class="hero__badge">{badge}</p>
+  <h1 class="hero__title">{title}</h1>
+  <p class="hero__subtitle">{subtitle}</p>
+  <p class="hero__description">{description}</p>
+</section>
+
+<style>
+  .hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 1rem;
+    text-align: center;
+  }
+
+  .hero__badge {
+    display: inline-block;
+    margin: 0 0 1rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: var(--_color-accent);
+    color: var(--_color-white);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .hero__title {
+    margin: 0 0 1rem;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .hero__subtitle {
+    margin: 0 0 1.5rem;
+    font-size: 1.25rem;
+    color: var(--_color-black);
+  }
+
+  .hero__description {
+    margin: 0 auto;
+    max-width: 40rem;
+    color: var(--_color-black);
+    line-height: 1.75;
+  }
+</style>

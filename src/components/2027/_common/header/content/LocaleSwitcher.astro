@@ -1,14 +1,9 @@
 ---
-import {
-  getDictionary,
-  getLocaleName,
-  t,
-  type Dictionary,
-  type LocalesValues,
-} from "intlayer";
+import { getIntlayer, getLocaleName, type LocalesValues } from "intlayer";
 
 import Popover from "../../../../_common/Popover.astro";
 import { getLocalizedHref, getOtherLocale } from "../../../../../utils/locale";
+import { key } from "./LocaleSwitcher.content";
 
 interface Props {
   locale: LocalesValues;
@@ -16,20 +11,7 @@ interface Props {
 const { locale } = Astro.props;
 const otherLocale = getOtherLocale(locale);
 
-const content = {
-  key: "local",
-  content: {
-    ariaLabel: t({
-      en: "Change language",
-      ja: "言語を切り替える",
-    }),
-    switchTo: t({
-      en: "日本語に切り替える",
-      ja: "Switch to English",
-    }),
-  },
-} satisfies Dictionary;
-const { ariaLabel, switchTo } = getDictionary(content, locale);
+const { ariaLabel, switchTo } = getIntlayer(key, locale);
 ---
 
 <Popover id="locale-switcher" label={ariaLabel}>
