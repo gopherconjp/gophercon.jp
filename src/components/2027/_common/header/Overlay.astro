@@ -22,7 +22,7 @@ const { locale } = Astro.props;
     new IntersectionObserver((entries) => {
       const entry = entries[0];
       if (entry) {
-        overlay.classList.toggle("is-hidden", entry.isIntersecting);
+        overlay.classList.toggle("is-shown", !entry.isIntersecting);
       }
     }).observe(sentinel);
   }
@@ -33,14 +33,16 @@ const { locale } = Astro.props;
     position: fixed;
     inset: 0 0 auto 0;
     z-index: 50;
+    transform: translateY(-100%);
+    visibility: hidden;
     transition:
       transform 0.3s ease,
       visibility 0.3s;
   }
 
-  .overlay.is-hidden {
-    transform: translateY(-100%);
-    visibility: hidden;
+  .overlay.is-shown {
+    transform: none;
+    visibility: visible;
   }
 
   @media (prefers-reduced-motion: reduce) {
