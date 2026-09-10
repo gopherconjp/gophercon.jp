@@ -1,0 +1,17 @@
+---
+import type { LocalesValues } from "intlayer";
+
+import Layout from "./_layouts/Layout.astro";
+
+interface Props {
+  locale: LocalesValues;
+  destination: string;
+}
+const { locale, destination } = Astro.props;
+---
+
+<Layout locale={locale} redirectTo={destination} noindex>
+  <p>
+    Redirecting to <a href={destination}>{destination}</a>
+  </p>
+</Layout>

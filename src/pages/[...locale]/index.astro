@@ -7,7 +7,7 @@ import {
   type LocalesValues,
 } from "intlayer";
 
-import Layout from "../../components/index/_layouts/Layout.astro";
+import Home from "../../components/home/index.astro";
 
 const mainPath = "/2027";
 
@@ -21,8 +21,4 @@ const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
 const destination = getLocalizedUrl(mainPath, locale);
 ---
 
-<Layout locale={locale} redirectTo={destination} noindex>
-  <p>
-    Redirecting to <a href={destination}>{destination}</a>
-  </p>
-</Layout>
+<Home locale={locale} destination={destination} />

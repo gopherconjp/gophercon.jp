@@ -1,0 +1,28 @@
+---
+import { getIntlayer, type LocalesValues } from "intlayer";
+
+import Layout from "../home/_layouts/Layout.astro";
+import { key } from "./index.content";
+
+interface Props {
+  locale: LocalesValues;
+}
+const { locale } = Astro.props;
+const { title, description, heading, body } = getIntlayer(key, locale);
+---
+
+<Layout locale={locale} title={title} description={description} noindex>
+  <section class="not-found">
+    <h1>{heading}</h1>
+    <p>{body}</p>
+  </section>
+</Layout>
+
+<style>
+  .not-found {
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 6rem 1rem;
+    text-align: center;
+  }
+</style>
