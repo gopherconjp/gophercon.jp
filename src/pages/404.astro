@@ -1,7 +1,7 @@
 ---
 import { getLocaleFromPath, type LocalesValues } from "intlayer";
 
-import NotFound from "../components/not-found/index.astro";
+import NotFound from "../components/index/not-found/index.astro";
 
 const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
 ---
