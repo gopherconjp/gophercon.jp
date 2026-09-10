@@ -1,7 +1,7 @@
-import CardList from "./CardList.astro";
+import CardList from "./List.astro";
 
 export default {
-  title: "2027/Common/Card/CardList",
+  title: "2027/Common/Card/List",
   component: CardList,
   args: {
     cards: [

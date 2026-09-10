@@ -1,7 +1,7 @@
-import Card from "./Card.astro";
+import Card from "./index.astro";
 
 export default {
-  title: "2027/Common/Card/Card",
+  title: "2027/Common/Card",
   component: Card,
   args: {
     label: "Date",
