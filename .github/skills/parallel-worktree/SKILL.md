@@ -16,5 +16,6 @@ Open a sibling worktree in a new VS Code window so another agent can work on a d
    3. Open (`code --new-window ../<repo>-<suffix>`).
    4. If no branch exists, notify and suggest creating one first.
    5. If creation fails on permissions, notify and suggest checking them.
-3. Report path, branch, and task; user starts agent manually.
-4. After merge, run `cleanup-merged-branch`.
+3. Return to the main worktree (`cd` back, verify `main` and clean).
+4. Report path, branch, and task; user starts agent manually.
+5. After merge, run `cleanup-merged-branch`.
