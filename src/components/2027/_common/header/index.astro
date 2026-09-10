@@ -6,14 +6,13 @@ import Hamburger from "./content/Hamburger.astro";
 import LocaleSwitcher from "./content/LocaleSwitcher.astro";
 import logo from "./content/logo.webp";
 import NavLink from "./content/NavLink.astro";
-import { key } from "./index.content";
 
 interface Props {
   locale: LocalesValues;
 }
 const { locale } = Astro.props;
 
-const { navLabel, menuLabel } = getIntlayer(key, locale);
+const { navLabel, menuLabel } = getIntlayer("2027-header", locale);
 
 const links = [
   { label: "About", href: getLocalizedUrl("/2027/about", locale) },

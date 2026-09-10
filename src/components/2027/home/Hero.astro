@@ -1,14 +1,15 @@
 ---
 import { getIntlayer, type LocalesValues } from "intlayer";
 
-import { key } from "./Hero.content";
-
 interface Props {
   locale: LocalesValues;
 }
 const { locale } = Astro.props;
 
-const { badge, title, subtitle, description } = getIntlayer(key, locale);
+const { badge, title, subtitle, description } = getIntlayer(
+  "2027-home-hero",
+  locale,
+);
 ---
 
 <section class="hero">

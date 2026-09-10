@@ -3,7 +3,6 @@ import { getIntlayer, getLocaleName, type LocalesValues } from "intlayer";
 
 import Popover from "../../../../_common/Popover.astro";
 import { getLocalizedHref, getOtherLocale } from "../../../../../utils/locale";
-import { key } from "./LocaleSwitcher.content";
 
 interface Props {
   locale: LocalesValues;
@@ -11,7 +10,10 @@ interface Props {
 const { locale } = Astro.props;
 const otherLocale = getOtherLocale(locale);
 
-const { ariaLabel, switchTo } = getIntlayer(key, locale);
+const { ariaLabel, switchTo } = getIntlayer(
+  "2027-header-locale-switcher",
+  locale,
+);
 ---
 
 <Popover id="locale-switcher" label={ariaLabel}>

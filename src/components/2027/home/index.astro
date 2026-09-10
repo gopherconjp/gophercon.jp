@@ -3,7 +3,6 @@ import { getIntlayer, type LocalesValues } from "intlayer";
 
 import Layout from "../_layouts/Layout.astro";
 import Hero from "./Hero.astro";
-import { key } from "./index.content";
 import KeyVisual from "./key-visual/index.astro";
 
 interface Props {
@@ -11,7 +10,7 @@ interface Props {
 }
 const { locale } = Astro.props;
 
-const { description, missionTitle, mission } = getIntlayer(key, locale);
+const { description, missionTitle, mission } = getIntlayer("2027-home", locale);
 ---
 
 <Layout locale={locale} description={description} overlayHeader>

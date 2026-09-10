@@ -5,7 +5,6 @@ import background from "./background.webp";
 import cloudL from "./cloud_l.webp";
 import cloudR from "./cloud_r.webp";
 import hikyaku from "./hikyaku.webp";
-import { key } from "./index.content";
 import logo from "./logo.webp";
 import onago from "./onago.webp";
 import rectangle from "./rectangle.webp";
@@ -17,7 +16,7 @@ interface Props {
 }
 const { locale } = Astro.props;
 
-const { ariaLabel } = getIntlayer(key, locale);
+const { ariaLabel } = getIntlayer("2027-home-key-visual", locale);
 
 // Stage layers in stacking order (bottom → top).
 const layers: {

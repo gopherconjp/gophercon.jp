@@ -2,13 +2,12 @@
 import { getIntlayer, type LocalesValues } from "intlayer";
 
 import Layout from "../home/_layouts/Layout.astro";
-import { key } from "./index.content";
 
 interface Props {
   locale: LocalesValues;
 }
 const { locale } = Astro.props;
-const { title, description, heading, body } = getIntlayer(key, locale);
+const { title, description, heading, body } = getIntlayer("not-found", locale);
 ---
 
 <Layout locale={locale} title={title} description={description} noindex>
