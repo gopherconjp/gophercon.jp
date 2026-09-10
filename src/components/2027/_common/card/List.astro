@@ -13,7 +13,11 @@ const { cards } = Astro.props;
 ---
 
 <div class="card-list">
-  {cards.map((card) => <Card label={card.label} content={card.content} />)}
+  {
+    cards.map((card: CardItem) => (
+      <Card label={card.label} content={card.content} />
+    ))
+  }
 </div>
 
 <style>
