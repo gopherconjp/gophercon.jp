@@ -1,0 +1,32 @@
+---
+import type { LocalesValues } from "intlayer";
+
+import type { Breakable } from "./types";
+
+interface Props {
+  value: Breakable;
+  locale: LocalesValues;
+}
+
+const { value, locale } = Astro.props;
+const separator = locale === "ja" ? "" : " ";
+---
+
+{
+  typeof value === "string"
+    ? value
+    : value.map((chunk, index) => (
+        <>
+          {index > 0 ? separator : null}
+          <span class="breakable__chunk">
+            <Astro.self value={chunk} locale={locale} />
+          </span>
+        </>
+      ))
+}
+
+<style>
+  .breakable__chunk {
+    display: inline-block;
+  }
+</style>
