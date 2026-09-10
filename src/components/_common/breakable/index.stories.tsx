@@ -37,3 +37,10 @@ export const Japanese = {
     value: ["世界の情熱を", "日本へ。"],
   },
 };
+
+export const Accent = {
+  args: {
+    locale: Locales.ENGLISH,
+    value: ["Let the world's", { accent: "passion" }, "reach Japan."],
+  },
+};

@@ -13,20 +13,30 @@ const separator = locale === "ja" ? "" : " ";
 ---
 
 {
-  typeof value === "string"
-    ? value
-    : value.map((chunk, index) => (
-        <>
-          {index > 0 ? separator : null}
-          <span class="breakable__chunk">
-            <Astro.self value={chunk} locale={locale} />
-          </span>
-        </>
-      ))
+  typeof value === "string" ? (
+    value
+  ) : Array.isArray(value) ? (
+    value.map((chunk, index) => (
+      <>
+        {index > 0 ? separator : null}
+        <span class="breakable__chunk">
+          <Astro.self value={chunk} locale={locale} />
+        </span>
+      </>
+    ))
+  ) : (
+    <span class="breakable__accent">
+      <Astro.self value={value.accent} locale={locale} />
+    </span>
+  )
 }
 
 <style>
   .breakable__chunk {
     display: inline-block;
+  }
+
+  .breakable__accent {
+    color: var(--_color-accent);
   }
 </style>

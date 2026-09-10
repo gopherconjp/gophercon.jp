@@ -1,1 +1,1 @@
-export type Breakable = string | Breakable[];
+export type Breakable = string | Breakable[] | { accent: Breakable };
