@@ -18,7 +18,7 @@ User writes break intent inline with pipes: more pipes means higher priority (br
 
 Examples:
 
-- `世界の | 情熱を || 日本へ。` → `[["世界の", "情熱を"], "日本へ。"]`
+- `世界の|情熱を||日本へ。` → `[["世界の", "情熱を"], "日本へ。"]`
 - `Let the world's | passion || reach | Japan.` → `[["Let the world's", "passion"], ["reach", "Japan."]]`
 
 ## Procedure
