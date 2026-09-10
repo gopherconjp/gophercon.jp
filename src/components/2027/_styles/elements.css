@@ -44,7 +44,7 @@ h2.center {
 
 h2.center::after {
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-40%);
 }
 
 /* h3: text + brush-stroke band overlapping the bottom of the text.
