@@ -13,6 +13,7 @@ reviews:
     - "!**/*.woff"
     - "!**/*.woff2"
     - "!.github/skills/**"
+    - "!.github/instructions/**"
     - "!.github/copilot-instructions.md"
 
   auto_review:
