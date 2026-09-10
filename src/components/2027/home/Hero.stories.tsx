@@ -1,7 +1,7 @@
 import Hero from "./Hero.astro";
 
 export default {
-  title: "Components/Hero",
+  title: "2027/Home/Hero",
   component: Hero,
   argTypes: {
     locale: {

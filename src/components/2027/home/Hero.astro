@@ -1,38 +1,15 @@
 ---
-import {
-  getDictionary,
-  t,
-  type Dictionary,
-  type LocalesValues,
-} from "intlayer";
+import { getIntlayer, type LocalesValues } from "intlayer";
 
 interface Props {
   locale: LocalesValues;
 }
 const { locale } = Astro.props;
 
-const content = {
-  key: "local",
-  content: {
-    badge: t({
-      en: "GopherCon Japan 2027",
-      ja: "GopherCon Japan 2027",
-    }),
-    title: t({
-      en: "Let the world's passion reach Japan.",
-      ja: "世界の情熱を日本へ。",
-    }),
-    subtitle: t({
-      en: "Let Japan's untapped wisdom travel to the world.",
-      ja: "日本の未発見の叡智を世界へ。",
-    }),
-    description: t({
-      en: "GopherCon Japan offers a space where Gophers from around the world connect and enjoy without barriers.",
-      ja: "GopherCon Japan は、世界中の Gopher が垣根なくつながり、楽しめる場所を提供します。",
-    }),
-  },
-} satisfies Dictionary;
-const { badge, title, subtitle, description } = getDictionary(content, locale);
+const { badge, title, subtitle, description } = getIntlayer(
+  "2027-home-hero",
+  locale,
+);
 ---
 
 <section class="hero">

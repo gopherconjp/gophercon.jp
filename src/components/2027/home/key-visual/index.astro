@@ -1,10 +1,5 @@
 ---
-import {
-  getDictionary,
-  t,
-  type Dictionary,
-  type LocalesValues,
-} from "intlayer";
+import { getIntlayer, type LocalesValues } from "intlayer";
 
 import background from "./background.webp";
 import cloudL from "./cloud_l.webp";
@@ -21,16 +16,7 @@ interface Props {
 }
 const { locale } = Astro.props;
 
-const content = {
-  key: "local",
-  content: {
-    ariaLabel: t({
-      en: "GopherCon Japan 2027 key visual",
-      ja: "GopherCon Japan 2027 キービジュアル",
-    }),
-  },
-} satisfies Dictionary;
-const { ariaLabel } = getDictionary(content, locale);
+const { ariaLabel } = getIntlayer("2027-home-key-visual", locale);
 
 // Stage layers in stacking order (bottom → top).
 const layers: {

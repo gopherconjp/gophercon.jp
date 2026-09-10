@@ -1,12 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import {
-  getDictionary,
-  getLocalizedUrl,
-  t,
-  type Dictionary,
-  type LocalesValues,
-} from "intlayer";
+import { getIntlayer, getLocalizedUrl, type LocalesValues } from "intlayer";
 
 import Hamburger from "./content/Hamburger.astro";
 import LocaleSwitcher from "./content/LocaleSwitcher.astro";
@@ -18,20 +12,7 @@ interface Props {
 }
 const { locale } = Astro.props;
 
-const content = {
-  key: "local",
-  content: {
-    navLabel: t({
-      en: "Main navigation",
-      ja: "メインナビゲーション",
-    }),
-    menuLabel: t({
-      en: "Open menu",
-      ja: "メニューを開く",
-    }),
-  },
-} satisfies Dictionary;
-const { navLabel, menuLabel } = getDictionary(content, locale);
+const { navLabel, menuLabel } = getIntlayer("2027-header", locale);
 
 const links = [
   { label: "About", href: getLocalizedUrl("/2027/about", locale) },

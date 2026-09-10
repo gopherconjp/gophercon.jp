@@ -1,52 +1,9 @@
 ---
-import {
-  getDictionary,
-  getLocaleFromPath,
-  t,
-  type Dictionary,
-  type LocalesValues,
-} from "intlayer";
+import { getLocaleFromPath, type LocalesValues } from "intlayer";
 
-import Layout from "../components/index/_layouts/Layout.astro";
-
-const content = {
-  key: "local",
-  content: {
-    title: t({
-      en: "404 - Page not found",
-      ja: "404 - ページが見つかりません",
-    }),
-    description: t({
-      en: "The page you are looking for does not exist.",
-      ja: "お探しのページは見つかりませんでした。",
-    }),
-    heading: t({
-      en: "Page not found",
-      ja: "ページが見つかりません",
-    }),
-    body: t({
-      en: "Sorry, the page you are looking for does not exist.",
-      ja: "お探しのページは見つかりませんでした。",
-    }),
-  },
-} satisfies Dictionary;
+import NotFound from "../components/not-found/index.astro";
 
 const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
-const { title, description, heading, body } = getDictionary(content, locale);
 ---
 
-<Layout locale={locale} title={title} description={description} noindex>
-  <section class="not-found">
-    <h1>{heading}</h1>
-    <p>{body}</p>
-  </section>
-</Layout>
-
-<style>
-  .not-found {
-    max-width: 40rem;
-    margin: 0 auto;
-    padding: 6rem 1rem;
-    text-align: center;
-  }
-</style>
+<NotFound locale={locale} />
