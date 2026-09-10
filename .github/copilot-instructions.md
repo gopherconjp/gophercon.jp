@@ -21,4 +21,5 @@
 ## Verification
 
 - After any code change: `bun run check`, `bun run lint`, `bun run format`, `bun run build`.
+- After any Actions change: `actionlint`, `ghalint run`, `ghalint run-action`, `zizmor`.
 - After any Astro/design change, also `bun run preview` in the browser.
