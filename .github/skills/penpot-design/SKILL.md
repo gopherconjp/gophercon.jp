@@ -49,6 +49,7 @@ Run only when the user explicitly asks for a design change.
 ## Verification
 
 - `export_shape` PNG check; `penpot:export` plus snapshot commit, never skip; `check` / `lint` / `format`; `build` plus `preview` for Astro/design.
+- After edits, verify propagation to instances and report code-design diffs before fixing.
 
 ## Limits (explain, don't retry)
 

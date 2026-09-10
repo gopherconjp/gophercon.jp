@@ -14,6 +14,10 @@
 - Avoid comments; add one only for Why / Why Not of a behavior.
 - In Astro files, order blocks as markup, `script`, then `style`.
 
+## Git and PR
+
+- See `git-commit-and-pr` / `coderabbit-review-loop` skills for branch, commit granularity, and reset flow.
+
 ## Verification
 
 - After any code change: `bun run check`, `bun run lint`, `bun run format`, `bun run build`.
