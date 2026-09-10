@@ -9,17 +9,32 @@ interface Props {
 const { width = 1200, variant = "default" } = Astro.props;
 ---
 
-<div style={`width: ${width}px; margin: 0 auto; outline: 1px dashed #999;`}>
+<div class="frame" style={`--frame-width: ${width}px;`}>
   <ContentBox variant={variant}>
-    <div
-      slot="background"
-      style="height: 100%; background: rgba(104, 204, 231, 0.25);"
-    >
-    </div>
-    <div
-      style="min-height: 120px; display: grid; place-items: center; background: rgba(0, 84, 125, 0.15); outline: 1px solid #00547d;"
-    >
+    <div slot="background" class="frame__background"></div>
+    <div class="frame__content">
       {width}px parent
     </div>
   </ContentBox>
 </div>
+
+<style>
+  .frame {
+    width: var(--frame-width);
+    margin: 0 auto;
+    outline: 1px dashed var(--_color-black);
+  }
+
+  .frame__background {
+    height: 100%;
+    background: var(--_color-light);
+  }
+
+  .frame__content {
+    min-height: 120px;
+    display: grid;
+    place-items: center;
+    background: var(--_color-sub);
+    outline: 1px solid var(--_color-black);
+  }
+</style>
