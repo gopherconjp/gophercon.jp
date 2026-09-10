@@ -17,7 +17,7 @@ interface SeoOptions {
   site: string | URL | undefined;
   siteName: string;
   title: string;
-  image: string;
+  ogImage: string;
   redirectTo?: string;
 }
 
@@ -27,7 +27,7 @@ export const getSeo = ({
   site,
   siteName,
   title,
-  image,
+  ogImage,
   redirectTo,
 }: SeoOptions) => {
   if (site === undefined) {
@@ -38,7 +38,7 @@ export const getSeo = ({
 
   const fullTitle = title ? `${title} | ${siteName}` : siteName;
 
-  const ogImage = new URL(image, site);
+  const ogImageUrl = new URL(ogImage, site);
   const ogLocale = OG_LOCALES[locale];
 
   const canonical = new URL(redirectTo ?? getLocalizedUrl(pathWithoutLocale, locale), site);
@@ -52,7 +52,7 @@ export const getSeo = ({
 
   return {
     fullTitle,
-    ogImage,
+    ogImageUrl,
     ogLocale,
     canonical,
     alternates,

@@ -14,8 +14,8 @@ interface Props {
   locale: LocalesValues;
   title?: string;
   description?: string;
-  image?: string;
-  imageAlt?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
   type?: "website" | "article";
   overlayHeader?: boolean;
 }
@@ -24,22 +24,22 @@ const {
   locale,
   title = "",
   description,
-  image = "/2027/ogp.png",
-  imageAlt = "GopherCon Japan OGP",
+  ogImage = "/2027/ogp.png",
+  ogImageAlt = "GopherCon Japan OGP",
   type = "website",
   overlayHeader = false,
 } = Astro.props;
 
 const SITE_NAME = "GopherCon Japan 2027";
 
-const { fullTitle, ogImage, ogLocale, canonical, alternates, xDefaultHref } =
+const { fullTitle, ogImageUrl, ogLocale, canonical, alternates, xDefaultHref } =
   getSeo({
     locale,
     pathname: Astro.url.pathname,
     site: Astro.site,
     siteName: SITE_NAME,
     title,
-    image,
+    ogImage,
   });
 ---
 
@@ -78,8 +78,8 @@ const { fullTitle, ogImage, ogLocale, canonical, alternates, xDefaultHref } =
     <meta property="og:title" content={fullTitle} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content={ogLocale} />
@@ -97,8 +97,8 @@ const { fullTitle, ogImage, ogLocale, canonical, alternates, xDefaultHref } =
     <meta name="twitter:site" content="@GopherConJP" />
     <meta name="twitter:title" content={fullTitle} />
     {description && <meta name="twitter:description" content={description} />}
-    <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content={imageAlt} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
     <link rel="canonical" href={canonical} />
     {
       alternates.map((alt) => (
