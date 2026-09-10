@@ -6,10 +6,7 @@ import {
   type LocalesValues,
 } from "intlayer";
 
-export const OG_LOCALES: Record<LocalesValues, string> = {
-  en: "en_US",
-  ja: "ja_JP",
-};
+export const getOgLocale = (locale: LocalesValues): string => (locale === "ja" ? "ja_JP" : "en_US");
 
 interface SeoOptions {
   locale: LocalesValues;
@@ -39,7 +36,7 @@ export const getSeo = ({
   const fullTitle = title ? `${title} | ${siteName}` : siteName;
 
   const ogImageUrl = new URL(ogImage, site);
-  const ogLocale = OG_LOCALES[locale];
+  const ogLocale = getOgLocale(locale);
 
   const canonical = new URL(redirectTo ?? getLocalizedUrl(pathWithoutLocale, locale), site);
 

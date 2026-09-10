@@ -2,7 +2,7 @@
 import { getHTMLTextDir, type LocalesValues } from "intlayer";
 
 import LocaleRedirector from "../../_common/LocaleRedirector.astro";
-import { getSeo, OG_LOCALES } from "../../../utils/seo";
+import { getOgLocale, getSeo } from "../../../utils/seo";
 
 interface Props {
   locale: LocalesValues;
@@ -83,11 +83,11 @@ const { fullTitle, ogImageUrl, ogLocale, canonical, alternates, xDefaultHref } =
     <meta property="og:locale" content={ogLocale} />
     {
       alternates
-        .filter((alt) => OG_LOCALES[alt.locale] !== ogLocale)
+        .filter((alt) => getOgLocale(alt.locale) !== ogLocale)
         .map((alt) => (
           <meta
             property="og:locale:alternate"
-            content={OG_LOCALES[alt.locale]}
+            content={getOgLocale(alt.locale)}
           />
         ))
     }
