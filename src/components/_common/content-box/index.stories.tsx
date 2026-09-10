@@ -1,8 +1,8 @@
-import ContentBoxFrame from "./ContentBoxFrame.astro";
+import Frame from "./Frame.astro";
 
 /**
  * ContentBox responds to its parent width (container queries), so the
- * stories render it inside `ContentBoxFrame`, a thin wrapper that fixes the
+ * stories render it inside `Frame`, a thin wrapper that fixes the
  * parent width. The `width` control lets you drag through every phase:
  *
  *  - Default (`variant: "default"`):
@@ -18,7 +18,7 @@ import ContentBoxFrame from "./ContentBoxFrame.astro";
  */
 export default {
   title: "Common/ContentBox",
-  component: ContentBoxFrame,
+  component: Frame,
   argTypes: {
     width: {
       control: { type: "range", min: 200, max: 2000, step: 10 },
