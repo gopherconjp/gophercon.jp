@@ -16,5 +16,5 @@
 
 ## Verification
 
-- After any code change: `bun run check`, `bun run lint`, `bun run format`.
-- After any Astro/design change, also `bun run build` plus `bun run preview` in the browser.
+- After any code change: `bun run check`, `bun run lint`, `bun run format`, `bun run build`.
+- After any Astro/design change, also `bun run preview` in the browser.
