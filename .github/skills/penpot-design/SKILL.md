@@ -9,7 +9,7 @@ Run only when the user explicitly asks for a design change.
 
 ## Preconditions
 
-- Read the high-level overview first; work via `execute_code` with ids in `storage`; prefer `penpotUtils`; `openPage` before edits. Cross-page `clone`, `appendChild`, and `remove` are not allowed; if these actions are needed, consult a human to move shapes.
+- Read the high-level overview first; work via `execute_code` with ids in `storage`; prefer `penpotUtils`; `openPage` before edits. Cross-page `clone` / `appendChild` / `remove` are not allowed — consult a human.
 
 ## Frames and spacing
 
@@ -19,19 +19,32 @@ Run only when the user explicitly asks for a design change.
 
 ## Edits
 
-- `width` / `height` are read-only, use `resize` (`proportionLock = false` first); `parentX` / `parentY` use `setParentXY`; `fills` / `strokes` replaced whole, never mutated.
+- `width` / `height` read-only → `resize` (`proportionLock = false` first); `parentX` / `parentY` → `setParentXY`; `fills` / `strokes` replaced whole, never mutated.
 - Image stretch: spread-copy `fillImage` with `keepAspectRatio: false`. Uploads are human-only. No variant-switch interaction; dynamic states in code. Underlines use an inner stroke (`borderWidth-2`), not a fill.
 
 ## Text and layout
 
 - `growType`: `auto-width` follows content, `auto-height` grows down, `fixed` never reflows; `characters` change may need `resize`; `textBounds` can be stale, re-read to verify.
-- Band geometry follows CSS: board is text `+15`, text bottom at board `-15`; center variant centers text and band.
+- Band geometry: board is text `+15`, text bottom at board `-15`; center variant centers text and band.
 - Bottom-anchored text and band (`constraintsVertical: bottom`); width via `leftright` / `left` / `center` per spec; board `auto` sizing, `clipContent: false` (flex children use `layoutChild: fill`; `leftright` texts need `auto-height`).
 - Verify board equals children union with bottom gaps intact after edits.
+- `createText` requires a string arg; set `growType` after `resize`.
+- After changing text in nested instances, re-anchor the label (`setParentXY(label, 0, 0)`).
+- Don't add text labels that merely repeat shape names.
 
-## Variants and tokens
+## Tokens
 
-- `createVariantContainer` plus `renameProperty` / `setVariantProperty`. Shape `tokens` are read-only (silent ignore); token renames orphan references, relink manually. Sync tokens to `token.css` (`--_*`).
+- Library: `penpot.library.local.tokens` — `addSet({name})` → `set.addToken({type,name,value})` → `set.toggleActive()`. Values: color `"#RRGGBB"`, fontSizes string number, fontFamilies string[] of family names.
+- `fontFamilies` apply sets the FIRST family matching an installed font.
+- Color-token `applyToShapes` is unreliable on text nested in variant mains: set `shape.fills = []` first, then apply, then read.
+- No faux bold in Penpot: bold needs an uploaded Bold font file (fonts are team-level, not in snapshots).
+- Variants: `createVariantContainer` plus `renameProperty` / `setVariantProperty`. Shape `tokens` are read-only (silent ignore); token renames orphan references, relink manually.
+- Sync tokens to `token.css` (`--_*`).
+
+## Components
+
+- Names: `common/<category>/<Name>` (shared) / `home/<Name>` (home). Variant components need `.path` set explicitly (name ignores slash).
+- Resizing a variant main propagates to instances.
 
 ## Verification
 
