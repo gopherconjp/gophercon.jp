@@ -6,7 +6,7 @@ export default {
   args: {
     cards: [
       { label: "Date", content: "Feb 13-14" },
-      { label: "Venue", content: "Abema Towers" },
+      { label: "Venue", content: "Abema Towers", body: "Shibuya, Tokyo" },
     ],
   },
 };

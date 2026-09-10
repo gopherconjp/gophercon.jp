@@ -4,6 +4,7 @@ import Card from "./index.astro";
 interface CardItem {
   label: string;
   content: string;
+  body?: string;
 }
 
 interface Props {
@@ -15,7 +16,7 @@ const { cards } = Astro.props;
 <div class="card-list">
   {
     cards.map((card: CardItem) => (
-      <Card label={card.label} content={card.content} />
+      <Card label={card.label} content={card.content} body={card.body} />
     ))
   }
 </div>
@@ -24,6 +25,7 @@ const { cards } = Astro.props;
   .card-list {
     display: flex;
     flex-wrap: wrap;
+    align-items: start;
     column-gap: var(--_spacing-32);
     row-gap: 0;
   }
