@@ -1,10 +1,10 @@
 import { Locales } from "intlayer";
 
-import KeyVisualFrame from "./KeyVisualFrame.astro";
+import Frame from "./Frame.astro";
 
 /**
  * The key visual responds to its container width (container queries), so the
- * stories render it inside `KeyVisualFrame`, a thin wrapper that fixes the
+ * stories render it inside `Frame`, a thin wrapper that fixes the
  * container width. The `width` control lets you drag through every phase:
  *
  *  - Phase 1 (>= 1350px): the outer frame is locked at 1350x900
@@ -14,7 +14,7 @@ import KeyVisualFrame from "./KeyVisualFrame.astro";
  */
 export default {
   title: "2027/Home/KeyVisual",
-  component: KeyVisualFrame,
+  component: Frame,
   argTypes: {
     width: {
       control: { type: "range", min: 200, max: 2000, step: 10 },
