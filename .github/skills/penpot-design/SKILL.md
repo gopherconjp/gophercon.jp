@@ -14,7 +14,7 @@ Run only when the user explicitly asks for a design change.
 ## Frames and spacing
 
 - Page margin `40px`; group boards padding `60px`, gap `60px`; variant containers padding `30px`, gap `60px`.
-- Frames: `dark` (`#00547D`) stroke, width `2` (`borderWidth-2`), solid center, no fill unless specified.
+- Frames: `common/<category>` group boards `#8715E2` stroke, variant containers (`common/<Name>`, `isVariantContainer() === true`) `#BB97D8` inner stroke, width `2`, solid, no fill unless specified. Component mains and plain boards have no stroke or fill unless specified.
 - Pixels multiples of 4 (8 from 40 up; key-visual exempt); tokenize spacing/dimensions.
 
 ## Edits
