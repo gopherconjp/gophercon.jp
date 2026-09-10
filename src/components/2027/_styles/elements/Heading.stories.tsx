@@ -41,7 +41,7 @@ export const H2 = {
 export const H2Center = {
   args: {
     level: 2,
-    text: "短い見出し",
+    text: "見出し",
     center: true,
   },
 };
