@@ -2,41 +2,20 @@
 import { getIntlayer, type LocalesValues } from "intlayer";
 
 import Layout from "../_layouts/Layout.astro";
-import Hero from "./Hero.astro";
 import KeyVisual from "./key-visual/index.astro";
+import Section1 from "./Section1.astro";
+import Section2 from "./Section2.astro";
 
 interface Props {
   locale: LocalesValues;
 }
 const { locale } = Astro.props;
 
-const { description, missionTitle, mission } = getIntlayer("2027-home", locale);
+const { description } = getIntlayer("2027-home", locale);
 ---
 
 <Layout locale={locale} description={description} overlayHeader>
   <KeyVisual locale={locale} />
-  <Hero locale={locale} />
-  <section class="mission">
-    <h2 class="mission__title">{missionTitle}</h2>
-    <p class="mission__statement">{mission}</p>
-  </section>
-
-  <style>
-    .mission {
-      max-width: 40rem;
-      margin: 0 auto;
-      padding: 2rem 1rem 4rem;
-      text-align: center;
-    }
-
-    .mission__title {
-      margin: 0 0 1rem;
-      font-size: 1.5rem;
-    }
-
-    .mission__statement {
-      margin: 0;
-      line-height: 1.9;
-    }
-  </style>
+  <Section1 locale={locale} />
+  <Section2 locale={locale} />
 </Layout>
