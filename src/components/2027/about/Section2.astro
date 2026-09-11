@@ -1,0 +1,69 @@
+---
+import { getIntlayer, type LocalesValues } from "intlayer";
+
+import CardList from "../_common/card/List.astro";
+import ContentBox from "../../_common/content-box/index.astro";
+
+interface Props {
+  locale: LocalesValues;
+}
+const { locale } = Astro.props;
+
+const {
+  dateLabel,
+  dateContent,
+  dateBody,
+  venueLabel,
+  venueContent,
+  venueBody,
+  mapTitle,
+} = getIntlayer("2027-about-section2", locale);
+---
+
+<section class="about-section2">
+  <ContentBox>
+    <div slot="background" class="about-section2__background"></div>
+
+    <div class="about-section2__content">
+      <CardList
+        cards={[
+          { label: dateLabel, content: dateContent, body: dateBody },
+          { label: venueLabel, content: venueContent, body: venueBody },
+        ]}
+      />
+      <iframe
+        class="about-section2__map"
+        title={mapTitle}
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d831443.6192918719!2d139.1104279724294!3d35.508564715558826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x605d1b87f02e57e7%3A0x2e01618b22571b89!2z5p2x5Lqs6YO9!5e0!3m2!1sja!2sjp!4v1789103044103!5m2!1sja!2sjp"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+  </ContentBox>
+</section>
+
+<style>
+  .about-section2__background {
+    height: 100%;
+    background: var(--_color-dark);
+  }
+
+  .about-section2__content {
+    display: grid;
+    justify-items: center;
+    gap: var(--_spacing-32);
+    padding: var(--_spacing-64) 0;
+    color: var(--_color-white);
+  }
+
+  .about-section2__map {
+    width: min(600px, 100%);
+    aspect-ratio: 4 / 3;
+    border: 0;
+  }
+
+  .about-section2__content :global(h2),
+  .about-section2__content :global(p) {
+    color: var(--_color-white);
+  }
+</style>
