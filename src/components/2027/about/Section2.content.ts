@@ -29,6 +29,10 @@ const content = {
       en: "(To be defined)",
       ja: "(後日発表)",
     }),
+    mapTitle: t({
+      en: "GopherCon Japan 2027 venue map",
+      ja: "GopherCon Japan 2027 会場マップ",
+    }),
   },
 } satisfies Dictionary;
 

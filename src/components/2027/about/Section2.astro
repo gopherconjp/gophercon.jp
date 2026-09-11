@@ -16,6 +16,7 @@ const {
   venueLabel,
   venueContent,
   venueBody,
+  mapTitle,
 } = getIntlayer("2027-about-section2", locale);
 ---
 
@@ -32,7 +33,7 @@ const {
       />
       <iframe
         class="about-section2__map"
-        title="GopherCon Japan 2027 venue map"
+        title={mapTitle}
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d831443.6192918719!2d139.1104279724294!3d35.508564715558826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x605d1b87f02e57e7%3A0x2e01618b22571b89!2z5p2x5Lqs6YO9!5e0!3m2!1sja!2sjp!4v1789103044103!5m2!1sja!2sjp"
         loading="lazy"
         allowfullscreen
