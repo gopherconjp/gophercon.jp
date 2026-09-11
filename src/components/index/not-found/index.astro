@@ -7,6 +7,7 @@ interface Props {
   locale: LocalesValues;
 }
 const { locale } = Astro.props;
+
 const { title, description, heading, body } = getIntlayer("not-found", locale);
 ---
 
