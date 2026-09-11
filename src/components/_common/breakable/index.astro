@@ -14,7 +14,12 @@ const separator = locale === "ja" ? "" : " ";
 
 {
   typeof value === "string" ? (
-    value
+    value.split(/\r?\n/).map((line, index) => (
+      <>
+        {index > 0 ? <br /> : null}
+        {line}
+      </>
+    ))
   ) : Array.isArray(value) ? (
     value.map((chunk, index) => (
       <>
