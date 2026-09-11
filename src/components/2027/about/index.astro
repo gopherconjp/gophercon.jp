@@ -12,14 +12,11 @@ interface Props {
 }
 const { locale } = Astro.props;
 
-const { description, bannerTitleJa, bannerTitleEn } = getIntlayer(
-  "2027-about",
-  locale,
-);
+const { description, title } = getIntlayer("2027-about", locale);
 ---
 
-<Layout locale={locale} description={description}>
-  <PageBanner titleJa={bannerTitleJa} titleEn={bannerTitleEn} />
+<Layout locale={locale} title={title} description={description}>
+  <PageBanner titleJa="GopherCon Japanについて" titleEn="About" />
   <Section1 locale={locale} />
   <Section2 locale={locale} />
   <Section3 locale={locale} />

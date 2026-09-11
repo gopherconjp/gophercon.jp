@@ -16,7 +16,7 @@ const { titleJa, titleEn } = Astro.props;
       <div class="page-banner__track">
         <div class="page-banner__group">
           <p class="page-banner__title-ja">{titleJa}</p>
-          <p class="page-banner__title-en">{titleEn}</p>
+          <h1 class="page-banner__title-en">{titleEn}</h1>
         </div>
         <div
           class="page-banner__group page-banner__group--clone"
@@ -41,7 +41,7 @@ const { titleJa, titleEn } = Astro.props;
     );
     if (!content || !group) return;
 
-    const titles = group.querySelectorAll("p");
+    const titles = group.querySelectorAll("p, h1");
     const overflow = Array.from(titles).some(
       (title) => title.scrollWidth > content.clientWidth + 1,
     );
@@ -154,6 +154,12 @@ const { titleJa, titleEn } = Astro.props;
   }
 
   .page-banner__title-en {
+    font-size: var(--_font-size-banner);
+    line-height: var(--_line-height-1);
+  }
+
+  h1.page-banner__title-en {
+    margin: 0;
     font-size: var(--_font-size-banner);
     line-height: var(--_line-height-1);
   }

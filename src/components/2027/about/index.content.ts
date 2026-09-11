@@ -9,13 +9,9 @@ const content = {
       en: "About GopherCon Japan",
       ja: "GopherCon Japanについて",
     }),
-    bannerTitleJa: t({
-      en: "GopherCon Japanについて",
-      ja: "GopherCon Japanについて",
-    }),
-    bannerTitleEn: t({
+    title: t({
       en: "About",
-      ja: "About",
+      ja: "GopherCon Japanについて",
     }),
   },
 } satisfies Dictionary;
