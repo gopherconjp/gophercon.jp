@@ -11,10 +11,10 @@ interface Props {
 }
 const { locale } = Astro.props;
 
-const { description } = getIntlayer("2027-home", locale);
+const { title, description } = getIntlayer("2027-home", locale);
 ---
 
-<Layout locale={locale} description={description} overlayHeader>
+<Layout locale={locale} title={title} description={description} overlayHeader>
   <KeyVisual locale={locale} />
   <Section1 locale={locale} />
   <Section2 locale={locale} />
