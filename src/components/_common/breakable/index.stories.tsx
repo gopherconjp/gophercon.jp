@@ -44,3 +44,13 @@ export const Accent = {
     value: ["Let the world's", { accent: "passion" }, "reach Japan."],
   },
 };
+
+export const Link = {
+  args: {
+    locale: Locales.ENGLISH,
+    value: [
+      "GopherCon Japan is a bilingual Go conference.",
+      ["Want to learn more? Check out our", { link: "About page →", href: "#about" }],
+    ],
+  },
+};

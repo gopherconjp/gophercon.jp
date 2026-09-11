@@ -29,10 +29,14 @@ const separator = locale === "ja" ? "" : " ";
         </span>
       </>
     ))
-  ) : (
+  ) : "accent" in value ? (
     <span class="breakable__accent">
       <Astro.self value={value.accent} locale={locale} />
     </span>
+  ) : (
+    <a href={value.href}>
+      <Astro.self value={value.link} locale={locale} />
+    </a>
   )
 }
 
