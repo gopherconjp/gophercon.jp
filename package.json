@@ -40,7 +40,7 @@
     "eslint": "10.10.0",
     "eslint-plugin-astro": "3.1.0",
     "intlayer": "9.4.4",
-    "knip": "6.34.0",
+    "knip": "6.35.0",
     "lightningcss-plugin-css-variables": "0.1.0",
     "oxfmt": "0.67.0",
     "oxlint": "1.82.0",
