@@ -2,10 +2,10 @@
 import { Image } from "astro:assets";
 import { getIntlayer, getLocalizedUrl, type LocalesValues } from "intlayer";
 
+import logo from "../logo.webp";
+import NavLink from "../nav-link/index.astro";
 import Hamburger from "./content/Hamburger.astro";
 import LocaleSwitcher from "./content/LocaleSwitcher.astro";
-import logo from "./content/logo.webp";
-import NavLink from "./content/NavLink.astro";
 
 interface Props {
   locale: LocalesValues;

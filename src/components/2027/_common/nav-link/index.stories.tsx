@@ -1,7 +1,7 @@
-import NavLink from "./NavLink.astro";
+import NavLink from "./index.astro";
 
 export default {
-  title: "2027/Common/Header/NavLink",
+  title: "2027/Common/NavLink",
   component: NavLink,
   args: {
     label: "About",
