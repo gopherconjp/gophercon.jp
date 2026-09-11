@@ -21,16 +21,10 @@ const currentPath =
 
 const links = [
   { label: "About", href: getLocalizedUrl("/2027/about", locale) },
-  { label: "Schedule", href: getLocalizedUrl("/2027/schedule", locale) },
-  { label: "Speakers", href: getLocalizedUrl("/2027/speakers", locale) },
-  { label: "Sponsors", href: getLocalizedUrl("/2027/sponsors", locale) },
-  { label: "FAQ", href: getLocalizedUrl("/2027/faq", locale) },
-  { label: "Committee", href: getLocalizedUrl("/2027/committee", locale) },
-  { label: "Contact/Socials", href: getLocalizedUrl("/2027/contact", locale) },
 ].map((link) => Object.assign(link, { current: currentPath === link.href }));
 
-const HEADER_BREAK_PX = 1168; // desktop/mobile switch
-const HEADER_COMPACT_MIN_PX = 400; // shrink start
+const HEADER_BREAK_PX = 500; // desktop/mobile switch
+const HEADER_COMPACT_MIN_PX = 440; // shrink start
 ---
 
 <header class="header">
