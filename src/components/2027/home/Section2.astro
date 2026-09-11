@@ -1,0 +1,60 @@
+---
+import { getIntlayer, type LocalesValues } from "intlayer";
+
+import Breakable from "../../_common/breakable/index.astro";
+import ContentBox from "../../_common/content-box/index.astro";
+
+interface Props {
+  locale: LocalesValues;
+}
+const { locale } = Astro.props;
+
+const { title, body } = getIntlayer("2027-home-section2", locale);
+---
+
+<section class="home-section2">
+  <ContentBox variant="text">
+    <div slot="background" class="home-section2__background"></div>
+
+    <div class="home-section2__content">
+      <h2 class="home-section2__title">
+        <Breakable value={title} locale={locale} />
+      </h2>
+      <p class="home-section2__body">
+        <Breakable value={body} locale={locale} />
+      </p>
+    </div>
+  </ContentBox>
+</section>
+
+<style>
+  .home-section2__background {
+    height: 100%;
+    background: var(--_color-dark);
+  }
+
+  .home-section2__content {
+    display: grid;
+    gap: var(--_spacing-32);
+    padding: var(--_spacing-64) 0;
+    text-align: center;
+    color: var(--_color-white);
+  }
+
+  .home-section2__title,
+  .home-section2__body {
+    margin: 0;
+  }
+
+  .home-section2__title {
+    width: fit-content;
+    max-width: 100%;
+    justify-self: center;
+    text-align: left;
+  }
+
+  .home-section2__content :global(h2),
+  .home-section2__content :global(p) {
+    color: var(--_color-white);
+  }
+</style>

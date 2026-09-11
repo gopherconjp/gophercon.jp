@@ -1,6 +1,6 @@
 import { t, type Dictionary } from "intlayer";
 
-export const key = "2027-about-section2" as const;
+export const key = "2027-home-section1" as const;
 
 const content = {
   key,
@@ -28,10 +28,6 @@ const content = {
     venueBody: t({
       en: "(To be defined)",
       ja: "(後日発表)",
-    }),
-    mapTitle: t({
-      en: "GopherCon Japan 2027 venue map",
-      ja: "GopherCon Japan 2027 会場マップ",
     }),
   },
 } satisfies Dictionary;

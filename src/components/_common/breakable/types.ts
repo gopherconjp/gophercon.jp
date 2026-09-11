@@ -1,1 +1,5 @@
-export type Breakable = string | Breakable[] | { accent: Breakable };
+export type Breakable =
+  | string
+  | Breakable[]
+  | { accent: Breakable }
+  | { link: Breakable; href: string };

@@ -2,7 +2,6 @@
 interface Props {
   variant?: "default" | "text";
 }
-
 const { variant = "default" } = Astro.props;
 ---
 
@@ -18,8 +17,10 @@ const { variant = "default" } = Astro.props;
 <style>
   .content-box {
     /* Convention: `--_`-prefixed names are build-time constants inlined by
-       lightningcss-plugin-css-variables (default include /^--_/). */
-    --_cb-max: 1200px; /* content width cap */
+       lightningcss-plugin-css-variables (default include /^--_/).
+       `--cb-max` is intentionally not prefixed:
+       the text variant overrides it at runtime, so it must survive inlining. */
+    --cb-max: 1200px; /* content width cap */
     --_cb-narrow: 400px; /* below this, fixed 20px side margins */
     --_cb-margin: 40px; /* total horizontal margin in the narrow phase */
     --_cb-base: 360px; /* content width at the narrow boundary (90% of 400px) */
@@ -30,7 +31,7 @@ const { variant = "default" } = Astro.props;
   }
 
   .content-box--text {
-    --_cb-max: 720px;
+    --cb-max: 720px;
   }
 
   .content-box__background {
@@ -38,14 +39,14 @@ const { variant = "default" } = Astro.props;
     inset: 0;
   }
 
-  /* C(W) = min(var(--_cb-max), 360px + (W - 400px) * 42 / 55, W - 40px)
+  /* C(W) = min(var(--cb-max), 360px + (W - 400px) * 42 / 55, W - 40px)
      - W >= 1500px (default) / 872px (text): fixed at max
      - 400px <= W: linear interpolation between (400, 360) and the max cap
      - W <= 400px: full width minus 20px margins on each side */
   .content-box__content {
     position: relative;
     width: min(
-      var(--_cb-max),
+      var(--cb-max),
       calc(var(--_cb-base) + (100cqw - var(--_cb-narrow)) * 42 / 55),
       calc(100cqw - var(--_cb-margin))
     );

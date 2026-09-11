@@ -1,0 +1,41 @@
+---
+import { getIntlayer, type LocalesValues } from "intlayer";
+
+import CardList from "../_common/card/List.astro";
+import ContentBox from "../../_common/content-box/index.astro";
+
+interface Props {
+  locale: LocalesValues;
+}
+const { locale } = Astro.props;
+
+const {
+  dateLabel,
+  dateContent,
+  dateBody,
+  venueLabel,
+  venueContent,
+  venueBody,
+} = getIntlayer("2027-home-section1", locale);
+---
+
+<section class="home-section1">
+  <ContentBox>
+    <div class="home-section1__content">
+      <CardList
+        cards={[
+          { label: dateLabel, content: dateContent, body: dateBody },
+          { label: venueLabel, content: venueContent, body: venueBody },
+        ]}
+      />
+    </div>
+  </ContentBox>
+</section>
+
+<style>
+  .home-section1__content {
+    display: grid;
+    justify-items: center;
+    padding: var(--_spacing-64) 0;
+  }
+</style>

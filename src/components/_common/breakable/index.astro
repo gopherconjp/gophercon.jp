@@ -7,14 +7,19 @@ interface Props {
   value: Breakable;
   locale: LocalesValues;
 }
-
 const { value, locale } = Astro.props;
+
 const separator = locale === "ja" ? "" : " ";
 ---
 
 {
   typeof value === "string" ? (
-    value
+    value.split(/\r?\n/).map((line, index) => (
+      <>
+        {index > 0 ? <br /> : null}
+        {line}
+      </>
+    ))
   ) : Array.isArray(value) ? (
     value.map((chunk, index) => (
       <>
@@ -24,10 +29,14 @@ const separator = locale === "ja" ? "" : " ";
         </span>
       </>
     ))
-  ) : (
+  ) : "accent" in value ? (
     <span class="breakable__accent">
       <Astro.self value={value.accent} locale={locale} />
     </span>
+  ) : (
+    <a href={value.href}>
+      <Astro.self value={value.link} locale={locale} />
+    </a>
   )
 }
 
