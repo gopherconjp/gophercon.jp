@@ -1,0 +1,105 @@
+---
+import { Image } from "astro:assets";
+import { getIntlayer, type LocalesValues } from "intlayer";
+
+import ContentBox from "../../../_common/content-box/index.astro";
+import logo from "../logo.webp";
+import NavLink from "../nav-link/index.astro";
+
+interface Props {
+  locale: LocalesValues;
+}
+const { locale } = Astro.props;
+
+const { backToTop, copyright, credit, logoAlt } = getIntlayer(
+  "2027-footer",
+  locale,
+);
+
+const FOOTER_BREAK_PX = 820;
+const FOOTER_COMPACT_MIN_PX = 440;
+---
+
+<footer class="footer">
+  <ContentBox>
+    <div slot="background" class="footer__background"></div>
+
+    <div class="footer__row">
+      <Image src={logo} alt={logoAlt} height={72} class="footer__logo" />
+      <div class="footer__texts">
+        <p class="footer__copyright">{copyright}</p>
+        <p class="footer__credit">{credit}</p>
+      </div>
+      <div class="footer__top">
+        <NavLink label={backToTop} href="#top" />
+      </div>
+    </div>
+  </ContentBox>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+  }
+
+  .footer__background {
+    height: 100%;
+    background: var(--_color-light);
+  }
+
+  .footer__row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "logo texts top";
+    align-items: start;
+    column-gap: var(--_spacing-24);
+    row-gap: var(--_spacing-8);
+    padding: var(--_spacing-16) 0;
+  }
+
+  .footer__logo {
+    grid-area: logo;
+    display: block;
+  }
+
+  .footer__texts {
+    grid-area: texts;
+    display: flex;
+    flex-direction: column;
+    gap: var(--_spacing-8);
+    align-self: end;
+    margin-bottom: 12px;
+  }
+
+  .footer__top {
+    grid-area: top;
+    display: flex;
+    align-self: start;
+    justify-self: end;
+  }
+
+  .footer__copyright,
+  .footer__credit {
+    margin: 0;
+    font-size: var(--_font-size-small);
+    line-height: 1.2;
+  }
+</style>
+
+<style
+  set:html={`
+  @media (max-width: ${FOOTER_BREAK_PX - 1}px) {
+    .footer__row.footer__row {
+      grid-template-columns: auto 1fr;
+      grid-template-areas:
+        "logo top"
+        "texts texts";
+      align-items: start;
+    }
+  }
+
+  @media (max-width: ${FOOTER_COMPACT_MIN_PX}px) {
+    .footer.footer { zoom: calc(100vw / ${FOOTER_COMPACT_MIN_PX}px); }
+  }
+`}
+></style>
