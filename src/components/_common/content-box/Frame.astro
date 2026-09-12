@@ -11,9 +11,7 @@ const { width = 1200, variant = "default" } = Astro.props;
 <div class="frame" style={`--frame-width: ${width}px;`}>
   <ContentBox variant={variant}>
     <div slot="background" class="frame__background"></div>
-    <div class="frame__content">
-      {width}px parent
-    </div>
+    <div class="frame__content">{width}px parent</div>
   </ContentBox>
 </div>
 
