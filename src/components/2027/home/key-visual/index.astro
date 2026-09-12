@@ -36,14 +36,12 @@ const layers: {
 ];
 ---
 
-{
-  /*
+{/*
   Responsive key visual (container width W):
   - W >= 1350px: frame fixed at 1350x900
   - 700px <= W < 1350px: width shrinks, height 900 (layers move)
   - W < 700px: whole composition scales by W/700
-*/
-}
+*/}
 <div class="kv" role="img" aria-label={ariaLabel}>
   <img
     class="kv__background"
@@ -55,20 +53,18 @@ const layers: {
     decoding="async"
   />
   <div class="kv__stage">
-    {
-      layers.map((l) => (
-        <img
-          class={l.class}
-          src={l.src}
-          width={l.width ?? 1350}
-          height={900}
-          alt=""
-          aria-hidden="true"
-          decoding="async"
-          fetchpriority={l.priority ? "high" : undefined}
-        />
-      ))
-    }
+    {layers.map((l) => (
+      <img
+        class={l.class}
+        src={l.src}
+        width={l.width ?? 1350}
+        height={900}
+        alt=""
+        aria-hidden="true"
+        decoding="async"
+        fetchpriority={l.priority ? "high" : undefined}
+      />
+    ))}
   </div>
 </div>
 

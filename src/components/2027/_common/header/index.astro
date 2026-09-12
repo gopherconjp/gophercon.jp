@@ -38,11 +38,9 @@ const HEADER_COMPACT_MIN_PX = 440; // shrink start
       />
     </a>
     <nav class="header__nav" aria-label={navLabel}>
-      {
-        links.map((link) => (
-          <NavLink label={link.label} href={link.href} current={link.current} />
-        ))
-      }
+      {links.map((link) => (
+        <NavLink label={link.label} href={link.href} current={link.current} />
+      ))}
     </nav>
   </div>
   <div class="header__right">
