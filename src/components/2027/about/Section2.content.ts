@@ -22,12 +22,12 @@ const content = {
       ja: "会場",
     }),
     venueContent: t({
-      en: "Tokyo",
-      ja: "東京",
+      en: "Abema Towers",
+      ja: "Abema Towers",
     }),
     venueBody: t({
-      en: "(To be defined)",
-      ja: "(後日発表)",
+      en: "(Shibuya, Tokyo)",
+      ja: "(東京都渋谷区)",
     }),
     mapTitle: t({
       en: "GopherCon Japan 2027 venue map",
