@@ -6,7 +6,7 @@
     getLocaleFromPath,
     getLocalizedUrl,
     getPathWithoutLocale,
-    locales,
+    isDeclaredLocale,
     setLocaleInStorageClient,
     type LocalesValues,
   } from "intlayer";
@@ -16,7 +16,7 @@
   ) as LocalesValues;
 
   const browserLocale = getBrowserLocale();
-  const targetLocale = locales.includes(browserLocale)
+  const targetLocale = isDeclaredLocale(browserLocale)
     ? browserLocale
     : defaultLocale;
 
