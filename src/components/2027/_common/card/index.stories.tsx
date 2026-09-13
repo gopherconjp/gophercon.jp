@@ -20,3 +20,20 @@ export const WithBody = {
     body: "Saturday & Sunday",
   },
 };
+
+export const Dark = {
+  args: {
+    label: "Date",
+    content: "Feb 13-14",
+    dark: true,
+  },
+};
+
+export const DarkWithBody = {
+  args: {
+    label: "Date",
+    content: "Feb 13-14",
+    body: "Saturday & Sunday",
+    dark: true,
+  },
+};
