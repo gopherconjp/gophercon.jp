@@ -1,7 +1,7 @@
 ---
 import type { LocalesValues } from "intlayer";
 
-import type { Breakable } from "./types";
+import { isAccent, isLink, type Breakable } from "./types";
 
 interface Props {
   value: Breakable;
@@ -12,14 +12,7 @@ const { value, locale } = Astro.props;
 const separator = locale === "ja" ? "" : " ";
 ---
 
-{typeof value === "string" ? (
-  value.split(/\r?\n/).map((line, index) => (
-    <>
-      {index > 0 ? <br /> : null}
-      {line}
-    </>
-  ))
-) : Array.isArray(value) ? (
+{Array.isArray(value) ? (
   value.map((chunk, index) => (
     <>
       {index > 0 ? separator : null}
@@ -28,15 +21,22 @@ const separator = locale === "ja" ? "" : " ";
       </span>
     </>
   ))
-) : "accent" in value ? (
+) : isAccent(value) ? (
   <span class="breakable__accent">
     <Astro.self value={value.accent} locale={locale} />
   </span>
-) : (
+) : isLink(value) ? (
   <a href={value.href}>
     <Astro.self value={value.link} locale={locale} />
   </a>
-)}
+) : typeof value === "string" ? (
+  value.split(/\r?\n/).map((line, index) => (
+    <>
+      {index > 0 ? <br /> : null}
+      {line}
+    </>
+  ))
+) : null}
 
 <style>
   .breakable__chunk {
