@@ -3,11 +3,12 @@ interface Props {
   label: string;
   content: string;
   body?: string;
+  dark?: boolean;
 }
-const { label, content, body } = Astro.props;
+const { label, content, body, dark = false } = Astro.props;
 ---
 
-<div class="card">
+<div class:list={["card", dark && "card--dark"]}>
   <h2 class="center">{label}</h2>
   <div class="card__body-group">
     <p class="card__content">{content}</p>
@@ -20,8 +21,8 @@ const { label, content, body } = Astro.props;
     box-sizing: border-box;
     display: grid;
     justify-items: center;
-    gap: var(--_spacing-16);
-    padding: var(--_spacing-32);
+    gap: var(--_spacing-24);
+    padding: 0 var(--_spacing-32);
     width: max-content;
     max-width: 100%;
   }
@@ -45,6 +46,12 @@ const { label, content, body } = Astro.props;
     max-width: 100%;
     min-width: min(168px, 100%);
     text-align: center;
+  }
+
+  .card--dark,
+  .card--dark h2,
+  .card--dark p {
+    color: var(--_color-white);
   }
 
   .card__content {
