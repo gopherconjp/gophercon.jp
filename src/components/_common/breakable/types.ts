@@ -1,19 +1,19 @@
-interface BreakableAccent {
+interface Accent {
   accent: Breakable;
 }
 
-interface BreakableLink {
+interface Link {
   href: string;
   link: Breakable;
 }
 
-export type Breakable = Breakable[] | BreakableAccent | BreakableLink | string;
+export type Breakable = Breakable[] | Accent | Link | string;
 
-const isObject = (value: Breakable): value is BreakableAccent | BreakableLink =>
+const isObject = (value: Breakable): value is Accent | Link =>
   typeof value === "object" && value !== null && !Array.isArray(value);
 
-export const isBreakableAccent = (value: Breakable): value is BreakableAccent =>
+export const isAccent = (value: Breakable): value is Accent =>
   isObject(value) && Object.hasOwn(value, "accent");
 
-export const isBreakableLink = (value: Breakable): value is BreakableLink =>
+export const isLink = (value: Breakable): value is Link =>
   isObject(value) && Object.hasOwn(value, "link");
