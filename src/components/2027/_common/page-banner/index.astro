@@ -10,24 +10,24 @@ const { titleJa, titleEn } = Astro.props;
 
 <div class="page-banner">
   <ContentBox>
-    <div slot="background" class="page-banner__background"></div>
-
-    <div class="page-banner__content">
-      <div class="page-banner__track">
-        <div class="page-banner__group">
-          <p class="page-banner__title-ja">{titleJa}</p>
-          <h1 class="page-banner__title-en">{titleEn}</h1>
-        </div>
-        <div
-          class="page-banner__group page-banner__group--clone"
-          aria-hidden="true"
-        >
-          <p class="page-banner__title-ja">{titleJa}</p>
-          <p class="page-banner__title-en">{titleEn}</p>
-        </div>
-      </div>
+    <div class="page-banner__static">
+      <p class="page-banner__title-ja">{titleJa}</p>
+      <h1 class="page-banner__title-en">{titleEn}</h1>
     </div>
   </ContentBox>
+
+  <div class="page-banner__viewport" aria-hidden="true">
+    <div class="page-banner__track">
+      <div class="page-banner__group">
+        <p class="page-banner__title-ja">{titleJa}</p>
+        <p class="page-banner__title-en">{titleEn}</p>
+      </div>
+      <div class="page-banner__group">
+        <p class="page-banner__title-ja">{titleJa}</p>
+        <p class="page-banner__title-en">{titleEn}</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -35,13 +35,13 @@ const { titleJa, titleEn } = Astro.props;
   const GAP = 96;
 
   const update = (banner: HTMLElement): void => {
-    const content = banner.querySelector(".page-banner__content");
+    const content = banner.querySelector(".page-banner__static");
     const group = banner.querySelector(
-      ".page-banner__group:not(.page-banner__group--clone)",
+      ".page-banner__viewport .page-banner__group",
     );
     if (!content || !group) return;
 
-    const titles = group.querySelectorAll("p, h1");
+    const titles = content.querySelectorAll("p, h1");
     const overflow = Array.from(titles).some(
       (title) => title.scrollWidth > content.clientWidth + 1,
     );
@@ -63,9 +63,8 @@ const { titleJa, titleEn } = Astro.props;
     for (const banner of banners) {
       update(banner);
 
-      const content = banner.querySelector(".page-banner__content");
-      if (content && "ResizeObserver" in window) {
-        new ResizeObserver(() => update(banner)).observe(content);
+      if ("ResizeObserver" in window) {
+        new ResizeObserver(() => update(banner)).observe(banner);
       }
     }
   };
@@ -87,31 +86,35 @@ const { titleJa, titleEn } = Astro.props;
 </script>
 
 <style>
-  .page-banner__background {
-    height: 100%;
+  .page-banner {
+    position: relative;
     background: var(--_color-sub);
   }
 
-  .page-banner__content {
+  .page-banner__static {
+    display: grid;
+    gap: var(--_spacing-32);
     overflow: clip;
     padding: var(--_spacing-64) 0;
   }
 
-  .page-banner__track {
-    display: grid;
-    gap: var(--_spacing-32);
-  }
-
-  .page-banner__group {
-    display: grid;
-    gap: var(--_spacing-32);
-  }
-
-  .page-banner__group--clone {
+  .page-banner__viewport {
+    position: absolute;
+    inset: 0;
     display: none;
+    overflow: clip;
+    align-content: center;
   }
 
-  .page-banner--marquee .page-banner__track {
+  .page-banner--marquee .page-banner__static {
+    opacity: 0;
+  }
+
+  .page-banner--marquee .page-banner__viewport {
+    display: grid;
+  }
+
+  .page-banner__track {
     display: flex;
     gap: var(--_spacing-96);
     width: max-content;
@@ -119,12 +122,10 @@ const { titleJa, titleEn } = Astro.props;
       infinite;
   }
 
-  .page-banner--marquee .page-banner__group {
-    flex: 0 0 auto;
-  }
-
-  .page-banner--marquee .page-banner__group--clone {
+  .page-banner__group {
     display: grid;
+    flex: 0 0 auto;
+    gap: var(--_spacing-32);
   }
 
   @keyframes page-banner-scroll {
@@ -134,6 +135,20 @@ const { titleJa, titleEn } = Astro.props;
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .page-banner--marquee .page-banner__static {
+      opacity: 1;
+      overflow: visible;
+    }
+
+    .page-banner--marquee .page-banner__viewport {
+      display: none;
+    }
+
+    .page-banner--marquee .page-banner__title-ja,
+    .page-banner--marquee .page-banner__title-en {
+      white-space: normal;
+    }
+
     .page-banner--marquee .page-banner__track {
       animation: none;
     }
