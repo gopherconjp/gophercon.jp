@@ -1,28 +1,97 @@
 ---
+import { Image } from "astro:assets";
 import { getIntlayer, type LocalesValues } from "intlayer";
 
 import Layout from "../_layouts/Layout.astro";
+import ContentBox from "../../_common/content-box/index.astro";
+import illust from "./404.webp";
 
 interface Props {
   locale: LocalesValues;
 }
 const { locale } = Astro.props;
 
-const { title, description, heading, body } = getIntlayer("not-found", locale);
+const { title, description, heading, body, linkLabel, imageAlt } = getIntlayer(
+  "not-found",
+  locale,
+);
 ---
 
 <Layout locale={locale} title={title} description={description} noindex>
   <section class="not-found">
-    <h1>{heading}</h1>
-    <p>{body}</p>
+    <ContentBox>
+      <div class="not-found__content">
+        <Image
+          src={illust}
+          alt={imageAlt}
+          width={500}
+          height={500}
+          class="not-found__image"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <h1 class="not-found__heading">{heading}</h1>
+        <div class="not-found__body-wrap">
+          <p class="not-found__body">{body}</p>
+          <a class="not-found__link" href="/" data-back>
+            {linkLabel}
+          </a>
+        </div>
+      </div>
+    </ContentBox>
   </section>
 </Layout>
 
+<script>
+  document.querySelector("a[data-back]")?.addEventListener("click", (event) => {
+    if (history.length > 1) {
+      event.preventDefault();
+      history.back();
+    }
+  });
+</script>
+
 <style>
-  .not-found {
-    max-width: 40rem;
-    margin: 0 auto;
-    padding: 6rem 1rem;
+  .not-found__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--_spacing-32);
+    padding: var(--_spacing-64) 0;
     text-align: center;
+  }
+
+  .not-found__heading,
+  .not-found__body {
+    margin: 0;
+  }
+
+  .not-found__heading {
+    font-size: var(--_font-size-h1);
+    font-weight: var(--_font-weight-bold);
+    line-height: var(--_line-height-1-4);
+  }
+
+  .not-found__body-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: var(--_spacing-16);
+  }
+
+  .not-found__body,
+  .not-found__link {
+    font-size: var(--_font-size-body);
+    line-height: var(--_line-height-1-8);
+  }
+
+  .not-found__link {
+    color: var(--_color-sub);
+    text-decoration: underline;
+  }
+
+  .not-found__image {
+    width: min(100%, 500px);
+    height: auto;
   }
 </style>
