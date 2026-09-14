@@ -5,7 +5,7 @@ export const cfg = {
   email: "creative@gophercon.jp",
   password: "password",
   project: "gophercon.jp",
-  files: ["gopherconjp-2027"],
+  files: ["gopherconjp", "gopherconjp-2027"],
 };
 
 const LIB = import.meta.dir; // design/scripts/lib
