@@ -18,13 +18,28 @@ const { locale } = Astro.props;
   const overlay = document.querySelector("[data-header-overlay]");
   const sentinel = document.querySelector("[data-header-sentinel]");
 
-  if (overlay && sentinel) {
-    new IntersectionObserver((entries) => {
-      const entry = entries[0];
-      if (entry) {
-        overlay.classList.toggle("is-shown", !entry.isIntersecting);
-      }
+  if (overlay instanceof HTMLElement && sentinel) {
+    let isPast = false;
+    let isHover = false;
+
+    const update = () => {
+      overlay.classList.toggle("is-shown", isPast || isHover);
+    };
+
+    new IntersectionObserver(([entry]) => {
+      isPast = !entry?.isIntersecting;
+      update();
     }).observe(sentinel);
+
+    document.addEventListener("mousemove", (event) => {
+      isHover = event.clientY < overlay.offsetHeight;
+      update();
+    });
+
+    document.documentElement.addEventListener("mouseleave", () => {
+      isHover = false;
+      update();
+    });
   }
 </script>
 
@@ -40,7 +55,8 @@ const { locale } = Astro.props;
       visibility 0.3s;
   }
 
-  .overlay.is-shown {
+  .overlay.is-shown,
+  .overlay:has([data-popover-content]:not([hidden])) {
     transform: none;
     visibility: visible;
   }
