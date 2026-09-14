@@ -11,6 +11,7 @@ applyTo: "design/**"
 
 - Per page: `Desktop` / `Mobile` selections plus `Components` board.
 - `Components` holds per-section variants (e.g. `home / Section1`, `Language` x `Viewport`); `Desktop` / `Mobile` compose instances only (page-banner, sections, header, footer).
+- Variant containers with `Language` x `Viewport` arrange variants in a 2x2 grid: Desktop row on top (Japanese, English left to right), Mobile row below; `60px` gaps.
 
 ## Sections
 
