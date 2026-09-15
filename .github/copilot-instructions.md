@@ -10,7 +10,7 @@
 - `LocaleRedirector` and `LocaleSwitcher` are intentionally separate; do not merge.
 - In Astro files, order blocks as markup, `script`, then `style`.
 - `body`'s `margin: 0` covers only `body` itself; `p` needs its own reset (UA default `1em`). `h1`/`h2`/`h3` are covered globally.
-- Quotes are straight `"` only; never curly `“”` / `‘’` (Gremlins flags them). Literal `"` inside `*.content.ts` strings uses single-quoted literals. Same rule applies to Penpot text.
+- Quotes are straight `"` only; never curly `“”` / `‘’` (Gremlins flags them). Same rule applies to Penpot text.
 
 ## Git and PR
 
