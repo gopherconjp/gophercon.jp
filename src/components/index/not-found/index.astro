@@ -1,41 +1,35 @@
 ---
 import { Image } from "astro:assets";
-import { getIntlayer, type LocalesValues } from "intlayer";
 
 import Layout from "../_layouts/Layout.astro";
 import ContentBox from "../../_common/content-box/index.astro";
 import illust from "./404.webp";
-
-interface Props {
-  locale: LocalesValues;
-}
-const { locale } = Astro.props;
-
-const { title, description, heading, body, linkLabel, imageAlt } = getIntlayer(
-  "not-found",
-  locale,
-);
 ---
 
-<Layout locale={locale} title={title} description={description} noindex>
+<Layout locale="en" title="404" description="404 - Page not found" noindex>
   <section class="not-found">
     <ContentBox>
       <div class="not-found__content">
         <Image
           src={illust}
-          alt={imageAlt}
+          alt="Confused Gopher illustration"
           width={500}
           height={500}
           class="not-found__image"
           loading="eager"
           fetchpriority="high"
         />
-        <h1 class="not-found__heading">{heading}</h1>
-        <div class="not-found__body-wrap">
-          <p class="not-found__body">{body}</p>
-          <a class="not-found__link" href="/" data-back>
-            {linkLabel}
-          </a>
+        <div class="not-found__text">
+          <h1 class="not-found__heading">404</h1>
+          <p class="not-found__body">
+            <span lang="ja">お探しのページは見つかりませんでした。</span>
+            <br />
+            The page you are looking for does not exist.
+            <br />
+            <a href="/" data-back>
+              戻る / Back
+            </a>
+          </p>
         </div>
       </div>
     </ContentBox>
@@ -61,33 +55,15 @@ const { title, description, heading, body, linkLabel, imageAlt } = getIntlayer(
     text-align: center;
   }
 
-  .not-found__heading,
   .not-found__body {
     margin: 0;
   }
 
-  .not-found__heading {
-    font-size: var(--_font-size-h1);
-    font-weight: var(--_font-weight-bold);
-    line-height: var(--_line-height-1-4);
-  }
-
-  .not-found__body-wrap {
+  .not-found__text {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: var(--_spacing-16);
-  }
-
-  .not-found__body,
-  .not-found__link {
-    font-size: var(--_font-size-body);
-    line-height: var(--_line-height-1-8);
-  }
-
-  .not-found__link {
-    color: var(--_color-sub);
-    text-decoration: underline;
+    gap: var(--_spacing-16);
   }
 
   .not-found__image {
