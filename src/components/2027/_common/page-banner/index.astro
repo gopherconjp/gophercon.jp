@@ -88,7 +88,7 @@ const { titleJa, titleEn } = Astro.props;
 <style>
   .page-banner {
     position: relative;
-    background: var(--_color-sub);
+    background: var(--_color-light);
   }
 
   .page-banner__static {
@@ -157,7 +157,7 @@ const { titleJa, titleEn } = Astro.props;
   .page-banner__title-ja,
   .page-banner__title-en {
     margin: 0;
-    color: var(--_color-white);
+    color: var(--_color-black);
     font-weight: var(--_font-weight-bold);
     text-align: left;
     white-space: nowrap;
@@ -169,12 +169,6 @@ const { titleJa, titleEn } = Astro.props;
   }
 
   .page-banner__title-en {
-    font-size: var(--_font-size-banner);
-    line-height: var(--_line-height-1);
-  }
-
-  h1.page-banner__title-en {
-    margin: 0;
     font-size: var(--_font-size-banner);
     line-height: var(--_line-height-1);
   }
