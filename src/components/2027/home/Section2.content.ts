@@ -8,7 +8,7 @@ const content = {
   key,
   content: {
     title: t<Breakable>({
-      en: ["What is", "GopherCon Japan?"],
+      en: "What is GopherCon Japan?",
       ja: "GopherCon Japanとは？",
     }),
     body: t<Breakable>({
