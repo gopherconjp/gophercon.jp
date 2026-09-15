@@ -4,7 +4,7 @@ description: "Penpot page assembly for the shared gopherconjp file (Core Compone
 
 # Penpot page assembly (shared)
 
-File: `gopherconjp` — pages `Core Components`, `404`. Code inherits via sync with no strict constraints.
+File: `gopherconjp`. Code inherits via sync with no strict constraints.
 
 ## Boards
 

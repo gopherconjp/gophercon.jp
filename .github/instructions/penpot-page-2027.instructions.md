@@ -4,7 +4,7 @@ description: "Penpot page assembly for the gopherconjp-2027 file (Common Compone
 
 # Penpot page assembly (2027)
 
-File: `gopherconjp-2027` — pages `Common Components`, `Home`, `About`, `Contact`. Code inherits via sync with no strict constraints.
+File: `gopherconjp-2027`. Code inherits via sync with no strict constraints.
 
 ## Boards
 
