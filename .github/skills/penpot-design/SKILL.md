@@ -5,11 +5,11 @@ description: "Edit Penpot designs via the MCP plugin. Use when changing a Penpot
 
 # Penpot Design
 
-Run only when the user explicitly asks for a design change. Mechanics live in `penpot-design` instructions; per-file page rules in `penpot-page-shared` (`gopherconjp`) / `penpot-page-2027` (`gopherconjp-2027`) — confirm `penpot.currentFile.name` first.
+Run only when the user explicitly asks for a design change. Use `penpot-design` instructions for mechanics; use `penpot-page-shared` for `gopherconjp` or `penpot-page-2027` for `gopherconjp-2027` for page rules — confirm that `penpot.currentFile.name` matches the expected design file name before proceeding.
 
 ## Procedure
 
-1. Read the high-level overview; work via `execute_code` with ids in `storage`; prefer `penpotUtils`; `openPage` before edits.
+1. Read the high-level overview (workflow mechanics per `penpot-design` Preconditions).
 2. Follow `penpot-design` instructions for frames, edits, text, tokens, components.
-3. Follow the matching `penpot-page-*` instructions for boards, sections, assembly.
-4. Verify: `export_shape` PNG check; `penpot:export` plus snapshot commit, never skip; `check` / `lint` / `format`; `build` plus `preview` for Astro/design. After edits, verify propagation to instances and report code-design diffs before fixing.
+3. If the confirmed file is `gopherconjp`, follow `penpot-page-shared`; if it is `gopherconjp-2027`, follow `penpot-page-2027` for boards, sections, assembly.
+4. Verify: `export_shape` PNG check; `penpot:export`. After edits, verify propagation to instances and report code-design diffs before fixing.
