@@ -31,15 +31,9 @@ const { title, heading, body } = getIntlayer("2027-about-section3", locale);
 <style>
   .about-section3__content {
     display: grid;
-    gap: var(--_spacing-32);
+    gap: var(--_spacing-40);
     padding: var(--_spacing-64) 0;
     text-align: center;
-  }
-
-  .about-section3__title,
-  .about-section3__heading,
-  .about-section3__body {
-    margin: 0;
   }
 
   .about-section3__title {
@@ -47,5 +41,16 @@ const { title, heading, body } = getIntlayer("2027-about-section3", locale);
     max-width: 100%;
     justify-self: center;
     text-align: left;
+  }
+
+  .about-section3__heading {
+    width: fit-content;
+    max-width: 100%;
+    justify-self: center;
+  }
+
+  .about-section3__body {
+    margin: 0;
+    text-align: center;
   }
 </style>

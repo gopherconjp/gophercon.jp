@@ -11,11 +11,11 @@ const content = {
     }),
     dateContent: t({
       en: "Feb 13-14",
-      ja: "2月13日・14日",
+      ja: "2月13日～14日",
     }),
     dateBody: t({
       en: "(Sat & Sun)",
-      ja: "(土、日)",
+      ja: "(土・日)",
     }),
     venueLabel: t({
       en: "Venue",
