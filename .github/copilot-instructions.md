@@ -1,22 +1,18 @@
 # Copilot instructions
 
-## Language
-
-- Code comments, commit messages (imperative, no prefix), and PR title/description in English.
-
 ## Design (Penpot)
 
 - See `penpot-design` skill for the full workflow. Only run when the user explicitly asks.
+- Two design files: `gopherconjp` (shared) and `gopherconjp-2027` (year-specific). Confirm `penpot.currentFile.name` first, then follow `penpot-page-shared` or `penpot-page-2027` respectively (`penpot-design` covers shared MCP mechanics).
 
 ## Code
 
 - `LocaleRedirector` and `LocaleSwitcher` are intentionally separate; do not merge.
-- Avoid comments; add one only for Why / Why Not of a behavior.
 - In Astro files, order blocks as markup, `script`, then `style`.
 
 ## Git and PR
 
-- See `git-commit-and-pr` / `coderabbit-review-loop` skills for branch, commit granularity, and reset flow.
+- Penpot: `bun run penpot:export` first, snapshot separately.
 
 ## Verification
 
