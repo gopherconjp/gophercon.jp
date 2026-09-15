@@ -10,18 +10,23 @@ File: `gopherconjp-2027` — pages `Common Components`, `Home`, `About`, `Contac
 
 - Per page: `Desktop` / `Mobile` selections plus `Components` board.
 - `Components` holds per-section variants (e.g. `home / Section1`, `Language` x `Viewport`); `Desktop` / `Mobile` compose instances only (page-banner, sections, header, footer).
-- `Language` x `Viewport` containers: 2x2 grid, Desktop row on top (JA left, EN right), Mobile row below; `60px` gaps.
+- `Language` x `Viewport` containers: 2x2 grid, Desktop row on top (EN left, JA right), Mobile row below (EN left, JA right); `60px` gaps.
 
 ## Sections
 
-- ContentBox-based (`normal` / `text`); full-width `content` frame; `64px` vertical padding; `32px` / `40px` / `48px` gaps; centered, inner left-aligned except `body` centered.
-- Section background is the exception to the no-fill rule: paint `#FFFFFF` when white is specified.
-- H2 follows code (`src/components/2027/_styles/elements.css`): board shrink-wraps text (`inline-block`, `max-width: 100%`); band is `clamp(board, 168, 372)`. Measure single-line width (join wrapped lines temporarily; re-read after settle). Fits content → 1-line variant, else 2-line. `Length`: `<168px` Short, `>372px` Long, else Medium (cf. About Section1). Never resize height — from `Lines` variant.
+- Section layout checklist:
+  1. ContentBox-based (`normal` / `text`), full-width `content` frame, `64px` vertical padding.
+  2. Gaps `32px` / `40px` / `48px`; H2-Body and H3-Body `40px`.
+  3. Centered, inner left-aligned except `body` centered.
+- Exception to no-fill rule: white sections paint `#FFFFFF`; `content` frames never take fills (clear `createBoard` white default).
+- H2 sizing per `src/components/2027/_styles/elements.css`: board shrink-wraps text (`inline-block`, `max-width: 100%`); band `clamp(board, 168, 372)`. Measure single-line width (join wraps temporarily; re-read after settle). Fits content → 1-line variant, else 2-line. `Length`: `<168px` Short, `>372px` Long, else Medium (cf. About Section1). Never resize height — from `Lines` variant.
+- H3 same pattern: board shrink-wraps text (`block`, band `min(100%, 544px)`); `Length`: single-line width `<684px` Short, else Long. Center variant (`Align=Center`) with board width = text width (capped at content width); content flex centers board. Center via `align` (not `textAlign` — phantom, ignored); Center mains already `align=center`, instances inherit it.
+- Body centered (`align=center` on text element) unless specified otherwise.
 - `h2.center` is Short-only: `Align=Center` only when text fits the 168px band (~134px or narrower); wider stays `Align=Left`, else band misaligns.
 - Body inline links use Link Default styling (`#68CCE7`, underline) via `TextRange`, not separate Link instances.
 
 ## Assembly
 
 - Instances only: variant choice, resize, text content (text-element height rule: see `penpot-design`).
-- Anything else probably needs a new variant; report and ask a human.
+- Anything else needs a new variant; report and ask a human. Unsupported variant request → error listing valid variants, no guessing.
 - `Desktop` / `Mobile`: instances in order; variant selection only.

@@ -3,12 +3,14 @@
 ## Design (Penpot)
 
 - See `penpot-design` skill for the full workflow. Only run when the user explicitly asks.
-- Two design files: `gopherconjp` (shared) and `gopherconjp-2027` (year-specific). Confirm `penpot.currentFile.name` first, then follow `penpot-page-shared` or `penpot-page-2027` respectively (`penpot-design` covers shared MCP mechanics).
+- Two files: `gopherconjp` (shared) and `gopherconjp-2027` (year-specific). Confirm `penpot.currentFile.name` first, then follow `penpot-page-shared` / `penpot-page-2027` respectively (`penpot-design` covers shared mechanics).
 
 ## Code
 
 - `LocaleRedirector` and `LocaleSwitcher` are intentionally separate; do not merge.
 - In Astro files, order blocks as markup, `script`, then `style`.
+- `body`'s `margin: 0` covers only `body` itself; `p` needs its own reset (UA default `1em`). `h1`/`h2`/`h3` are covered globally.
+- Quotes are straight `"` only; never curly `“”` / `‘’` (Gremlins flags them). Literal `"` inside `*.content.ts` strings uses single-quoted literals. Same rule applies to Penpot text.
 
 ## Git and PR
 
