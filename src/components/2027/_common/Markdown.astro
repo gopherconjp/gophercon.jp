@@ -1,0 +1,58 @@
+---
+import { getEntry, render } from "astro:content";
+import type { LocalesValues } from "intlayer";
+
+import ContentBox from "../../_common/content-box/index.astro";
+
+interface Props {
+  slug: string;
+  locale: LocalesValues;
+}
+const { slug, locale } = Astro.props;
+
+const entry = await getEntry("markdown2027", `${slug}-${locale}`);
+if (!entry) {
+  throw new Error(`Markdown entry not found: ${slug}-${locale}`);
+}
+
+const { Content } = await render(entry);
+---
+
+<div class="markdown">
+  <ContentBox variant="text">
+    <div class="markdown__content">
+      <Content />
+    </div>
+  </ContentBox>
+</div>
+
+<style>
+  .markdown {
+    width: 100%;
+  }
+
+  .markdown__content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--_spacing-64) 0;
+    text-align: left;
+  }
+
+  .markdown__content > :global(h1) {
+    margin: 0 0 var(--_spacing-24);
+  }
+
+  .markdown__content > :global(h2) {
+    align-self: flex-start;
+    margin: var(--_spacing-24) 0 var(--_spacing-32);
+  }
+
+  .markdown__content > :global(h3) {
+    margin: var(--_spacing-16) 0 var(--_spacing-24);
+  }
+
+  .markdown__content > :global(p) {
+    margin: var(--_spacing-8) 0;
+  }
+</style>
