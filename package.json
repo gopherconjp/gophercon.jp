@@ -38,6 +38,10 @@
     "penpot:reset": "bun design/scripts/reset.ts",
     "penpot:mcp": "bun design/scripts/mcp.ts"
   },
+  "dependencies": {
+    "@iconify-json/mdi": "^1.2.3",
+    "astro-icon": "^1.2.0"
+  },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
     "@ianvs/prettier-plugin-sort-imports": "4.7.1",
