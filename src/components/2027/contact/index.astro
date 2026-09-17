@@ -1,0 +1,19 @@
+---
+import { getIntlayer, type LocalesValues } from "intlayer";
+
+import PageBanner from "../_common/page-banner/index.astro";
+import Layout from "../_layouts/Layout.astro";
+import Section1 from "./Section1.astro";
+
+interface Props {
+  locale: LocalesValues;
+}
+const { locale } = Astro.props;
+
+const { description, title } = getIntlayer("2027-contact", locale);
+---
+
+<Layout locale={locale} title={title} description={description}>
+  <PageBanner titleJa="お問い合わせ・SNS" titleEn="Contact / Socials" />
+  <Section1 locale={locale} />
+</Layout>
