@@ -44,6 +44,8 @@ Run only when the user explicitly asks for a design change.
 
 - Names: `common/<category>/<Name>` (shared) / `<page>/<Name>` (page-local, e.g. `home/<Name>`, `404/<Name>`). Variant components need `.path` set explicitly (name ignores slash).
 - Variant-main resize propagates to instances.
+- Variant containers via MCP (verified): `createBoard` plain boards → `createComponent` **one board per call** (each becomes a main) → `createVariantContainer([{shape, properties}])`.
+- `createVariantFromComponents` accepts mains only: bundling boards in one `createComponent` yields copy children (rejected); plain boards are rejected too. On `:shapes`, check input kind — plain → main-ify, copy → rebuild plain and retry once, then ask a human.
 - Instance text (`auto-width` follows content):
   1. Never `resize` height (comes from the variant, e.g. `Lines`).
   2. To change height, switch the variant.
