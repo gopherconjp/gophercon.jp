@@ -45,7 +45,7 @@ const { ariaLabel, switchTo } = getIntlayer(
   .locale-switcher__label {
     display: flex;
     align-items: flex-end;
-    height: 24px;
+    height: var(--_spacing-24);
     white-space: nowrap;
     font-weight: var(--_font-weight-bold);
     line-height: var(--_line-height-1);
@@ -54,13 +54,13 @@ const { ariaLabel, switchTo } = getIntlayer(
 
   .locale-switcher__label-prefix {
     font-weight: var(--_font-weight-regular);
-    padding-bottom: 4px;
+    padding-bottom: var(--_spacing-4);
     margin-right: 6px;
   }
 
   .locale-switcher__label-name {
     position: relative;
-    padding-bottom: 4px;
+    padding-bottom: var(--_spacing-4);
     margin-right: 6px;
   }
 
@@ -111,8 +111,8 @@ const { ariaLabel, switchTo } = getIntlayer(
   .locale-switcher__item-frame {
     position: relative;
     display: block;
-    height: 24px;
-    padding-top: 4px;
+    height: var(--_spacing-24);
+    padding-top: var(--_spacing-4);
     font-weight: var(--_font-weight-bold);
     line-height: var(--_line-height-1);
     color: var(--_color-black);
