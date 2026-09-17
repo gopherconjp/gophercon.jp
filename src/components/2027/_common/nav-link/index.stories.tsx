@@ -10,10 +10,9 @@ export default {
 };
 
 export const Default = {
-  render: (args: Record<string, unknown>) => <NavLink {...args}>About</NavLink>,
+  args: { children: "About" },
 };
 
 export const Current = {
-  args: { current: true },
-  render: (args: Record<string, unknown>) => <NavLink {...args}>About</NavLink>,
+  args: { current: true, children: "About" },
 };
