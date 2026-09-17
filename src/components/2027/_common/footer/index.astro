@@ -27,8 +27,11 @@ const FOOTER_COMPACT_MIN_PX = 440;
     <div class="footer__row">
       <Image src={logo} alt={logoAlt} height={72} class="footer__logo" />
       <div class="footer__texts">
-        <p class="footer__copyright">{copyright}</p>
-        <p class="footer__credit">{credit}</p>
+        <p class="footer__body">
+          {copyright}
+          <br />
+          {credit}
+        </p>
       </div>
       <div class="footer__top">
         <NavLink label={backToTop} href="#top" />
@@ -64,11 +67,8 @@ const FOOTER_COMPACT_MIN_PX = 440;
 
   .footer__texts {
     grid-area: texts;
-    display: flex;
-    flex-direction: column;
-    gap: var(--_spacing-8);
     align-self: end;
-    margin-bottom: 12px;
+    margin-bottom: var(--_spacing-8);
   }
 
   .footer__top {
@@ -79,11 +79,9 @@ const FOOTER_COMPACT_MIN_PX = 440;
     margin-top: var(--_spacing-8);
   }
 
-  .footer__copyright,
-  .footer__credit {
+  .footer__body {
     margin: 0;
     font-size: var(--_font-size-small);
-    line-height: 1.2;
   }
 </style>
 
@@ -96,6 +94,9 @@ const FOOTER_COMPACT_MIN_PX = 440;
         "logo top"
         "texts texts";
       align-items: start;
+    }
+    .footer__texts.footer__texts {
+      margin-bottom: 0;
     }
   }
 

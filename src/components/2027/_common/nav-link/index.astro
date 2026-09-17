@@ -27,7 +27,7 @@ const { label, href, current = false, fullWidth = false } = Astro.props;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-end;
-    height: 24px;
+    height: var(--_spacing-24);
     text-decoration: none;
   }
 
@@ -42,7 +42,7 @@ const { label, href, current = false, fullWidth = false } = Astro.props;
     font-weight: var(--_font-weight-bold);
     line-height: var(--_line-height-1);
     color: var(--_color-black);
-    padding-bottom: 2px;
+    padding-bottom: var(--_border-width-2);
   }
 
   .nav-link__underline {
