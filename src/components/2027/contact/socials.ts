@@ -39,7 +39,7 @@ export const socials: SocialItem[] = [
     logo: "/social/x.svg",
     logoHover: "/social/x.svg",
     logoAlt: "X logo",
-    followHref: "https://x.com/GopherConJP",
+    followHref: "https://x.com/intent/follow?screen_name=GopherConJP",
     searchHref: "https://x.com/search?q=%23GopherConJP",
     shareHref: (locale) => {
       const siteUrl = getLocalizedSiteUrl(locale);
@@ -69,7 +69,8 @@ export const socials: SocialItem[] = [
     logo: "/social/mastodon-black.svg",
     logoHover: "/social/mastodon.svg",
     logoAlt: "Mastodon logo",
-    followHref: "https://mastodon.social/@gopherconjp",
+    followHref:
+      "https://mastodon.social/authorize_interaction?uri=https%3A%2F%2Fmastodon.social%2F%40gopherconjp",
     searchHref: "https://mastodon.social/tags/GopherConJP",
     shareHref: (locale) => {
       const siteUrl = getLocalizedSiteUrl(locale);
@@ -117,7 +118,7 @@ export const socials: SocialItem[] = [
     logo: "/social/youtube-black.webp",
     logoHover: "/social/youtube.webp",
     logoAlt: "YouTube logo",
-    followHref: "https://www.youtube.com/@GopherConJP",
+    followHref: "https://www.youtube.com/@GopherConJP?sub_confirmation=1",
     searchHref: "https://www.youtube.com/results?search_query=%23GopherConJP",
   },
 ];
