@@ -2,12 +2,16 @@ import { mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 
 import { runMain } from "./lib/cli.ts";
-import { cfg, snapshotPath } from "./lib/config.ts";
+import { cfg, isLib, snapshotPath } from "./lib/config.ts";
 import { Penpot } from "./lib/penpot.ts";
 
 // oxlint-disable no-await-in-loop -- files export sequentially on purpose
 
 const exportOne = async (penpot: Penpot, file: string): Promise<void> => {
+  if (isLib(file)) {
+    throw new Error(`"${file}" is an import-only lib file in design/lib and is never exported.`);
+  }
+
   const snapshot = snapshotPath(file);
 
   const design = await penpot.findDesign(cfg.project, file);

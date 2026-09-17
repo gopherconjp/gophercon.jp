@@ -60,7 +60,7 @@ const main = async (): Promise<void> => {
   console.log("Ensuring the gophercon.jp project / design files ...");
 
   const designs: { file: string; fileId: string; action: string }[] = [];
-  for (const file of cfg.files) {
+  for (const file of [...cfg.files, ...cfg.libs]) {
     const design = await ensureDesign(penpot, file);
     designs.push({ file, fileId: design.fileId, action: design.action });
   }
