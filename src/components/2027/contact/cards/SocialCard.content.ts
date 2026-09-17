@@ -17,6 +17,10 @@ const content = {
       en: "Share",
       ja: "シェア",
     }),
+    join: t({
+      en: "Join",
+      ja: "参加",
+    }),
   },
 } satisfies Dictionary;
 

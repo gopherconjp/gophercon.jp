@@ -12,7 +12,7 @@ interface Props {
 }
 const { locale, social } = Astro.props;
 
-const { follow, tagSearch, share } = getIntlayer(
+const { follow, tagSearch, share, join } = getIntlayer(
   "2027-contact-social-card",
   locale,
 );
@@ -32,6 +32,8 @@ const { follow, tagSearch, share } = getIntlayer(
         width={40}
         height={40}
         class="social-card__logo social-card__logo--default"
+        loading="eager"
+        fetchpriority="high"
       />
       <Image
         src={social.logoHover}
@@ -48,24 +50,36 @@ const { follow, tagSearch, share } = getIntlayer(
     </span>
   </a>
   <div class="social-card__actions">
-    <NavLink href={social.followHref} external>
-      <span class="social-card__action-icon" aria-hidden="true">
-        <Icon name="mdi:account-plus" />
-      </span>
-      {follow}
-    </NavLink>
-    <NavLink href={social.searchHref} external>
-      <span class="social-card__action-icon" aria-hidden="true">
-        <Icon name="mdi:magnify" />
-      </span>
-      {tagSearch}
-    </NavLink>
+    {social.followHref && (
+      <NavLink href={social.followHref} external>
+        <span class="social-card__action-icon" aria-hidden="true">
+          <Icon name="mdi:account-plus" />
+        </span>
+        {follow}
+      </NavLink>
+    )}
+    {social.searchHref && (
+      <NavLink href={social.searchHref} external>
+        <span class="social-card__action-icon" aria-hidden="true">
+          <Icon name="mdi:magnify" />
+        </span>
+        {tagSearch}
+      </NavLink>
+    )}
     {social.shareHref && (
       <NavLink href={social.shareHref(locale)} external>
         <span class="social-card__action-icon" aria-hidden="true">
           <Icon name="mdi:share" />
         </span>
         {share}
+      </NavLink>
+    )}
+    {social.joinHref && (
+      <NavLink href={social.joinHref} external>
+        <span class="social-card__action-icon" aria-hidden="true">
+          <Icon name="mdi:account-plus" />
+        </span>
+        {join}
       </NavLink>
     )}
   </div>
@@ -75,6 +89,7 @@ const { follow, tagSearch, share } = getIntlayer(
   .social-card {
     box-sizing: border-box;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--_spacing-24);
     padding: var(--_spacing-24);
@@ -103,10 +118,13 @@ const { follow, tagSearch, share } = getIntlayer(
     flex: 0 0 auto;
     width: 40px;
     height: 40px;
+    overflow: hidden;
   }
 
   .social-card__logo {
     display: block;
+    width: 40px;
+    height: 40px;
   }
 
   .social-card__logo--hover {
@@ -146,10 +164,21 @@ const { follow, tagSearch, share } = getIntlayer(
 
   .social-card__actions {
     display: flex;
-    flex: 0 0 auto;
+    flex: 1 1 100%;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--_spacing-8) var(--_spacing-24);
+  }
+
+  @media (min-width: 700px) {
+    .social-card {
+      flex-wrap: nowrap;
+      gap: var(--_spacing-24);
+    }
+
+    .social-card__actions {
+      flex: 0 0 auto;
+    }
   }
 
   .social-card__actions :global(.nav-link__label) {

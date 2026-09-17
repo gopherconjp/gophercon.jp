@@ -1,25 +1,17 @@
 import { getLocalizedUrl, type LocalesValues } from "intlayer";
 
-export type SocialService =
-  | "X"
-  | "Bluesky"
-  | "Mastodon"
-  | "Facebook"
-  | "Instagram"
-  | "LinkedIn"
-  | "YouTube";
-
 export interface SocialItem {
-  service: SocialService;
+  service: string;
   name: string;
   handle: string;
   href: string;
   logo: string;
   logoHover: string;
   logoAlt: string;
-  followHref: string;
-  searchHref: string;
+  followHref?: string;
+  searchHref?: string;
   shareHref?: (locale: LocalesValues) => string;
+  joinHref?: string;
 }
 
 const getLocalizedSiteUrl = (locale: LocalesValues): string =>
@@ -27,8 +19,6 @@ const getLocalizedSiteUrl = (locale: LocalesValues): string =>
     getLocalizedUrl("/2027", locale),
     import.meta.env.SITE ?? "https://gophercon.jp",
   ).toString();
-
-const SHARE_TEXT = "#GopherConJP";
 
 export const socials: SocialItem[] = [
   {
@@ -43,7 +33,7 @@ export const socials: SocialItem[] = [
     searchHref: "https://x.com/search?q=%23GopherConJP",
     shareHref: (locale) => {
       const siteUrl = getLocalizedSiteUrl(locale);
-      return `https://x.com/intent/post?text=${encodeURIComponent(`${SHARE_TEXT}\n`)}&url=${encodeURIComponent(siteUrl)}`;
+      return `https://x.com/intent/post?text=${encodeURIComponent("#GopherConJP\n")}&url=${encodeURIComponent(siteUrl)}`;
     },
   },
   {
@@ -58,7 +48,7 @@ export const socials: SocialItem[] = [
     searchHref: "https://bsky.app/search?q=%23GopherConJP",
     shareHref: (locale) => {
       const siteUrl = getLocalizedSiteUrl(locale);
-      return `https://bsky.app/intent/compose?text=${encodeURIComponent(`${SHARE_TEXT}\n${siteUrl}`)}`;
+      return `https://bsky.app/intent/compose?text=${encodeURIComponent(`#GopherConJP\n${siteUrl}`)}`;
     },
   },
   {
@@ -74,7 +64,7 @@ export const socials: SocialItem[] = [
     searchHref: "https://mastodon.social/tags/GopherConJP",
     shareHref: (locale) => {
       const siteUrl = getLocalizedSiteUrl(locale);
-      return `https://mastodonshare.com/?text=${encodeURIComponent(`${SHARE_TEXT}\n${siteUrl}`)}`;
+      return `https://mastodonshare.com/?text=${encodeURIComponent(`#GopherConJP\n${siteUrl}`)}`;
     },
   },
   {
@@ -121,26 +111,14 @@ export const socials: SocialItem[] = [
     followHref: "https://www.youtube.com/@GopherConJP?sub_confirmation=1",
     searchHref: "https://www.youtube.com/results?search_query=%23GopherConJP",
   },
+  {
+    service: "Slack",
+    name: "Gophers Slack",
+    handle: "#gophercon-japan",
+    href: "https://invite.slack.golangbridge.org/",
+    logo: "/social/slack-black.svg",
+    logoHover: "/social/slack.svg",
+    logoAlt: "Slack logo",
+    joinHref: "https://invite.slack.golangbridge.org/",
+  },
 ];
-
-export interface SlackItem {
-  service: "Slack";
-  name: string;
-  handle: string;
-  href: string;
-  logo: string;
-  logoHover: string;
-  logoAlt: string;
-  joinHref: string;
-}
-
-export const slack: SlackItem = {
-  service: "Slack",
-  name: "Gophers Slack",
-  handle: "#gophercon-japan",
-  href: "https://invite.slack.golangbridge.org/",
-  logo: "/social/slack-black.svg",
-  logoHover: "/social/slack.svg",
-  logoAlt: "Slack logo",
-  joinHref: "https://invite.slack.golangbridge.org/",
-};

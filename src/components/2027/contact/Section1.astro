@@ -3,7 +3,6 @@ import { getIntlayer, type LocalesValues } from "intlayer";
 
 import Breakable from "../../_common/breakable/index.astro";
 import ContentBox from "../../_common/content-box/index.astro";
-import SlackCard from "./cards/SlackCard.astro";
 import SocialCard from "./cards/SocialCard.astro";
 import { socials } from "./socials";
 
@@ -25,7 +24,6 @@ const { title } = getIntlayer("2027-contact-section1", locale);
         {socials.map((social) => (
           <SocialCard locale={locale} social={social} />
         ))}
-        <SlackCard locale={locale} />
       </div>
     </div>
   </ContentBox>
