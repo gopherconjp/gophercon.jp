@@ -1,44 +1,63 @@
 ---
-import type { LocalesValues } from "intlayer";
-
-import { isAccent, isLink, type Breakable } from "./types";
+import { isAccent, isBreak, isLink, type Breakable } from "./types";
 
 interface Props {
   value: Breakable;
-  locale: LocalesValues;
+  space?: boolean;
 }
-const { value, locale } = Astro.props;
+const { value, space = true } = Astro.props;
 
-const separator = locale === "ja" ? "" : " ";
+const separator = space ? " " : "";
+
+const escapeHtml = (text: string): string =>
+  text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
+const containsBreak = (node: Breakable): boolean => {
+  if (Array.isArray(node)) {
+    return node.some(containsBreak);
+  }
+
+  return isBreak(node);
+};
+
+const render = (node: Breakable): string => {
+  if (Array.isArray(node)) {
+    const inner = node
+      .map((chunk, index) => (index > 0 ? separator : "") + render(chunk))
+      .join("");
+
+    return containsBreak(node)
+      ? inner
+      : `<span class="breakable__chunk">${inner}</span>`;
+  }
+
+  if (isBreak(node)) {
+    return "<br />";
+  }
+
+  if (isAccent(node)) {
+    return `<span class="breakable__accent">${render(node.accent)}</span>`;
+  }
+
+  if (isLink(node)) {
+    return `<a href="${escapeHtml(node.href)}">${render(node.link)}</a>`;
+  }
+
+  if (typeof node === "string") {
+    return `<span class="breakable__chunk">${escapeHtml(node)}</span>`;
+  }
+
+  return "";
+};
 ---
 
-{Array.isArray(value) ? (
-  value.map((chunk, index) => (
-    <>
-      {index > 0 ? separator : null}
-      <span class="breakable__chunk">
-        <Astro.self value={chunk} locale={locale} />
-      </span>
-    </>
-  ))
-) : isAccent(value) ? (
-  <span class="breakable__accent">
-    <Astro.self value={value.accent} locale={locale} />
-  </span>
-) : isLink(value) ? (
-  <a href={value.href}>
-    <Astro.self value={value.link} locale={locale} />
-  </a>
-) : typeof value === "string" ? (
-  value.split(/\r?\n/).map((line, index) => (
-    <>
-      {index > 0 ? <br /> : null}
-      {line}
-    </>
-  ))
-) : null}
+<Fragment set:html={render(value)} />
 
-<style>
+<style is:global>
   .breakable__chunk {
     display: inline-block;
   }
