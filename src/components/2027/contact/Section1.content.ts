@@ -6,8 +6,8 @@ const content = {
   key,
   content: {
     title: t({
-      en: "Socials",
-      ja: "SNS",
+      en: "Follow us on Socials!",
+      ja: "SNSで最新情報をチェック！",
     }),
   },
 } satisfies Dictionary;

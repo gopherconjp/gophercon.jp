@@ -6,8 +6,8 @@ const content = {
   key,
   content: {
     description: t({
-      en: "Get in touch with the GopherCon Japan team",
-      ja: "GopherCon Japanへのお問い合わせはこちら。SNS・メール窓口の一覧を掲載しています。",
+      en: "Get in touch with the Organizing Committee",
+      ja: "運営へのお問い合わせ・公式SNSはこちら",
     }),
     title: t({
       en: "Contact & Socials",

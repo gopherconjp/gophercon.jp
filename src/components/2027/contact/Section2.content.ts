@@ -6,8 +6,8 @@ const content = {
   key,
   content: {
     title: t({
-      en: "Contact",
-      ja: "お問い合わせ",
+      en: "Contact the Organizing Committee",
+      ja: "運営へのお問い合わせ",
     }),
     contacts: t({
       en: [
