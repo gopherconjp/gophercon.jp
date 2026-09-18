@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 
 import Layout from "../_layouts/Layout.astro";
+import Breakable from "../../_common/breakable/index.astro";
 import ContentBox from "../../_common/content-box/index.astro";
 import illust from "./404.webp";
 ---
@@ -22,9 +23,16 @@ import illust from "./404.webp";
         <div class="not-found__text">
           <h1 class="not-found__heading">404</h1>
           <p class="not-found__body">
-            <span lang="ja">お探しのページは見つかりませんでした。</span>
+            <span lang="ja">
+              <Breakable
+                value={["お探しのページは", "見つかりませんでした。"]}
+                space={false}
+              />
+            </span>
             <br />
-            The page you are looking for does not exist.
+            <Breakable
+              value={[["The page", "you are looking for"], "does not exist."]}
+            />
             <br />
             <a href="/" data-back>
               <span lang="ja">戻る</span> / Back
