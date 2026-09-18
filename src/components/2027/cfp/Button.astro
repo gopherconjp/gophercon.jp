@@ -1,0 +1,39 @@
+---
+interface Props {
+  label: string;
+  href: string;
+}
+const { label, href } = Astro.props;
+---
+
+<a class="cfp-button" href={href} target="_blank" rel="noopener noreferrer">
+  <span class="cfp-button__label">{label}</span>
+</a>
+
+<style>
+  .cfp-button {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    padding: var(--_spacing-24);
+    background: var(--_color-white);
+    border-radius: var(--_radius-8);
+    box-shadow: var(--_shadow-dark);
+    text-decoration: none;
+  }
+
+  .cfp-button__label {
+    display: block;
+    font-weight: var(--_font-weight-bold);
+    font-size: var(--_font-size-h3);
+    line-height: var(--_line-height-1);
+    color: var(--_color-black);
+    text-align: center;
+  }
+
+  .cfp-button:hover {
+    & .cfp-button__label {
+      color: var(--_color-accent);
+    }
+  }
+</style>
