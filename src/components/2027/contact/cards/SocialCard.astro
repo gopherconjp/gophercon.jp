@@ -99,7 +99,7 @@ const { follow, tagSearch, share, join } = getIntlayer(
   }
 
   .social-card:hover {
-    box-shadow: var(--_shadow-popup);
+    box-shadow: var(--_shadow-dark);
   }
 
   .social-card__info {
@@ -143,7 +143,7 @@ const { follow, tagSearch, share, join } = getIntlayer(
 
   .social-card__text-col {
     display: grid;
-    gap: 0;
+    gap: var(--_spacing-8);
     min-width: 0;
     justify-items: start;
     text-align: left;
@@ -153,13 +153,13 @@ const { follow, tagSearch, share, join } = getIntlayer(
     margin: 0;
     font-weight: var(--_font-weight-bold);
     font-size: var(--_font-size-body);
-    line-height: var(--_line-height-1-8);
+    line-height: var(--_line-height-1);
   }
 
   .social-card__handle {
     margin: 0;
     font-size: var(--_font-size-body);
-    line-height: var(--_line-height-1-8);
+    line-height: var(--_line-height-1);
   }
 
   .social-card__actions {

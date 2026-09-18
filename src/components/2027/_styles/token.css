@@ -61,5 +61,6 @@
   --_hamburger-size: 24px;
 
   /* shadow */
-  --_shadow-popup: 0 4px 12px -4px #00547d;
+  --_shadow-dark: 0 4px 12px -4px #00547d;
+  --_shadow-white: 0 4px 12px -4px #ffffff;
 }
