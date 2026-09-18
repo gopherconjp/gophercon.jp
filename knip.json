@@ -1,4 +1,5 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "entry": ["intlayer.config.ts", "src/**/*.content.ts"]
+  "entry": ["intlayer.config.ts", "src/**/*.content.ts"],
+  "ignoreDependencies": ["@iconify-json/mdi"]
 }
