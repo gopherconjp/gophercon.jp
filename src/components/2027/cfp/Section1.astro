@@ -1,6 +1,7 @@
 ---
 import { getIntlayer, type LocalesValues } from "intlayer";
 
+import Breakable from "../../_common/breakable/index.astro";
 import ContentBox from "../../_common/content-box/index.astro";
 import CfpButton from "./Button.astro";
 
@@ -42,9 +43,7 @@ const BANNER_MEDIUM =
           <img src={BANNER_MEDIUM} alt={bannerAlt} width="220" height="80" />
         </a>
         <p class="cfp-section1__body">
-          {body[0]}
-          <br />
-          {body[1]}
+          <Breakable value={body} space={locale !== "ja"} />
         </p>
         <div class="cfp-section1__button">
           <CfpButton label={buttonLabel} href={SUBMIT_URL} />

@@ -1,22 +1,27 @@
 ---
+import type { LocalesValues } from "intlayer";
+
+import type { Breakable } from "../../../_common/breakable/types";
 import Card from "./index.astro";
 
 interface CardItem {
   label: string;
-  content: string;
-  body?: string;
+  content: Breakable;
+  body?: Breakable;
   dark?: boolean;
 }
 
 interface Props {
+  locale: LocalesValues;
   cards: CardItem[];
 }
-const { cards } = Astro.props;
+const { locale, cards } = Astro.props;
 ---
 
 <div class="card-list">
   {cards.map((card: CardItem) => (
     <Card
+      locale={locale}
       label={card.label}
       content={card.content}
       body={card.body}

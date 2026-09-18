@@ -15,7 +15,10 @@ const { description, title } = getIntlayer("2027-contact", locale);
 ---
 
 <Layout locale={locale} title={title} description={description}>
-  <PageBanner titleJa="お問い合わせ・SNS" titleEn="Contact & Socials" />
+  <PageBanner
+    titleJa={["お問い合わせ・", "SNS"]}
+    titleEn={["Contact &", "Socials"]}
+  />
   <Section1 locale={locale} />
   <Section2 locale={locale} />
 </Layout>

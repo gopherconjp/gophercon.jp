@@ -1,18 +1,30 @@
 ---
+import type { LocalesValues } from "intlayer";
+
+import Breakable from "../../../_common/breakable/index.astro";
+import type { Breakable as BreakableValue } from "../../../_common/breakable/types";
+
 interface Props {
+  locale: LocalesValues;
   label: string;
-  content: string;
-  body?: string;
+  content: BreakableValue;
+  body?: BreakableValue;
   dark?: boolean;
 }
-const { label, content, body, dark = false } = Astro.props;
+const { locale, label, content, body, dark = false } = Astro.props;
 ---
 
 <div class:list={["card", dark && "card--dark"]}>
   <h2 class="center">{label}</h2>
   <div class="card__body-group">
-    <p class="card__content">{content}</p>
-    {body && <p class="card__body">{body}</p>}
+    <p class="card__content">
+      <Breakable value={content} space={locale !== "ja"} />
+    </p>
+    {body && (
+      <p class="card__body">
+        <Breakable value={body} space={locale !== "ja"} />
+      </p>
+    )}
   </div>
 </div>
 

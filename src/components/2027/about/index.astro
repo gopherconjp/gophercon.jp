@@ -16,7 +16,7 @@ const { description, title } = getIntlayer("2027-about", locale);
 ---
 
 <Layout locale={locale} title={title} description={description}>
-  <PageBanner titleJa="GopherCon Japanについて" titleEn="About" />
+  <PageBanner titleJa={["GopherCon Japan", "について"]} titleEn="About" />
   <Section1 locale={locale} />
   <Section2 locale={locale} />
   <Section3 locale={locale} />

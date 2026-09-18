@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { getIntlayer, type LocalesValues } from "intlayer";
 
+import Breakable from "../../../_common/breakable/index.astro";
 import ContentBox from "../../../_common/content-box/index.astro";
 import logo from "../logo.webp";
 import NavLink from "../nav-link/index.astro";
@@ -28,9 +29,9 @@ const FOOTER_COMPACT_MIN_PX = 440;
       <Image src={logo} alt={logoAlt} height={72} class="footer__logo" />
       <div class="footer__texts">
         <p class="footer__body">
-          {copyright}
+          <Breakable value={copyright} space={locale !== "ja"} />
           <br />
-          {credit}
+          <Breakable value={credit} space={locale !== "ja"} />
         </p>
       </div>
       <div class="footer__top">

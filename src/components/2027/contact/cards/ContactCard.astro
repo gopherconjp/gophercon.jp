@@ -1,16 +1,24 @@
 ---
+import type { LocalesValues } from "intlayer";
+
+import Breakable from "../../../_common/breakable/index.astro";
 import type { ContactItem } from "../content/contacts";
 
 interface Props {
+  locale: LocalesValues;
   contact: ContactItem;
 }
-const { contact } = Astro.props;
+const { locale, contact } = Astro.props;
 ---
 
 <a class="contact-card" href={`mailto:${contact.email}`}>
-  <p class="contact-card__email">{contact.email}</p>
+  <p class="contact-card__email">
+    <Breakable value={contact.emailDisplay} space={false} />
+  </p>
   <p class="contact-card__label">{contact.label}</p>
-  <p class="contact-card__description">{contact.description}</p>
+  <p class="contact-card__description">
+    <Breakable value={contact.description} space={locale !== "ja"} />
+  </p>
 </a>
 
 <style>

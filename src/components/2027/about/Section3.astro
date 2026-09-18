@@ -16,13 +16,13 @@ const { title, heading, body } = getIntlayer("2027-about-section3", locale);
   <ContentBox variant="text">
     <div class="about-section3__content">
       <h2 class="about-section3__title">
-        <Breakable value={title} locale={locale} />
+        <Breakable value={title} space={locale !== "ja"} />
       </h2>
       <h3 class="about-section3__heading center">
-        <Breakable value={heading} locale={locale} />
+        <Breakable value={heading} space={locale !== "ja"} />
       </h3>
       <p class="about-section3__body">
-        <Breakable value={body} locale={locale} />
+        <Breakable value={body} space={locale !== "ja"} />
       </p>
     </div>
   </ContentBox>

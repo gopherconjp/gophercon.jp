@@ -18,7 +18,7 @@ const { title } = getIntlayer("2027-contact-section1", locale);
   <ContentBox variant="text">
     <div class="contact-section1__content">
       <h2 class="contact-section1__title">
-        <Breakable value={title} locale={locale} />
+        <Breakable value={title} space={locale !== "ja"} />
       </h2>
       <div class="contact-section1__cards">
         {socials.map((social) => (

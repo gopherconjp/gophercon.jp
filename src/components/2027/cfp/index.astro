@@ -15,7 +15,7 @@ const { description, title } = getIntlayer("2027-cfp", locale);
 ---
 
 <Layout locale={locale} title={title} description={description}>
-  <PageBanner titleJa="プロポーザル募集" titleEn="Call for Proposals" />
+  <PageBanner titleJa={["プロポーザル", "募集"]} titleEn="Call for Proposals" />
   <Section1 locale={locale}>
     <Markdown slug="cfp" locale={locale} />
   </Section1>

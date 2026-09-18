@@ -12,12 +12,37 @@ const content = {
       ja: "GopherCon Japan スローガン",
     }),
     heading: t<Breakable>({
-      en: "Let the world's passion reach Japan.\nLet Japan's untapped wisdom travel to the world.",
-      ja: "世界に宿る熱量を日本へ。日本に眠る叡智を世界へ。",
+      en: [
+        ["Let the world's passion", "reach Japan."],
+        [["Let Japan's", "untapped wisdom"], "travel to the world."],
+      ],
+      ja: [
+        ["世界に宿る", "熱量を日本へ。"],
+        ["日本に眠る", "叡智を世界へ。"],
+      ],
     }),
     body: t<Breakable>({
-      en: "We bring the world's inspiration to Japan.\nWe share Japan's pride with the world.\nGopherCon Japan offers a space where Gophers from around the world connect and enjoy without barriers.",
-      ja: "日本のGopherに「これが世界だ」という刺激を。\n世界のGopherに「これが日本だ」という誇りを。\nGopherCon Japanは、世界中のあらゆるGopherが分け隔てなく繋がり、楽しめる空間を目指します。",
+      en: [
+        ["We bring", "the world's inspiration", "to Japan."],
+        { break: true },
+        ["We share", "Japan's pride", "with the world."],
+        { break: true },
+        [
+          ["GopherCon Japan", "offers a space"],
+          ["where Gophers from", "around the world"],
+          ["connect and enjoy", "without barriers."],
+        ],
+      ],
+      ja: [
+        ["日本のGopherに", "「これが世界だ」", "という刺激を。"],
+        { break: true },
+        ["世界のGopherに", "「これが日本だ」", "という誇りを。"],
+        { break: true },
+        [
+          ["GopherCon Japanは、", "世界中の", "あらゆるGopherが"],
+          ["分け隔てなく", "繋がり、", "楽しめる空間を", "目指します。"],
+        ],
+      ],
     }),
   },
 } satisfies Dictionary;

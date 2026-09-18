@@ -1,9 +1,11 @@
 ---
+import Breakable from "../../../_common/breakable/index.astro";
+import type { Breakable as BreakableValue } from "../../../_common/breakable/types";
 import ContentBox from "../../../_common/content-box/index.astro";
 
 interface Props {
-  titleJa: string;
-  titleEn: string;
+  titleJa: BreakableValue;
+  titleEn: BreakableValue;
 }
 const { titleJa, titleEn } = Astro.props;
 ---
@@ -11,20 +13,32 @@ const { titleJa, titleEn } = Astro.props;
 <div class="page-banner">
   <ContentBox>
     <div class="page-banner__static">
-      <p class="page-banner__title-ja">{titleJa}</p>
-      <h1 class="page-banner__title-en">{titleEn}</h1>
+      <p class="page-banner__title-ja">
+        <Breakable value={titleJa} space={false} />
+      </p>
+      <h1 class="page-banner__title-en">
+        <Breakable value={titleEn} />
+      </h1>
     </div>
   </ContentBox>
 
   <div class="page-banner__viewport" aria-hidden="true">
     <div class="page-banner__track">
       <div class="page-banner__group">
-        <p class="page-banner__title-ja">{titleJa}</p>
-        <p class="page-banner__title-en">{titleEn}</p>
+        <p class="page-banner__title-ja">
+          <Breakable value={titleJa} space={false} />
+        </p>
+        <p class="page-banner__title-en">
+          <Breakable value={titleEn} />
+        </p>
       </div>
       <div class="page-banner__group">
-        <p class="page-banner__title-ja">{titleJa}</p>
-        <p class="page-banner__title-en">{titleEn}</p>
+        <p class="page-banner__title-ja">
+          <Breakable value={titleJa} space={false} />
+        </p>
+        <p class="page-banner__title-en">
+          <Breakable value={titleEn} />
+        </p>
       </div>
     </div>
   </div>
