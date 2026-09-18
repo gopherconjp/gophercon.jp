@@ -2,8 +2,6 @@
 import { getEntry, render } from "astro:content";
 import type { LocalesValues } from "intlayer";
 
-import ContentBox from "../../_common/content-box/index.astro";
-
 interface Props {
   slug: string;
   locale: LocalesValues;
@@ -19,11 +17,9 @@ const { Content } = await render(entry);
 ---
 
 <div class="markdown">
-  <ContentBox variant="text">
-    <div class="markdown__content">
-      <Content />
-    </div>
-  </ContentBox>
+  <div class="markdown__content">
+    <Content />
+  </div>
 </div>
 
 <style>
@@ -35,7 +31,6 @@ const { Content } = await render(entry);
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    padding: var(--_spacing-64) 0;
     text-align: left;
   }
 
@@ -54,5 +49,12 @@ const { Content } = await render(entry);
 
   .markdown__content > :global(p) {
     margin: var(--_spacing-8) 0;
+  }
+
+  .markdown__content > :global(hr) {
+    width: 100%;
+    margin: var(--_spacing-16) 0;
+    border: none;
+    border-top: var(--_border-width-2) solid var(--_color-dark);
   }
 </style>
