@@ -4,12 +4,10 @@
   "workspaces": {
     "": {
       "name": "gophercon.jp",
-      "dependencies": {
-        "@iconify-json/mdi": "^1.2.3",
-      },
       "devDependencies": {
         "@astrojs/check": "0.9.10",
         "@ianvs/prettier-plugin-sort-imports": "4.7.1",
+        "@iconify-json/mdi": "1.2.3",
         "@intlayer/core": "9.5.3",
         "@storybook-astro/framework": "1.12.0",
         "@storybook/builder-vite": "10.6.0",
