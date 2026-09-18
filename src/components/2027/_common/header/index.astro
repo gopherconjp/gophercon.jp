@@ -21,13 +21,14 @@ const currentPath =
 
 const links = [
   { label: "About", href: getLocalizedUrl("/2027/about", locale) },
+  { label: "CFP", href: getLocalizedUrl("/2027/cfp", locale) },
   {
     label: "Contact & Socials",
     href: getLocalizedUrl("/2027/contact", locale),
   },
 ].map((link) => Object.assign(link, { current: currentPath === link.href }));
 
-const HEADER_BREAK_PX = 640; // desktop/mobile switch
+const HEADER_BREAK_PX = 660; // desktop/mobile switch
 const HEADER_COMPACT_MIN_PX = 440; // shrink start
 ---
 
