@@ -1,0 +1,99 @@
+---
+import { getIntlayer, type LocalesValues } from "intlayer";
+
+import ContentBox from "../../_common/content-box/index.astro";
+import CfpButton from "./Button.astro";
+
+interface Props {
+  locale: LocalesValues;
+}
+const { locale } = Astro.props;
+
+const { bannerAlt, body, buttonLabel } = getIntlayer(
+  "2027-cfp-section1",
+  locale,
+);
+
+const SUBMIT_URL = "https://sessionize.com/gopherconjp-2027/";
+const BANNER_WIDE =
+  "https://sessionize.com/landing/images/brand/banners/sessionize-banner-wide.png";
+const BANNER_MEDIUM =
+  "https://sessionize.com/landing/images/brand/banners/sessionize-banner-medium.png";
+---
+
+<section class="cfp-section1">
+  <ContentBox variant="text">
+    <div class="cfp-section1__content">
+      <div class="cfp-section1__submission">
+        <a
+          class="cfp-section1__banner cfp-section1__banner--desktop"
+          href="https://sessionize.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src={BANNER_WIDE} alt={bannerAlt} width="400" height="64" />
+        </a>
+        <a
+          class="cfp-section1__banner cfp-section1__banner--mobile"
+          href="https://sessionize.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src={BANNER_MEDIUM} alt={bannerAlt} width="220" height="80" />
+        </a>
+        <p class="cfp-section1__body">
+          {body[0]}
+          <br />
+          {body[1]}
+        </p>
+        <div class="cfp-section1__button">
+          <CfpButton label={buttonLabel} href={SUBMIT_URL} />
+        </div>
+      </div>
+      <slot />
+    </div>
+  </ContentBox>
+</section>
+
+<style>
+  .cfp-section1__content {
+    display: grid;
+    gap: var(--_spacing-40);
+    padding: var(--_spacing-64) 0;
+  }
+
+  .cfp-section1__submission {
+    display: grid;
+    justify-items: start;
+    gap: var(--_spacing-24);
+  }
+
+  .cfp-section1__banner {
+    justify-self: center;
+    line-height: 0;
+  }
+
+  .cfp-section1__banner--mobile {
+    display: none;
+  }
+
+  @media (max-width: 500px) {
+    .cfp-section1__banner--desktop {
+      display: none;
+    }
+
+    .cfp-section1__banner--mobile {
+      display: block;
+    }
+  }
+
+  .cfp-section1__body {
+    margin: var(--_spacing-8) 0;
+  }
+
+  .cfp-section1__button {
+    display: grid;
+    justify-items: center;
+    width: 100%;
+  }
+</style>
