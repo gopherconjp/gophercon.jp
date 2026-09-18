@@ -48,8 +48,8 @@ Run only when the user explicitly asks for a design change.
 - `createVariantFromComponents` accepts mains only: bundling boards in one `createComponent` yields copy children (rejected); plain boards are rejected too. On `:shapes`, check input kind — plain → main-ify, copy → rebuild plain and retry once, then ask a human.
 - Instance text (`auto-width` follows content):
   1. Never `resize` height (comes from the variant, e.g. `Lines`).
-  2. To change height, switch the variant.
-  3. Otherwise replace with a fresh instance.
+  2. To change height, first switch the variant.
+  3. If switching is not possible, replace with a fresh instance.
 
 ## Verification
 

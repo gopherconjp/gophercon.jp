@@ -1,0 +1,198 @@
+---
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import { getIntlayer, type LocalesValues } from "intlayer";
+
+import NavLink from "../../_common/nav-link/index.astro";
+import type { SocialItem } from "../socials";
+
+interface Props {
+  locale: LocalesValues;
+  social: SocialItem;
+}
+const { locale, social } = Astro.props;
+
+const { follow, tagSearch, share, join } = getIntlayer(
+  "2027-contact-social-card",
+  locale,
+);
+---
+
+<div class="social-card">
+  <a
+    class="social-card__info"
+    href={social.href}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <span class="social-card__icon">
+      <Image
+        src={social.logo}
+        alt={social.logoAlt}
+        width={40}
+        height={40}
+        class="social-card__logo social-card__logo--default"
+        loading="eager"
+      />
+      <Image
+        src={social.logoHover}
+        alt=""
+        aria-hidden="true"
+        width={40}
+        height={40}
+        class="social-card__logo social-card__logo--hover"
+      />
+    </span>
+    <span class="social-card__text-col">
+      <span class="social-card__name">{social.name}</span>
+      <span class="social-card__handle">{social.handle}</span>
+    </span>
+  </a>
+  <div class="social-card__actions">
+    {social.followHref && (
+      <NavLink href={social.followHref} external>
+        <span class="social-card__action-icon" aria-hidden="true">
+          <Icon name="mdi:account-plus" />
+        </span>
+        {follow}
+      </NavLink>
+    )}
+    {social.searchHref && (
+      <NavLink href={social.searchHref} external>
+        <span class="social-card__action-icon" aria-hidden="true">
+          <Icon name="mdi:magnify" />
+        </span>
+        {tagSearch}
+      </NavLink>
+    )}
+    {social.shareHref && (
+      <NavLink href={social.shareHref(locale)} external>
+        <span class="social-card__action-icon" aria-hidden="true">
+          <Icon name="mdi:share" />
+        </span>
+        {share}
+      </NavLink>
+    )}
+    {social.joinHref && (
+      <NavLink href={social.joinHref} external>
+        <span class="social-card__action-icon" aria-hidden="true">
+          <Icon name="mdi:account-plus" />
+        </span>
+        {join}
+      </NavLink>
+    )}
+  </div>
+</div>
+
+<style>
+  .social-card {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--_spacing-24);
+    padding: var(--_spacing-24);
+    width: 100%;
+    background: var(--_color-white);
+    border-radius: var(--_radius-8);
+  }
+
+  .social-card:hover {
+    box-shadow: var(--_shadow-dark);
+  }
+
+  .social-card__info {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: var(--_spacing-32);
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .social-card__icon {
+    position: relative;
+    display: block;
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+  }
+
+  .social-card__logo {
+    display: block;
+    width: 40px;
+    height: 40px;
+  }
+
+  .social-card__logo--hover {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+
+  .social-card:hover .social-card__logo--hover {
+    opacity: 1;
+  }
+
+  .social-card:hover .social-card__logo--default {
+    opacity: 0;
+  }
+
+  .social-card__text-col {
+    display: grid;
+    gap: var(--_spacing-8);
+    min-width: 0;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .social-card__name {
+    margin: 0;
+    font-weight: var(--_font-weight-bold);
+    font-size: var(--_font-size-body);
+    line-height: var(--_line-height-1);
+  }
+
+  .social-card__handle {
+    margin: 0;
+    font-size: var(--_font-size-body);
+    line-height: var(--_line-height-1);
+  }
+
+  .social-card__actions {
+    display: flex;
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--_spacing-8) var(--_spacing-24);
+  }
+
+  @media (min-width: 700px) {
+    .social-card {
+      flex-wrap: nowrap;
+      gap: var(--_spacing-24);
+    }
+
+    .social-card__actions {
+      flex: 0 0 auto;
+    }
+  }
+
+  .social-card__actions :global(.nav-link__label) {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--_spacing-8);
+  }
+
+  .social-card__action-icon {
+    display: inline-flex;
+    flex: 0 0 auto;
+  }
+
+  .social-card__action-icon :global(svg) {
+    width: 16px;
+    height: 16px;
+  }
+</style>

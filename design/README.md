@@ -22,23 +22,25 @@ bun run penpot:export
 
 ## Commands
 
-Run these from the repo root. `export` / `import` take an optional file name (default: all files in `cfg.files`).
+Run these from the repo root. `export` / `import` take an optional file name (default: all files in `cfg.files` + `cfg.libs`; `export` skips `cfg.libs`).
 
-| Command                 | What it does                                                              |
-| ----------------------- | ------------------------------------------------------------------------- |
-| `bun run penpot`        | Starts the stack, restores missing files from `snapshot/`, uploads fonts. |
-| `bun run penpot:export` | Exports the design to `snapshot/<file>.penpot`.                           |
-| `bun run penpot:import` | Force-restores `snapshot/<file>.penpot` (asks for confirmation first).    |
-| `bun run penpot:mcp`    | Writes the MCP URL into `.vscode/mcp.json`.                               |
-| `bun run penpot:down`   | Stops the stack; volumes and snapshots are kept.                          |
-| `bun run penpot:reset`  | Wipes all Penpot data (docker volumes, DB wiped); snapshots are kept.     |
+| Command                 | What it does                                                                                  |
+| ----------------------- | --------------------------------------------------------------------------------------------- |
+| `bun run penpot`        | Starts the stack, restores missing files from `snapshot/` + `lib/`, uploads fonts.            |
+| `bun run penpot:export` | Exports the design to `snapshot/<file>.penpot`.                                               |
+| `bun run penpot:import` | Force-restores `snapshot/<file>.penpot` or `lib/<file>.penpot` (asks for confirmation first). |
+| `bun run penpot:mcp`    | Writes the MCP URL into `.vscode/mcp.json`.                                                   |
+| `bun run penpot:down`   | Stops the stack; volumes and snapshots are kept.                                              |
+| `bun run penpot:reset`  | Wipes all Penpot data (docker volumes, DB wiped); snapshots are kept.                         |
 
 The local stack uses the fixed account `creative@gophercon.jp` / `password`.
 
 ## Saving / restoring
 
 - `bun run penpot:export` overwrites `snapshot/<file>.penpot`; commit the change to save it.
-- `bun run penpot` auto-imports the snapshot when the design file is missing; creates an empty file if no snapshot exists.
+  - Files in `lib/` (e.g. `Material-Design-Icons`) are import-only and never exported.
+- `bun run penpot` auto-imports the snapshot (or `lib/` file) when the design file is missing
+  - Creates an empty file if no snapshot exists (lib files error instead).
 - Fonts in `public/font/` are uploaded automatically by `penpot` / `penpot:import`; do not upload manually.
 
 ## Updating / resetting
@@ -50,9 +52,10 @@ bun run penpot:reset && bun run penpot  # full reset (DB wiped)
 
 ## Layout
 
-| Path                    | What it is                                                               |
-| ----------------------- | ------------------------------------------------------------------------ |
-| `compose.yaml`          | Whole stack: Penpot + built-in MCP + Postgres + Valkey                   |
-| `scripts/`              | `up` / `export` / `import` / `mcp` / `down` / `reset`, helpers in `lib`  |
-| `scripts/lib/config.ts` | Source of truth: `cfg.files` defines the design files                    |
-| `snapshot/*.penpot`     | Exported snapshots, one per design file (e.g. `gopherconjp-2027.penpot`) |
+| Path                    | What it is                                                                                  |
+| ----------------------- | ------------------------------------------------------------------------------------------- |
+| `compose.yaml`          | Whole stack: Penpot + built-in MCP + Postgres + Valkey                                      |
+| `scripts/`              | `up` / `export` / `import` / `mcp` / `down` / `reset`, helpers in `lib`                     |
+| `scripts/lib/config.ts` | Source of truth: `cfg.files` defines the design files, `cfg.libs` the import-only lib files |
+| `snapshot/*.penpot`     | Exported snapshots, one per design file (e.g. `gopherconjp-2027.penpot`)                    |
+| `lib/*.penpot`          | Libraries (e.g. `Material-Design-Icons.penpot`), import-only                                |

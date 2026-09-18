@@ -1,12 +1,18 @@
 ---
 interface Props {
-  label: string;
   href: string;
   current?: boolean;
   /** Stretch the link to fill the full width of its container. */
   fullWidth?: boolean;
+  /** Open the link in a new tab. */
+  external?: boolean;
 }
-const { label, href, current = false, fullWidth = false } = Astro.props;
+const {
+  href,
+  current = false,
+  fullWidth = false,
+  external = false,
+} = Astro.props;
 ---
 
 <a
@@ -14,9 +20,11 @@ const { label, href, current = false, fullWidth = false } = Astro.props;
   href={href}
   aria-current={current ? "page" : undefined}
   tabindex={current ? -1 : undefined}
+  target={external ? "_blank" : undefined}
+  rel={external ? "noopener noreferrer" : undefined}
 >
   <span class="nav-link__label">
-    {label}
+    <slot />
     <span class="nav-link__underline" aria-hidden="true"></span>
   </span>
 </a>

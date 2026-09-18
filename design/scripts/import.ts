@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 
 import { ask, runMain } from "./lib/cli.ts";
-import { cfg, snapshotPath } from "./lib/config.ts";
+import { cfg, isLib, libPath, snapshotPath } from "./lib/config.ts";
 import { uploadFonts } from "./lib/fonts.ts";
 import { ensureProject } from "./lib/import.ts";
 import { Penpot } from "./lib/penpot.ts";
@@ -9,13 +9,11 @@ import { Penpot } from "./lib/penpot.ts";
 // oxlint-disable no-await-in-loop -- files import sequentially on purpose
 
 const importOne = async (penpot: Penpot, file: string): Promise<void> => {
-  const snapshot = snapshotPath(file);
+  const source = isLib(file) ? libPath(file) : snapshotPath(file);
 
   const design = await penpot.findDesign(cfg.project, file);
   if (design?.file) {
-    const answer = (
-      await ask(`The design file "${file}" will be overwritten with ${snapshot}. Continue? [y/N] `)
-    )
+    const answer = (await ask(`The design file "${file}" will be overwritten. Continue? [y/N] `))
       .trim()
       .toLowerCase();
     if (answer !== "y" && answer !== "yes") {
@@ -24,10 +22,10 @@ const importOne = async (penpot: Penpot, file: string): Promise<void> => {
     }
   }
 
-  console.log(`Importing ${snapshot} ...`);
+  console.log(`Importing "${file}" ...`);
 
   const project = design?.project ?? (await ensureProject(penpot));
-  const fileId = await penpot.importFile(project.id, file, Bun.file(snapshot));
+  const fileId = await penpot.importFile(project.id, file, Bun.file(source));
 
   const previousFileId = design?.file?.id;
   if (previousFileId && previousFileId !== fileId) {
@@ -55,11 +53,15 @@ const importOne = async (penpot: Penpot, file: string): Promise<void> => {
 };
 
 const main = async (): Promise<void> => {
-  const files = process.argv[2] ? [process.argv[2]] : cfg.files;
-  const missing = files.find((file) => !existsSync(snapshotPath(file)));
+  const files = process.argv[2] ? [process.argv[2]] : [...cfg.files, ...cfg.libs];
+  const missing = files.find(
+    (file) => !existsSync(isLib(file) ? libPath(file) : snapshotPath(file)),
+  );
   if (missing) {
     throw new Error(
-      `No snapshot found: ${snapshotPath(missing)}. Run: bun run penpot:export ${missing}`,
+      isLib(missing)
+        ? `No lib file found: "${missing}".`
+        : `No snapshot found: "${missing}". Run: bun run penpot:export ${missing}`,
     );
   }
 

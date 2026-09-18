@@ -1,0 +1,54 @@
+---
+import type { ContactItem } from "../contacts";
+
+interface Props {
+  contact: ContactItem;
+}
+const { contact } = Astro.props;
+---
+
+<a class="contact-card" href={`mailto:${contact.email}`}>
+  <p class="contact-card__email">{contact.email}</p>
+  <p class="contact-card__label">{contact.label}</p>
+  <p class="contact-card__description">{contact.description}</p>
+</a>
+
+<style>
+  .contact-card {
+    box-sizing: border-box;
+    display: grid;
+    gap: var(--_spacing-16);
+    padding: var(--_spacing-24) var(--_spacing-24) var(--_spacing-16);
+    width: 100%;
+    color: var(--_color-white);
+    text-decoration: none;
+    background: var(--_color-dark);
+    border-radius: var(--_radius-8);
+  }
+
+  .contact-card:hover {
+    box-shadow: var(--_shadow-white);
+  }
+
+  .contact-card__email {
+    margin: 0;
+    overflow-wrap: anywhere;
+    font-family: var(--_font-family-code);
+    font-weight: var(--_font-weight-bold);
+    font-size: var(--_font-size-h2);
+    line-height: var(--_line-height-1);
+  }
+
+  .contact-card__label {
+    margin: 0;
+    font-weight: var(--_font-weight-bold);
+    font-size: var(--_font-size-h3);
+    line-height: var(--_line-height-1);
+  }
+
+  .contact-card__description {
+    margin: 0;
+    font-size: var(--_font-size-body);
+    line-height: var(--_line-height-1-8);
+  }
+</style>

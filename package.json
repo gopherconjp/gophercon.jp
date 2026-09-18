@@ -38,6 +38,9 @@
     "penpot:reset": "bun design/scripts/reset.ts",
     "penpot:mcp": "bun design/scripts/mcp.ts"
   },
+  "dependencies": {
+    "@iconify-json/mdi": "^1.2.3"
+  },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
     "@ianvs/prettier-plugin-sort-imports": "4.7.1",
@@ -48,6 +51,7 @@
     "@typescript-eslint/eslint-plugin": "8.70.0",
     "@typescript-eslint/parser": "8.70.0",
     "astro": "7.3.2",
+    "astro-icon": "1.2.0",
     "astro-intlayer": "9.5.3",
     "eslint": "10.10.0",
     "eslint-plugin-astro": "3.1.0",

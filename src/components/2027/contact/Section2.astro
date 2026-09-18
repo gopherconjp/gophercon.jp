@@ -1,0 +1,65 @@
+---
+import { getIntlayer, type LocalesValues } from "intlayer";
+
+import Breakable from "../../_common/breakable/index.astro";
+import ContentBox from "../../_common/content-box/index.astro";
+import ContactCard from "./cards/ContactCard.astro";
+
+interface Props {
+  locale: LocalesValues;
+}
+const { locale } = Astro.props;
+
+const { title, contacts } = getIntlayer("2027-contact-section2", locale);
+---
+
+<section class="contact-section2">
+  <ContentBox variant="text">
+    <div slot="background" class="contact-section2__background"></div>
+
+    <div class="contact-section2__content">
+      <h2 class="contact-section2__title">
+        <Breakable value={title} locale={locale} />
+      </h2>
+      <div class="contact-section2__cards">
+        {contacts.map((contact) => (
+          <ContactCard contact={contact} />
+        ))}
+      </div>
+    </div>
+  </ContentBox>
+</section>
+
+<style>
+  .contact-section2__background {
+    height: 100%;
+    background: var(--_color-dark);
+  }
+
+  .contact-section2__content {
+    display: grid;
+    justify-items: center;
+    gap: var(--_spacing-40);
+    padding: var(--_spacing-64) 0;
+    color: var(--_color-white);
+  }
+
+  .contact-section2__title {
+    width: fit-content;
+    max-width: 100%;
+    justify-self: center;
+    text-align: left;
+    color: var(--_color-white);
+  }
+
+  .contact-section2__cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--_spacing-32);
+    width: 100%;
+  }
+
+  .contact-section2__cards > :global(.contact-card) {
+    flex: 1 1 344px;
+  }
+</style>

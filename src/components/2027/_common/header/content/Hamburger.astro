@@ -24,12 +24,9 @@ const { label, links } = Astro.props;
 
   <nav slot="content" class="hamburger__menu">
     {links.map((link) => (
-      <NavLink
-        label={link.label}
-        href={link.href}
-        current={link.current}
-        fullWidth
-      />
+      <NavLink href={link.href} current={link.current} fullWidth>
+        {link.label}
+      </NavLink>
     ))}
   </nav>
 </Popover>
@@ -62,6 +59,6 @@ const { label, links } = Astro.props;
     padding: var(--_spacing-16) var(--_spacing-24);
     background: var(--_color-white);
     border-radius: var(--_radius-8);
-    box-shadow: var(--_shadow-popup);
+    box-shadow: var(--_shadow-popover);
   }
 </style>

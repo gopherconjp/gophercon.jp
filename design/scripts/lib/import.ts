@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 
-import { cfg, snapshotPath } from "./config.ts";
+import { cfg, isLib, libPath, snapshotPath } from "./config.ts";
 import { type Penpot, type Project } from "./penpot.ts";
 
 interface EnsureResult {
@@ -25,7 +25,7 @@ export const ensureProject = async (penpot: Penpot): Promise<Project> => {
   return penpot.createProject(team.id, cfg.project);
 };
 
-// Ensure the project + design file exist for `file`, restoring its snapshot when the file is missing.
+// Ensure the project + design file exist for `file`, restoring its source when the file is missing.
 export const ensureDesign = async (penpot: Penpot, file: string): Promise<EnsureResult> => {
   const found = await penpot.findDesign(cfg.project, file);
   if (found?.file) {
@@ -33,11 +33,15 @@ export const ensureDesign = async (penpot: Penpot, file: string): Promise<Ensure
   }
 
   const project = await ensureProject(penpot);
-  const snapshot = snapshotPath(file);
+  const source = isLib(file) ? libPath(file) : snapshotPath(file);
 
-  if (existsSync(snapshot)) {
-    const fileId = await penpot.importFile(project.id, file, Bun.file(snapshot));
+  if (existsSync(source)) {
+    const fileId = await penpot.importFile(project.id, file, Bun.file(source));
     return { projectId: project.id, fileId, action: "imported" };
+  }
+
+  if (isLib(file)) {
+    throw new Error(`No lib file found: "${file}".`);
   }
 
   const created = await penpot.createFile(project.id, file);
