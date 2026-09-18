@@ -5,38 +5,31 @@ applyTo: "src/components/_common/breakable/**, src/**/*.content.ts"
 
 # Breakable copy
 
-- Render via `Breakable` (`src/components/_common/breakable/index.astro`): `<Breakable value={title} locale={locale} />`. Break separator is `""` for `ja`, `" "` otherwise. Style is self-contained.
-- Type `Breakable = string | Breakable[] | { accent: Breakable } | { link: Breakable; href: string }` (`types.ts`, usable from `*.content.ts` via `t<Breakable>`). Unlimited nesting; outer breaks before inner. Pipe-syntax parsing yields pipe-free string leaves.
+- Render: `<Breakable value={title} space={...} />`. `space` inserts a space between chunks (default `true`); `space={false}` for `ja` or fixed no-space content (e.g. emails).
+- Type: `Breakable = string | Breakable[] | { accent } | { link; href } | { break: true }` (`types.ts`, via `t<Breakable>`). Unlimited nesting; outer breaks before inner.
+- With `space={false}`, never split a span containing a space (`Abema Towers`): the `""` separator deletes it. Keep one chunk; the browser wraps at the space.
+- Line breaks are `{ break: true }` (rendered `<br />`), never `\n`. Arrays containing a break are not chunk-wrapped.
 
 ## Pipe syntax (user to code)
 
-Write break intent inline with pipes: more pipes = higher priority (breaks first).
+More pipes = higher priority: `|` inner, `||` outer, `|||` further outer. `\n` is the outermost break → top-level `{ break: true }`. `en` trims spaces around pipes; `ja` needs none. Literal `|` is `｜`.
 
-- `|` inner, `||` outer, `|||` further outer, ...
-- `en` trims spaces around pipes; `ja` needs none. Literal `|` is `｜` (full-width).
-- Accent emphasis:
-  1. Wrap a pipe-free span in `*...*` (e.g. `*情熱*`, `*passion*`).
-  2. No `|` or `*` inside; must not span `||` or higher.
-  3. Multi-word emphasis with an inner break: one accent per word joined by `|`: `*reach*|*Japan*`. Accent boundaries act as `|` (inner) breaks. Literal `*` is `＊` (full-width).
-- Link:
-  1. Wrap a pipe-free span in `[...]`, e.g. `[About page →]`, `[Aboutページ]`.
-  2. No `|` or `[` / `]` inside; must not span `||` or higher.
-  3. Multi-word link with an inner break: one link per word joined by `|`: `[About]|[page →]`. Link boundaries act as `|` (inner) breaks. Literal `[` / `]` are `［` / `］` (full-width).
-- Invalid syntax (unmatched `*` / `[` / `]`, nested accent/link, pipe inside accent/link, empty accent/link): report an error naming the case with the correct format.
+- Accent: `*...*` (`*情熱*`). No `|`/`*` inside; must not span `||`+. Multi-word: `*reach*|*Japan*`; accent boundaries act as `|`. Literal `*` is `＊`.
+- Link: `[...]` (`[Aboutページ]`). No `|`/`[`/`]` inside; must not span `||`+. Multi-word: `[About]|[page →]`; link boundaries act as `|`. Literal `[`/`]` are `［`/`］`.
+- Invalid syntax (unmatched `*`/`[`/`]`, nested accent/link, pipe inside accent/link, empty accent/link): report an error naming the case with the correct format.
 
 Examples:
 
 - `世界の|情熱を||日本へ。` → `[["世界の", "情熱を"], "日本へ。"]`
-- `Let the world's | passion || reach | Japan.` → `[["Let the world's", "passion"], ["reach", "Japan."]]`
 - `世界の*情熱*を||日本へ。` → `[["世界の", { accent: "情熱" }, "を"], "日本へ。"]`
-- `Let the world's *passion* || reach | Japan.` → `[["Let the world's", { accent: "passion" }], ["reach", "Japan."]]`
 - `*reach*|*Japan*` → `[{ accent: "reach" }, { accent: "Japan" }]`
 - `Check out our [About page →]` → `["Check out our", { link: "About page →", href: "/2027/about" }]`
-- `[About]|[page →]` → `[{ link: "About", href: "/2027/about" }, { link: "page →", href: "/2027/about" }]`
+- `これは|サンプル文章です。\nこれは|サンプル文章です。` → `[["これは", "サンプル文章です。"], { break: true }, ["これは", "サンプル文章です。"]]`
 
 ## Procedure
 
-1. Extract each non-greedy, pipe-free, non-empty `*...*` as atomic `{ accent: <inner> }` and each non-greedy, pipe-free, bracket-balanced, non-empty `[...]` as atomic `{ link: <inner> }` (`*...*` first, then `[...]`; nesting accent inside link or vice versa is invalid).
-2. Split by longest pipe run first (`|||`, then `||`, then `|`), recursively trimming `en` whitespace, into nested arrays. Unsplit segments stay plain strings without singleton wrapping.
-3. Declare as `t<Breakable>({ en: [...], ja: [...] })`. Depths may differ per locale.
-4. Pass `Breakable` through unchanged.
+1. Split by `\n` → top-level `{ break: true }` between segments.
+2. Extract pipe-free `*...*` as `{ accent }`, then `[...]` as `{ link }` (nesting accent/link is invalid).
+3. Split by longest pipe run first (`|||` → `||` → `|`), recursively trimming `en` whitespace, into nested arrays. Unsplit segments stay plain strings.
+4. Declare as `t<Breakable>({ en: [...], ja: [...] })`. Depths may differ per locale.
+5. Pass `Breakable` through unchanged.
