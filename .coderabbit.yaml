@@ -39,3 +39,6 @@ reviews:
     - path: "src/components/index/not-found/**"
       instructions: |
         Intentional design; accept by design (do not report): 404 builds to one static HTML (`assets.not_found_handling: 404-page` in `wrangler.json`) served for all missing paths, so per-locale split is impossible; single bilingual JA+EN page with fixed `locale="en"` and no Intlayer dictionary; do not request locale propagation or locale-specific lookup restoration.
+    - path: "src/components/2027/contact/content/socials.ts"
+      instructions: |
+        Intentional; accept by design (do not report): Mastodon `handle` stays short `@gopherconjp`.
