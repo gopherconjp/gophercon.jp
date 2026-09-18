@@ -6,12 +6,12 @@ const content = {
   key,
   content: {
     description: t({
-      en: "Contact GopherCon Japan",
-      ja: "GopherCon Japanへのお問い合わせ",
+      en: "Get in touch with the GopherCon Japan team",
+      ja: "GopherCon Japanへのお問い合わせはこちら。SNS・メール窓口の一覧を掲載しています。",
     }),
     title: t({
-      en: "Contact",
-      ja: "GopherCon Japanについて",
+      en: "Contact & Socials",
+      ja: "お問い合わせ・SNS",
     }),
   },
 } satisfies Dictionary;
