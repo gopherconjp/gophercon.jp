@@ -31,7 +31,7 @@ const { ariaLabel, switchTo } = getIntlayer(
     href={getLocalizedHref(Astro.url.pathname, otherLocale)}
     data-locale={otherLocale}
   >
-    <span class="locale-switcher__item-frame">{switchTo}</span>
+    {switchTo}
   </a>
 </Popover>
 
@@ -101,18 +101,11 @@ const { ariaLabel, switchTo } = getIntlayer(
     right: 0;
     z-index: 10;
     display: block;
-    padding: var(--_spacing-16) var(--_spacing-24) var(--_spacing-12);
+    padding: var(--_spacing-20) var(--_spacing-24);
     background: var(--_color-white);
     border-radius: var(--_radius-8);
     box-shadow: var(--_shadow-popup);
     text-decoration: none;
-  }
-
-  .locale-switcher__item-frame {
-    position: relative;
-    display: block;
-    height: var(--_spacing-24);
-    padding-top: var(--_spacing-4);
     font-weight: var(--_font-weight-bold);
     line-height: var(--_line-height-1);
     color: var(--_color-black);
