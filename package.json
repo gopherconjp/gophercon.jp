@@ -54,7 +54,7 @@
     "eslint": "10.10.0",
     "eslint-plugin-astro": "3.2.0",
     "intlayer": "9.5.3",
-    "knip": "6.35.1",
+    "knip": "6.36.0",
     "lightningcss-plugin-css-variables": "0.1.0",
     "oxfmt": "0.68.0",
     "oxlint": "1.83.0",
