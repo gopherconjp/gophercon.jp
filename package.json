@@ -63,6 +63,6 @@
     "prettier-plugin-astro": "1.0.0",
     "storybook": "10.6.0",
     "typescript": "6.0.3",
-    "wrangler": "4.132.0"
+    "wrangler": "4.133.0"
   }
 }
