@@ -49,6 +49,7 @@
     "@typescript-eslint/eslint-plugin": "8.70.0",
     "@typescript-eslint/parser": "8.70.0",
     "astro": "7.3.3",
+    "astro-compress": "2.4.3",
     "astro-icon": "1.2.0",
     "astro-intlayer": "9.5.3",
     "eslint": "10.10.0",
