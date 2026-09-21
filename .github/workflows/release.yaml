@@ -77,7 +77,7 @@ jobs:
           ref: ${{ needs.tag.outputs.tag }}
           persist-credentials: false
       - name: Setup Bun environment
-        uses: gopherconjp/actions-toolkit/setup-bun@b80c2a2ea9e3ae641e08e76c467e5cb62023750e # main
+        uses: gopherconjp/actions-toolkit/setup-bun@6c3abe23c03c02b3edf8c2c58268924fbd6b4aee # main
       - name: Deploy to Cloudflare Workers
         run: bun run deploy
         env:
