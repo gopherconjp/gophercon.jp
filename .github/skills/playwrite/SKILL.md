@@ -7,5 +7,5 @@ description: "Use when recording a Playwright-based Shorts video (2160x3840 60fp
 
 - One script per video in `scripts/playwrite/<operation>.ts` + shared `lib/`; run with `bun scripts/playwrite/<operation>.ts`.
 - Shoot stills at `VideoSpec` CSS px × `spec.scale`, join offline at `spec.fps`; never realtime-record.
-- Pin WAAPI `currentTime` via `FrameDriver`; never wall-clock waits. JS marquees ignore it — verify at operation width first.
+- Pin WAAPI time per-animation via `advanceClock` (each starts from its own beginning); never wall-clock waits. JS marquees ignore it — verify at operation width first.
 - Move real mouse for `:hover`, ripple press only, then `goto`; never mid-sequence `click`. Needs non-mobile emulation.

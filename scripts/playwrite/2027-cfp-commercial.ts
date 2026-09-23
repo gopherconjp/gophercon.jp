@@ -6,7 +6,7 @@ import { encodeFrames, resolveOperationDirs } from "./lib/encode.ts";
 import { launchRecorder } from "./lib/recorder.ts";
 import { hideScrollbars, hold, maxScrollY, scrollToY, smoothScroll } from "./lib/scroll.ts";
 import { secondsToFrames, shorts4k60 } from "./lib/spec.ts";
-import { driveClock, resetClock } from "./lib/timeline.ts";
+import { resetClock } from "./lib/timeline.ts";
 
 const OPERATION = "2027-cfp-commercial";
 const HOME_URL = "https://gophercon.jp/2027/";
@@ -28,7 +28,7 @@ const main = async (): Promise<void> => {
 
     assertOk(await page.goto(HOME_URL, { waitUntil: "networkidle" }), HOME_URL);
     await scrollToY(page, 0);
-    await driveClock(page, 0);
+    await resetClock(timeline);
 
     await hold(timeline, secondsToFrames(spec, 3), shot);
 
@@ -51,8 +51,7 @@ const main = async (): Promise<void> => {
 
     assertOk(await page.goto(CFP_URL, { waitUntil: "networkidle" }), CFP_URL);
     await scrollToY(page, 0);
-    resetClock(timeline);
-    await driveClock(page, 0);
+    await resetClock(timeline);
 
     await hold(timeline, secondsToFrames(spec, 2), shot);
 

@@ -1,6 +1,6 @@
 import type { Page } from "playwright-core";
 
-import { driveClock, tick, type FrameDriver } from "./timeline.ts";
+import { advanceClock, type FrameDriver } from "./timeline.ts";
 
 export const hideScrollbars = async (page: Page): Promise<void> => {
   await page.addStyleTag({
@@ -29,8 +29,7 @@ export const hold = async (
   onFrame: (index: number) => Promise<void>,
 ): Promise<void> => {
   for (let i = 0; i < frames; i++) {
-    await driveClock(timeline.page, timeline.clockMs);
-    tick(timeline);
+    await advanceClock(timeline);
     await onFrame(i);
   }
 };
@@ -45,8 +44,7 @@ export const smoothScroll = async (
   for (let i = 0; i < frames; i++) {
     const t = frames === 1 ? 1 : i / (frames - 1);
     await scrollToY(timeline.page, Math.round(easeInOutCubic(t) * maxY));
-    await driveClock(timeline.page, timeline.clockMs);
-    tick(timeline);
+    await advanceClock(timeline);
     await onFrame(i);
   }
 };

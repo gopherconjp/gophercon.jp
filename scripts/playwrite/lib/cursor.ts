@@ -1,6 +1,6 @@
 import type { Page } from "playwright-core";
 
-import { driveClock, tick, type FrameDriver } from "./timeline.ts";
+import { advanceClock, type FrameDriver } from "./timeline.ts";
 
 export interface Point {
   x: number;
@@ -126,8 +126,7 @@ export const runClick = async (
       await fireRipple(page, at, rippleP);
     }
 
-    await driveClock(page, timeline.clockMs);
-    tick(timeline);
+    await advanceClock(timeline);
 
     await onFrame();
   }
