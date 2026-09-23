@@ -51,13 +51,16 @@ export const encodeFrames = async (
     ],
     { stdout: "inherit", stderr: "inherit" },
   );
-  const code = await proc.exited;
-  if (code !== 0) {
-    await rm(tmp, { force: true });
-    throw new Error(`ffmpeg exited with ${code}`);
-  }
+  try {
+    const code = await proc.exited;
+    if (code !== 0) {
+      throw new Error(`ffmpeg exited with ${code}`);
+    }
 
-  await rename(tmp, out);
+    await rename(tmp, out);
+  } finally {
+    await rm(tmp, { force: true });
+  }
 
   console.log(`Wrote ${out} (${count} frames)`);
 };
