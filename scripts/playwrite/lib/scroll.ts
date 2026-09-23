@@ -2,18 +2,11 @@ import type { Page } from "playwright-core";
 
 import { advanceClock, type FrameDriver } from "./timeline.ts";
 
-export const hideScrollbars = async (page: Page): Promise<void> => {
-  await page.addStyleTag({
-    content:
-      "::-webkit-scrollbar{width:0!important;height:0!important}html{scrollbar-width:none!important}",
-  });
-};
-
 export const maxScrollY = (page: Page): Promise<number> =>
   page.evaluate(() => document.documentElement.scrollHeight - window.innerHeight);
 
 export const scrollToY = (page: Page, y: number): Promise<void> =>
-  page.evaluate((yy: number) => window.scrollTo(0, yy), y);
+  page.evaluate((yy: number) => window.scrollTo({ left: 0, top: yy, behavior: "instant" }), y);
 
 export const settleFrame = (page: Page): Promise<void> =>
   page.evaluate(

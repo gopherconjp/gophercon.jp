@@ -4,7 +4,7 @@ import { runMain } from "../lib/cli.ts";
 import { findLinkCenter, runClick } from "./lib/cursor.ts";
 import { encodeFrames, resolveOperationDirs } from "./lib/encode.ts";
 import { launchRecorder } from "./lib/recorder.ts";
-import { hideScrollbars, hold, maxScrollY, scrollToY, smoothScroll } from "./lib/scroll.ts";
+import { hold, maxScrollY, scrollToY, smoothScroll } from "./lib/scroll.ts";
 import { secondsToFrames, shorts4k60 } from "./lib/spec.ts";
 import { resetClock } from "./lib/timeline.ts";
 
@@ -24,8 +24,6 @@ const main = async (): Promise<void> => {
   const { browser, page, timeline, shot, frameCount } = await launchRecorder(framesDir, spec);
 
   try {
-    await hideScrollbars(page);
-
     assertOk(await page.goto(HOME_URL, { waitUntil: "networkidle" }), HOME_URL);
     await scrollToY(page, 0);
     await resetClock(timeline);
