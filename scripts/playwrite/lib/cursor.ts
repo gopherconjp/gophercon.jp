@@ -104,8 +104,8 @@ export const runClick = async (
 ): Promise<void> => {
   const { page, spec } = timeline;
   const moveFrames = Math.round(direction.moveSeconds * spec.fps);
-  const total =
-    direction.pressFrame + Math.max(1, direction.releaseFrame - direction.pressFrame + 9);
+  const rippleFrames = 9;
+  const total = direction.releaseFrame + rippleFrames;
 
   await ensureOverlays(page);
 
@@ -122,7 +122,7 @@ export const runClick = async (
     await placeCursor(page, at, pressed);
     await page.mouse.move(at.x, at.y);
 
-    if (pressed) {
+    if (k >= direction.pressFrame) {
       await fireRipple(page, at, rippleP);
     }
 

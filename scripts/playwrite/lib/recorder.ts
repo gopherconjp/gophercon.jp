@@ -37,15 +37,23 @@ export const launchRecorder = async (
     chromiumSandbox: true,
     args: ["--disable-dev-shm-usage", "--disable-gpu", "--hide-scrollbars"],
   });
-  const context = await browser.newContext({
-    viewport: { width: spec.cssWidth, height: spec.cssHeight },
-    deviceScaleFactor: spec.scale,
-    // Desktop hover needs non-mobile emulation; mobile emulation suppresses :hover.
-    isMobile: false,
-    hasTouch: false,
-    locale: options.locale ?? "en-US",
-  });
-  const page = await context.newPage();
+
+  let page: Page;
+  try {
+    const context = await browser.newContext({
+      viewport: { width: spec.cssWidth, height: spec.cssHeight },
+      deviceScaleFactor: spec.scale,
+      // Desktop hover needs non-mobile emulation; mobile emulation suppresses :hover.
+      isMobile: false,
+      hasTouch: false,
+      locale: options.locale ?? "en-US",
+    });
+    page = await context.newPage();
+  } catch (error) {
+    await browser.close();
+    throw error;
+  }
+
   const timeline = createTimeline(page, spec);
 
   let seq = 0;
