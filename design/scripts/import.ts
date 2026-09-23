@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 
-import { ask, runMain } from "./lib/cli.ts";
+import { ask, runMain } from "../../scripts/lib/cli.ts";
 import { cfg, isLib, libPath, snapshotPath } from "./lib/config.ts";
 import { uploadFonts } from "./lib/fonts.ts";
 import { ensureProject } from "./lib/import.ts";
@@ -81,4 +81,4 @@ const main = async (): Promise<void> => {
   }
 };
 
-runMain(main);
+runMain(main, "penpot");

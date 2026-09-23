@@ -1,4 +1,4 @@
-import { ask, runMain } from "./lib/cli.ts";
+import { ask, runMain } from "../../scripts/lib/cli.ts";
 import { runCompose } from "./lib/docker.ts";
 
 const main = async (): Promise<void> => {
@@ -18,4 +18,4 @@ const main = async (): Promise<void> => {
   console.log("All Penpot data wiped. Run `bun run penpot` to start fresh from the snapshot.");
 };
 
-runMain(main);
+runMain(main, "penpot");
