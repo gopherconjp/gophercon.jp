@@ -1,4 +1,4 @@
-import { rm } from "node:fs/promises";
+import { rename, rm } from "node:fs/promises";
 import path from "node:path";
 
 import type { VideoSpec } from "./spec.ts";
@@ -29,38 +29,35 @@ export const encodeFrames = async (
   }
 
   const tmp = `${out}.tmp.mp4`;
-  try {
-    const proc = Bun.spawn(
-      [
-        "ffmpeg",
-        "-y",
-        "-framerate",
-        String(spec.fps),
-        "-i",
-        path.join(framesDir, "%04d.png"),
-        "-c:v",
-        "h264_videotoolbox",
-        "-b:v",
-        "80M",
-        "-pix_fmt",
-        "yuv420p",
-        "-movflags",
-        "+faststart",
-        "-r",
-        String(spec.fps),
-        tmp,
-      ],
-      { stdout: "inherit", stderr: "inherit" },
-    );
-    const code = await proc.exited;
-    if (code !== 0) {
-      throw new Error(`ffmpeg exited with ${code}`);
-    }
-
-    await Bun.write(out, Bun.file(tmp));
-  } finally {
+  const proc = Bun.spawn(
+    [
+      "ffmpeg",
+      "-y",
+      "-framerate",
+      String(spec.fps),
+      "-i",
+      path.join(framesDir, "%04d.png"),
+      "-c:v",
+      "h264_videotoolbox",
+      "-b:v",
+      "80M",
+      "-pix_fmt",
+      "yuv420p",
+      "-movflags",
+      "+faststart",
+      "-r",
+      String(spec.fps),
+      tmp,
+    ],
+    { stdout: "inherit", stderr: "inherit" },
+  );
+  const code = await proc.exited;
+  if (code !== 0) {
     await rm(tmp, { force: true });
+    throw new Error(`ffmpeg exited with ${code}`);
   }
+
+  await rename(tmp, out);
 
   console.log(`Wrote ${out} (${count} frames)`);
 };
