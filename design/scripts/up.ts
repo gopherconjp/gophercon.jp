@@ -1,4 +1,4 @@
-import { runMain } from "./lib/cli.ts";
+import { runMain } from "../../scripts/lib/cli.ts";
 import { cfg } from "./lib/config.ts";
 import { runCompose } from "./lib/docker.ts";
 import { uploadFonts } from "./lib/fonts.ts";
@@ -95,4 +95,4 @@ const main = async (): Promise<void> => {
   console.log("MCP always acts on the page focused in the active Penpot tab.");
 };
 
-runMain(main);
+runMain(main, "penpot");

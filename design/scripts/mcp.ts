@@ -1,7 +1,7 @@
 import { chmodSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname } from "node:path";
 
-import { ask, runMain } from "./lib/cli.ts";
+import { ask, runMain } from "../../scripts/lib/cli.ts";
 import { paths } from "./lib/config.ts";
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -65,4 +65,4 @@ const main = async (): Promise<void> => {
   console.log("The file contains your MCP key but is git-ignored (.vscode/).");
 };
 
-runMain(main);
+runMain(main, "penpot");

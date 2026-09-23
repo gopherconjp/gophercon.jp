@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 
-import { runMain } from "./lib/cli.ts";
+import { runMain } from "../../scripts/lib/cli.ts";
 import { cfg, isLib, snapshotPath } from "./lib/config.ts";
 import { Penpot } from "./lib/penpot.ts";
 
@@ -41,4 +41,4 @@ const main = async (): Promise<void> => {
   console.log("Restore:  bun run penpot imports it automatically when the file is missing");
 };
 
-runMain(main);
+runMain(main, "penpot");

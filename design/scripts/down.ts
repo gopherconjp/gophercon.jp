@@ -1,4 +1,4 @@
-import { runMain } from "./lib/cli.ts";
+import { runMain } from "../../scripts/lib/cli.ts";
 import { runCompose } from "./lib/docker.ts";
 
 const main = async (): Promise<void> => {
@@ -10,4 +10,4 @@ const main = async (): Promise<void> => {
   );
 };
 
-runMain(main);
+runMain(main, "penpot");
