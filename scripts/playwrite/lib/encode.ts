@@ -29,29 +29,30 @@ export const encodeFrames = async (
   }
 
   const tmp = `${out}.tmp.mp4`;
-  const proc = Bun.spawn(
-    [
-      "ffmpeg",
-      "-y",
-      "-framerate",
-      String(spec.fps),
-      "-i",
-      path.join(framesDir, "%04d.png"),
-      "-c:v",
-      "h264_videotoolbox",
-      "-b:v",
-      "80M",
-      "-pix_fmt",
-      "yuv420p",
-      "-movflags",
-      "+faststart",
-      "-r",
-      String(spec.fps),
-      tmp,
-    ],
-    { stdout: "inherit", stderr: "inherit" },
-  );
   try {
+    const proc = Bun.spawn(
+      [
+        "ffmpeg",
+        "-y",
+        "-framerate",
+        String(spec.fps),
+        "-i",
+        path.join(framesDir, "%04d.png"),
+        "-c:v",
+        "h264_videotoolbox",
+        "-b:v",
+        "80M",
+        "-pix_fmt",
+        "yuv420p",
+        "-movflags",
+        "+faststart",
+        "-r",
+        String(spec.fps),
+        tmp,
+      ],
+      { stdout: "inherit", stderr: "inherit" },
+    );
+
     const code = await proc.exited;
     if (code !== 0) {
       throw new Error(`ffmpeg exited with ${code}`);
