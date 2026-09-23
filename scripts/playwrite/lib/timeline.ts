@@ -10,60 +10,48 @@ export interface FrameDriver {
 
 export const createTimeline = (page: Page, spec: VideoSpec): FrameDriver => ({ page, spec });
 
-export const advanceClock = (timeline: FrameDriver, frames = 1): Promise<void> =>
-  timeline.page.evaluate(
-    (stepMs: number) => {
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- untyped page global
-      const store = globalThis as unknown as Record<string, unknown>;
-      if (!(store.playwriteClock instanceof WeakMap)) {
-        store.playwriteClock = new WeakMap<Animation, number>();
-      }
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- just narrowed above
-      const elapsedMap = store.playwriteClock as WeakMap<Animation, number>;
-
-      for (const animation of document.getAnimations()) {
-        try {
-          if (animation.playState !== "paused") {
-            animation.pause();
-          }
-
-          const prev = elapsedMap.get(animation);
-          if (prev === undefined) {
-            animation.currentTime = 0;
-            elapsedMap.set(animation, 0);
-          } else {
-            const next = prev + stepMs;
-            animation.currentTime = next;
-            elapsedMap.set(animation, next);
-          }
-        } catch {
-          // Ignore non-seekable animations (e.g. finished transitions).
-        }
-      }
-
-      void document.body?.offsetHeight;
-    },
-    frames * frameMs(timeline.spec),
-  );
-
-export const resetClock = (timeline: FrameDriver): Promise<void> =>
-  timeline.page.evaluate(() => {
+const driveClock = (page: Page, mode: number | "reset" | null): Promise<void> =>
+  page.evaluate((step: number | "reset" | null) => {
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- untyped page global
-    (globalThis as unknown as Record<string, unknown>).playwriteClock = new WeakMap<
-      Animation,
-      number
-    >();
+    const store = globalThis as unknown as Record<string, unknown>;
+    if (step === "reset") {
+      store.playwriteClock = new WeakMap<Animation, number>();
+      return;
+    }
+    if (!(store.playwriteClock instanceof WeakMap)) {
+      store.playwriteClock = new WeakMap<Animation, number>();
+    }
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- just narrowed above
+    const elapsed = store.playwriteClock as WeakMap<Animation, number>;
 
     for (const animation of document.getAnimations()) {
       try {
         if (animation.playState !== "paused") {
           animation.pause();
         }
-        animation.currentTime = 0;
+
+        const prev = elapsed.get(animation);
+        if (prev === undefined) {
+          animation.currentTime = 0;
+          elapsed.set(animation, 0);
+        } else if (typeof step === "number") {
+          const next = prev + step;
+          animation.currentTime = next;
+          elapsed.set(animation, next);
+        }
       } catch {
         // Ignore non-seekable animations (e.g. finished transitions).
       }
     }
 
     void document.body?.offsetHeight;
-  });
+  }, mode);
+
+// Register animations created since the last frame without advancing time.
+export const syncClock = (timeline: FrameDriver): Promise<void> => driveClock(timeline.page, null);
+
+export const advanceClock = (timeline: FrameDriver, frames = 1): Promise<void> =>
+  driveClock(timeline.page, frames * frameMs(timeline.spec));
+
+export const resetClock = (timeline: FrameDriver): Promise<void> =>
+  driveClock(timeline.page, "reset");

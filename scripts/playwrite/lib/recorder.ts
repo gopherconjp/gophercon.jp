@@ -5,7 +5,7 @@ import { chromium, type Browser, type Page } from "playwright-core";
 
 import { settleFrame } from "./scroll.ts";
 import type { VideoSpec } from "./spec.ts";
-import { createTimeline, type FrameDriver } from "./timeline.ts";
+import { createTimeline, syncClock, type FrameDriver } from "./timeline.ts";
 
 export interface Recorder {
   browser: Browser;
@@ -59,6 +59,7 @@ export const launchRecorder = async (
   let seq = 0;
   const shot = async (): Promise<void> => {
     await settleFrame(page);
+    await syncClock(timeline);
     await page.screenshot({ path: path.join(framesDir, `${String(seq).padStart(4, "0")}.png`) });
     seq += 1;
   };
