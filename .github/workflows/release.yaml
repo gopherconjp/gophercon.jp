@@ -8,15 +8,13 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  tag:
-    name: Tag
+  release:
+    name: Release
     runs-on: ubuntu-latest
     timeout-minutes: 5
     environment: production
     permissions:
       contents: write
-    outputs:
-      tag: ${{ steps.tag.outputs.tag }}
     steps:
       - name: Checkout main
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -39,20 +37,10 @@ jobs:
           git push "${REMOTE_URL}" "${TAG}"
 
           echo "tag=${TAG}" >> "${GITHUB_OUTPUT}"
-
-  release:
-    name: Release
-    needs: tag
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    environment: production
-    permissions:
-      contents: write
-    steps:
       - name: Generate release notes
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
-          TAG: ${{ needs.tag.outputs.tag }}
+          TAG: ${{ steps.tag.outputs.tag }}
         with:
           script: |
             await github.rest.repos.createRelease({
@@ -64,17 +52,16 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: tag
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: production
     permissions:
       contents: read
     steps:
-      - name: Checkout
+      - name: Checkout main
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ needs.tag.outputs.tag }}
+          ref: main
           persist-credentials: false
       - name: Setup Bun environment
         uses: gopherconjp/actions-toolkit/setup-bun@1d1076a5582c17f1e1b5f2d0896c1fda9f14e16f # main
