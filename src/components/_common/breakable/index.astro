@@ -1,4 +1,6 @@
 ---
+import { escape } from "html-escaper";
+
 import { isAccent, isBreak, isLink, type Breakable } from "./types";
 
 interface Props {
@@ -8,13 +10,6 @@ interface Props {
 const { value, space = true } = Astro.props;
 
 const separator = space ? " " : "";
-
-const escapeHtml = (text: string): string =>
-  text
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
 
 const containsBreak = (node: Breakable): boolean => {
   if (Array.isArray(node)) {
@@ -44,11 +39,11 @@ const render = (node: Breakable): string => {
   }
 
   if (isLink(node)) {
-    return `<a href="${escapeHtml(node.href)}">${render(node.link)}</a>`;
+    return `<a href="${escape(node.href)}">${render(node.link)}</a>`;
   }
 
   if (typeof node === "string") {
-    return `<span class="breakable__chunk">${escapeHtml(node)}</span>`;
+    return `<span class="breakable__chunk">${escape(node)}</span>`;
   }
 
   return "";
