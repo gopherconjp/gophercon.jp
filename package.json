@@ -17,8 +17,6 @@
     "deploy": "astro build && wrangler deploy",
     "predeploy:dev": "bun install",
     "deploy:dev": "astro build && wrangler deploy --env dev",
-    "predeploy:preview": "bun install",
-    "deploy:preview": "wrangler preview --env dev",
     "precheck": "bun install",
     "check": "astro check && tsc --noEmit && knip",
     "prelint:ox": "bun install",
