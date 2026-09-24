@@ -11,10 +11,10 @@ const separator = space ? " " : "";
 
 const escapeHtml = (text: string): string =>
   text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
 
 const containsBreak = (node: Breakable): boolean => {
   if (Array.isArray(node)) {
