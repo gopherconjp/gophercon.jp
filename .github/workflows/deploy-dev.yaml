@@ -1,0 +1,31 @@
+name: Deploy (Dev)
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy-dev
+  cancel-in-progress: false
+
+jobs:
+  deploy-dev:
+    name: Deploy (Dev)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: development
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Setup Bun environment
+        uses: gopherconjp/actions-toolkit/setup-bun@1d1076a5582c17f1e1b5f2d0896c1fda9f14e16f # main
+      - name: Deploy to Cloudflare Workers
+        run: bun run deploy:dev
+        env:
+          SITE_URL: https://dev.gophercon.jp
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

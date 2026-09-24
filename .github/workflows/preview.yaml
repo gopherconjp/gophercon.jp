@@ -1,0 +1,75 @@
+name: Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    name: Preview
+    if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Setup Bun environment
+        uses: gopherconjp/actions-toolkit/setup-bun@1d1076a5582c17f1e1b5f2d0896c1fda9f14e16f # main
+      - name: Build
+        run: bun run build
+        env:
+          SITE_URL: https://dev.gophercon.jp
+      - name: Create or update Preview
+        id: preview
+        run: |
+          set -o pipefail
+          output="$(bun run deploy:preview -- --name "pr-${{ github.event.pull_request.number }}" --json)"
+          printf '%s\n' "${output}"
+          preview_url="$(printf '%s' "${output}" | jq -er '.preview.urls[0]')"
+          echo "preview_url=${preview_url}" >> "${GITHUB_OUTPUT}"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Probe Preview
+        run: curl --fail --show-error --silent "${PREVIEW_URL}"
+        env:
+          PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
+      - name: Comment Preview URL
+        run: >
+          gh pr comment "${{ github.event.pull_request.number }}"
+          --body "Preview: ${STEPS_PREVIEW_OUTPUTS_PREVIEW_URL}"
+          --edit-last --create-if-none
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STEPS_PREVIEW_OUTPUTS_PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
+
+  cleanup:
+    name: Cleanup Preview
+    if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Setup Bun environment
+        uses: gopherconjp/actions-toolkit/setup-bun@1d1076a5582c17f1e1b5f2d0896c1fda9f14e16f # main
+      - name: Delete Preview
+        run: bunx wrangler preview delete --env dev --name "pr-${{ github.event.pull_request.number }}" --skip-confirmation
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
