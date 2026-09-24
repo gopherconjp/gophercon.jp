@@ -78,10 +78,8 @@ const layers: {
     --_kv-cloud-l-turn: 1150px; /* cloud_l starts receding below this */
     --_kv-cloud-l-hide: 900px; /* cloud_l fully hidden below this */
     --_kv-onago-x: 60px; /* onago content left edge at W = break */
-
     --_kv-cloud-swing-period: 6s; /* cloud wiggle period */
     --_kv-cloud-swing-amp: 24px; /* cloud wiggle width (total travel) */
-
     --kv-shrink: calc(
       (var(--_kv-max) - var(--_kv-break)) / 2
     ); /* per-edge frame shrink */
@@ -97,6 +95,7 @@ const layers: {
     position: relative;
     width: min(100%, var(--_kv-max));
     margin: 0 auto;
+
     /* 700:900 ratio; height 900px in phases 1-2, proportional in phase 3 */
     aspect-ratio: calc(var(--_kv-break) / 900px);
     max-height: 900px;
@@ -151,6 +150,7 @@ const layers: {
         calc(var(--kv-cloud-x) - var(--_kv-cloud-swing-amp) / 2)
       );
     }
+
     50% {
       transform: translateX(
         calc(var(--kv-cloud-x) + var(--_kv-cloud-swing-amp) / 2)
@@ -176,6 +176,7 @@ const layers: {
         (var(--_kv-cloud-l-turn) - var(--_kv-cloud-l-hide)),
       1
     );
+
     /* smoothstep easing */
     --t-cloud-l-eased: calc(
       var(--t-cloud-l) * var(--t-cloud-l) * (3 - 2 * var(--t-cloud-l))
@@ -183,6 +184,7 @@ const layers: {
 
     /* pin at turn */
     --kv-cloud-l-base: calc((var(--_kv-max) - var(--_kv-cloud-l-turn)) / 2);
+
     /* total recession */
     --kv-cloud-l-recede: calc(
       228px - (var(--_kv-cloud-l-turn) - var(--_kv-cloud-l-hide)) / 2
@@ -196,14 +198,15 @@ const layers: {
           var(--kv-cloud-l-recede)
       )
     );
+
     transform: translateX(var(--kv-cloud-x));
   }
 
   /* cloud_r: right edge pinned to the frame's right edge -> move left --kv-shrink */
   .kv__cloud--r {
     --kv-cloud-x: calc(var(--t) * -1 * var(--kv-shrink));
-    transform: translateX(var(--kv-cloud-x));
 
+    transform: translateX(var(--kv-cloud-x));
     animation-delay: calc(
       var(--_kv-cloud-swing-period) / -2
     ); /* anti-phase to cloud_l */
