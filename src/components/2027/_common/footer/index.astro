@@ -56,8 +56,7 @@ const FOOTER_COMPACT_MIN_PX = 440;
     grid-template-columns: auto 1fr auto;
     grid-template-areas: "logo texts top";
     align-items: start;
-    column-gap: var(--_spacing-24);
-    row-gap: var(--_spacing-8);
+    gap: var(--_spacing-8) var(--_spacing-24);
     padding: var(--_spacing-16) 0;
   }
 
@@ -75,8 +74,7 @@ const FOOTER_COMPACT_MIN_PX = 440;
   .footer__top {
     grid-area: top;
     display: flex;
-    align-self: start;
-    justify-self: end;
+    place-self: start end;
     margin-top: var(--_spacing-8);
   }
 
