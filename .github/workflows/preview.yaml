@@ -61,13 +61,13 @@ jobs:
           {
             echo "## 🚀 Cloudflare Workers Preview 🚀"
             echo
-            echo "| | URL |"
-            echo "| --- | --- |"
-            echo "| PR Preview | ${PREVIEW_URL:---} |"
+            echo "|               | Preview URL           |"
+            echo "| ------------- | --------------------- |"
+            echo "| PR            | ${PREVIEW_URL:---}    |"
             echo "| Latest Commit | ${DEPLOYMENT_URL:---} |"
             echo
-            echo "- Build: ${BUILD_STATUS}"
-            echo "- Deploy: ${DEPLOY_STATUS}"
+            echo "- **Build**: ${BUILD_STATUS}"
+            echo "- **Deploy**: ${DEPLOY_STATUS}"
             echo "- [View logs ↗︎](${RUN_URL})"
           } > "${path}"
           echo "path=${path}" >> "${GITHUB_OUTPUT}"
