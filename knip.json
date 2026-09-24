@@ -1,5 +1,5 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "entry": ["intlayer.config.ts", "src/**/*.content.ts", "scripts/playwrite/*.ts"],
+  "entry": ["intlayer.config.ts", "src/**/*.content.ts", "scripts/playwright/*.ts"],
   "ignoreDependencies": ["@iconify-json/mdi"]
 }

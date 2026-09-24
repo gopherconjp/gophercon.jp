@@ -15,14 +15,14 @@ const driveClock = (page: Page, mode: number | "reset" | null): Promise<void> =>
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- untyped page global
     const store = globalThis as unknown as Record<string, unknown>;
     if (step === "reset") {
-      store.playwriteClock = new WeakMap<Animation, number>();
+      store.playwrightClock = new WeakMap<Animation, number>();
       return;
     }
-    if (!(store.playwriteClock instanceof WeakMap)) {
-      store.playwriteClock = new WeakMap<Animation, number>();
+    if (!(store.playwrightClock instanceof WeakMap)) {
+      store.playwrightClock = new WeakMap<Animation, number>();
     }
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- just narrowed above
-    const elapsed = store.playwriteClock as WeakMap<Animation, number>;
+    const elapsed = store.playwrightClock as WeakMap<Animation, number>;
 
     for (const animation of document.getAnimations()) {
       try {

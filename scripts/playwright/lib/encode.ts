@@ -13,8 +13,8 @@ export const resolveOperationDirs = (operation: string, spec: VideoSpec): Operat
   const tag = `${spec.cssWidth * spec.scale}x${spec.cssHeight * spec.scale}-${spec.fps}fps`;
 
   return {
-    framesDir: path.join(root, "dist", "playwrite", operation, "frames"),
-    out: path.join(root, "dist", "playwrite", operation, `${operation}-${tag}.mp4`),
+    framesDir: path.join(root, "dist", "playwright", operation, "frames"),
+    out: path.join(root, "dist", "playwright", operation, `${operation}-${tag}.mp4`),
   };
 };
 

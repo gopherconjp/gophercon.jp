@@ -8,9 +8,9 @@ import { hold, maxScrollY, scrollToY, smoothScroll } from "./lib/scroll.ts";
 import { secondsToFrames, shorts4k60 } from "./lib/spec.ts";
 import { resetClock } from "./lib/timeline.ts";
 
-const OPERATION = "2027-cfp-commercial-ja";
-const HOME_URL = "https://gophercon.jp/ja/2027/";
-const CFP_URL = "https://gophercon.jp/ja/2027/cfp";
+const OPERATION = "2027-cfp-commercial";
+const HOME_URL = "https://gophercon.jp/2027/";
+const CFP_URL = "https://gophercon.jp/2027/cfp";
 
 const assertOk = (response: Response | null, url: string): void => {
   if (!response || !response.ok()) {
@@ -21,9 +21,7 @@ const assertOk = (response: Response | null, url: string): void => {
 const main = async (): Promise<void> => {
   const spec = shorts4k60;
   const { framesDir, out } = resolveOperationDirs(OPERATION, spec);
-  const { browser, page, timeline, shot, frameCount } = await launchRecorder(framesDir, spec, {
-    locale: "ja-JP",
-  });
+  const { browser, page, timeline, shot, frameCount } = await launchRecorder(framesDir, spec);
 
   try {
     assertOk(await page.goto(HOME_URL, { waitUntil: "networkidle" }), HOME_URL);
@@ -37,9 +35,9 @@ const main = async (): Promise<void> => {
 
     await hold(timeline, secondsToFrames(spec, 1), shot);
 
-    const target = await findLinkCenter(page, "CFPページ");
+    const target = await findLinkCenter(page, "CFP Page");
     if (!target) {
-      throw new Error('Link "CFPページ" not found');
+      throw new Error('Link "CFP Page" not found');
     }
     await runClick(
       timeline,
@@ -65,4 +63,4 @@ const main = async (): Promise<void> => {
   await encodeFrames(framesDir, out, spec);
 };
 
-runMain(main, "playwrite");
+runMain(main, "playwright");

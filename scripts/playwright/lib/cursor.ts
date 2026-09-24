@@ -13,8 +13,8 @@ export interface ClickDirection {
   releaseFrame: number;
 }
 
-const CURSOR_ID = "playwrite-cursor";
-const RIPPLE_ID = "playwrite-ripple";
+const CURSOR_ID = "playwright-cursor";
+const RIPPLE_ID = "playwright-ripple";
 
 const ensureOverlays = (page: Page): Promise<void> =>
   page.evaluate(
@@ -67,31 +67,31 @@ const ensureOverlays = (page: Page): Promise<void> =>
 
 const placeCursor = (page: Page, at: Point, pressed: boolean): Promise<void> =>
   page.evaluate(
-    (args: { at: Point; pressed: boolean }) => {
-      const cursor = document.getElementById("playwrite-cursor");
+    (args: { at: Point; pressed: boolean; ids: { cursor: string; ripple: string } }) => {
+      const cursor = document.getElementById(args.ids.cursor);
       if (cursor) {
         cursor.style.opacity = "1";
         cursor.style.transform = `translate(${args.at.x}px,${args.at.y}px) scale(${args.pressed ? 0.86 : 1})`;
       }
 
-      const ripple = document.getElementById("playwrite-ripple");
+      const ripple = document.getElementById(args.ids.ripple);
       if (ripple) {
         ripple.style.opacity = "0";
       }
     },
-    { at, pressed },
+    { at, pressed, ids: { cursor: CURSOR_ID, ripple: RIPPLE_ID } },
   );
 
 const fireRipple = (page: Page, at: Point, progress: number): Promise<void> =>
   page.evaluate(
-    (args: { at: Point; progress: number }) => {
-      const ripple = document.getElementById("playwrite-ripple");
+    (args: { at: Point; progress: number; ripple: string }) => {
+      const ripple = document.getElementById(args.ripple);
       if (ripple) {
         ripple.style.opacity = args.progress > 0 ? `${1 - args.progress}` : "0";
         ripple.style.transform = `translate(${args.at.x}px,${args.at.y}px) scale(${1 + args.progress * 1.6})`;
       }
     },
-    { at, progress },
+    { at, progress, ripple: RIPPLE_ID },
   );
 
 // oxlint-disable no-await-in-loop -- frames must render sequentially
