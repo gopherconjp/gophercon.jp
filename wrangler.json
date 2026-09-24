@@ -3,6 +3,7 @@
   "name": "gophercon-jp",
   "compatibility_date": "2026-08-29",
   "workers_dev": false,
+  "preview_urls": false,
   "observability": {
     "enabled": false
   },
@@ -14,6 +15,7 @@
   "env": {
     "dev": {
       "name": "dev-gophercon-jp",
+      "preview_urls": true,
       "previews": {}
     }
   }

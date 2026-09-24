@@ -38,8 +38,14 @@ jobs:
           set -o pipefail
           output="$(bun run wrangler preview --env dev --name "pr-${{ github.event.pull_request.number }}" --json | sed -n '/^{/,$p')"
           printf '%s\n' "${output}"
-          preview_url="$(printf '%s' "${output}" | jq -er '.preview_urls[0] // .preview.urls[0]')"
-          deployment_url="$(printf '%s' "${output}" | jq -er '.deployment.urls[0]')"
+
+          preview_url="$(printf '%s' "${output}" | jq -r '.preview_urls[0] // .preview.urls[0] // empty')"
+          deployment_url="$(printf '%s' "${output}" | jq -r '.deployment.urls[0] // empty')"
+          if [[ -z "${preview_url}" || -z "${deployment_url}" ]]; then
+            echo "Preview URLs are empty" >&2
+            exit 1
+          fi
+
           {
             echo "preview_url=${preview_url}"
             echo "deployment_url=${deployment_url}"
