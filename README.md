@@ -15,7 +15,7 @@ The official website for GopherCon Japan.
 ```sh
 mise install              # install pinned runtimes
 eval "$(mise activate)"   # enable mise shims (add to your shell rc to persist)
-bun install
+bun run init              # bun install + enable git hooks (auto-install on pull/checkout/rebase)
 bun run dev               # http://localhost:4321 (en at /, ja at /ja)
 ```
 
