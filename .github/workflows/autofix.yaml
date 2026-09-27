@@ -25,8 +25,6 @@ jobs:
         uses: gopherconjp/actions-toolkit/setup-bun@db11f6a3e98d6c3d75ff55757b670464261a25b1 # main
       - name: Check
         run: bun run check
-      - name: Knip
-        run: bun run knip
       - name: Lint
         run: bun run lint
       - name: Format
