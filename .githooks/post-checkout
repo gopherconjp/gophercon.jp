@@ -1,0 +1,10 @@
+#!/bin/bash
+set -eu -o pipefail
+
+# Re-sync node_modules after branch switch / clone / file checkout when manifests changed.
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+# shellcheck source=/dev/null
+source "$SCRIPT_DIR/_common.sh"
+
+sync_deps
