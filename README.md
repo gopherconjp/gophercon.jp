@@ -24,15 +24,15 @@ bun run dev               # http://localhost:4321 (en at /, ja at /ja)
 
 ## Commands
 
-| Command              | Description                                                                                      |
-| -------------------- | ------------------------------------------------------------------------------------------------ |
-| `bun run dev`        | Astro dev server (`localhost:4321`)                                                              |
-| `bun run build`      | Build the static site to `./dist/`                                                               |
-| `bun run preview`    | Preview the production build locally                                                             |
-| `bun run preview:cf` | Build then preview through Wrangler (Workers)                                                    |
-| `bun run check`      | Type-check (`astro check`, `tsc --noEmit`) + static analysis (`knip`: unused files/exports/deps) |
-| `bun run storybook`  | Component preview (`localhost:6006`)                                                             |
-| `bun run deploy`     | Build then deploy to Cloudflare Workers                                                          |
+| Command                 | Description                                                                                      |
+| ----------------------- | ------------------------------------------------------------------------------------------------ |
+| `bun run dev`           | Astro dev server (`localhost:4321`)                                                              |
+| `bun run build`         | Build the static site to `./dist/`                                                               |
+| `bun run preview`       | Preview the production build locally                                                             |
+| `bun run preview:cf`    | Build then preview through Wrangler (Workers)                                                    |
+| `bun run check`         | Type-check (`astro check`, `tsc --noEmit`) + static analysis (`knip`: unused files/exports/deps) |
+| `bun run dev:storybook` | Component preview (`localhost:6006`)                                                             |
+| `bun run deploy`        | Build then deploy to Cloudflare Workers                                                          |
 
 ## Project structure
 
