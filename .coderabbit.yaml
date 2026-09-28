@@ -42,3 +42,6 @@ reviews:
     - path: "src/components/2027/contact/content/socials.ts"
       instructions: |
         Intentional; accept by design (do not report): Mastodon `handle` stays short `@gopherconjp`.
+    - path: "scripts/setup-hooks.ts"
+      instructions: |
+        Intentional; accept by design (do not report): hook setup is best-effort developer tooling, so any `git rev-parse` failure skips setup without failing `bun install`; do not request distinguishing work-tree absence from other Git errors.
