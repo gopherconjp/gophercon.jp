@@ -9,9 +9,16 @@ import { ask, runMain } from "./lib/cli.ts";
 const HOOKS = ["post-merge", "post-checkout", "post-rewrite"];
 const MANIFESTS = ["package.json", "bun.lock"];
 
-const main = async (): Promise<void> => {
+const main = async (isInit: boolean): Promise<void> => {
   const root = path.resolve(import.meta.dir, "..");
   const hooksDir = path.join(root, ".githooks");
+
+  // Skip hook setup where no git checkout exists, such as CI or published tarballs.
+  const { exitCode } = await $`git rev-parse --is-inside-work-tree`.cwd(root).quiet().nothrow();
+  if (exitCode !== 0) {
+    console.log("Skipping git hooks setup (not inside a git work tree).");
+    return;
+  }
 
   for (const hook of HOOKS) {
     const hookPath = path.join(hooksDir, hook);
@@ -22,11 +29,20 @@ const main = async (): Promise<void> => {
     chmodSync(hookPath, 0o755);
   }
 
-  const current = await $`git config --get core.hooksPath`.cwd(root).quiet().nothrow().text();
-  const existing = current.trim();
-  if (existing !== "" && existing !== ".githooks") {
+  const current = (
+    await $`git config --get core.hooksPath`.cwd(root).quiet().nothrow().text()
+  ).trim();
+  if (current !== "" && current !== ".githooks") {
+    // Postinstall runs non-interactively, so an existing hooks configuration is preserved instead of asking.
+    if (!isInit) {
+      console.warn(
+        `[setup-hooks] core.hooksPath is currently "${current}". Skipping hook setup to preserve existing configuration.`,
+      );
+      return;
+    }
+
     const answer = (
-      await ask(`core.hooksPath is currently "${existing}". Replace it with ".githooks"? [y/N] `)
+      await ask(`core.hooksPath is currently "${current}". Replace it with ".githooks"? [y/N] `)
     )
       .trim()
       .toLowerCase();
@@ -36,7 +52,9 @@ const main = async (): Promise<void> => {
     }
   }
 
-  await $`bun install`.cwd(root);
+  if (isInit) {
+    await $`bun install`.cwd(root);
+  }
 
   const hashes = execFileSync("git", ["hash-object", ...MANIFESTS], { cwd: root })
     .toString()
@@ -47,8 +65,10 @@ const main = async (): Promise<void> => {
 
   console.log("");
   console.log("Git hooks enabled (core.hooksPath=.githooks).");
-  console.log("bun install runs automatically after pull / checkout / rebase");
-  console.log("when package.json or bun.lock changed.");
+  console.log(
+    "bun install runs automatically after pull / checkout / rebase when package.json or bun.lock changed.",
+  );
 };
 
-runMain(main, "setup-hooks");
+const isInit = process.argv.includes("--init");
+runMain(() => main(isInit), "setup-hooks");

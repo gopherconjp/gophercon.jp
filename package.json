@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "init": "bun scripts/setup-hooks.ts",
+    "init": "bun scripts/setup-hooks.ts --init",
+    "postinstall": "bun scripts/setup-hooks.ts",
     "dev": "bun -b astro dev",
     "build": "bun -b astro build",
     "build:dev": "bun run build && bun run build:storybook",
