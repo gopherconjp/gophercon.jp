@@ -1,4 +1,5 @@
 #!/bin/bash
+# Never fail the git operation; warn instead when install fails.
 
 MANIFESTS=(package.json bun.lock)
 
@@ -10,7 +11,6 @@ enter_root() {
   fi
 }
 
-# Never fail the hook; warn instead.
 run_install() {
   if ! command -v bun >/dev/null 2>&1; then
     echo "[githooks] bun not found, skipping install (run: mise install)" >&2
@@ -31,6 +31,7 @@ install_incomplete() {
     current="$(git hash-object "${MANIFESTS[@]}" 2>/dev/null || true)"
     local recorded
     recorded="$(cat node_modules/.githooks-installed 2>/dev/null || true)"
+
     if [[ -z "$current" || "$current" != "$recorded" ]]; then
       echo "[githooks] dependencies out of sync, running bun install ..."
       run_install
@@ -38,7 +39,6 @@ install_incomplete() {
   fi
 }
 
-# Never fail the git operation; warn instead when install fails.
 sync_deps() {
   enter_root
   install_incomplete
