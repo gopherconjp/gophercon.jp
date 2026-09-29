@@ -25,7 +25,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - name: Setup Bun environment
-        uses: gopherconjp/actions-toolkit/setup-bun@db11f6a3e98d6c3d75ff55757b670464261a25b1 # main
+        uses: logica0419-oss/actions-toolkit/setup-bun@db11f6a3e98d6c3d75ff55757b670464261a25b1 # main
       - name: Build
         id: build
         run: bun run build
@@ -105,7 +105,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - name: Setup Bun environment
-        uses: gopherconjp/actions-toolkit/setup-bun@db11f6a3e98d6c3d75ff55757b670464261a25b1 # main
+        uses: logica0419-oss/actions-toolkit/setup-bun@db11f6a3e98d6c3d75ff55757b670464261a25b1 # main
       - name: Delete Preview
         run: bun run wrangler preview delete --env dev --name "pr-${{ github.event.pull_request.number }}" --skip-confirmation
         env:
