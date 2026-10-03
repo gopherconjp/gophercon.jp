@@ -68,7 +68,7 @@
     "stylelint-config-standard": "40.0.0",
     "syndep": "0.1.0",
     "typescript": "npm:typescript-native-bridge@6.0.3-bridge.18.tsgo.7.0.2",
-    "wrangler": "4.144.0"
+    "wrangler": "4.145.0"
   },
   "overrides": {
     "typescript": "$typescript"
