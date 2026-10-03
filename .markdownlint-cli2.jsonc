@@ -3,4 +3,5 @@
     "MD013": false,
   },
   "gitignore": true,
+  "ignores": [".github/pull_request_template.md"],
 }
