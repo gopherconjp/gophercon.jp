@@ -4,8 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "init": "bun scripts/setup-hooks.ts --init",
-    "postinstall": "bun scripts/setup-hooks.ts",
+    "prepare": "simple-git-hooks",
     "dev": "bun -b astro dev",
     "build": "bun -b astro build",
     "build:dev": "bun run build && bun run build:storybook",
@@ -62,14 +61,21 @@
     "postcss-html": "2.0.0",
     "prettier": "3.9.9",
     "prettier-plugin-astro": "1.1.0",
+    "simple-git-hooks": "2.14.0",
     "storybook": "10.6.1",
     "stylelint": "17.15.0",
     "stylelint-config-html": "2.0.0",
     "stylelint-config-standard": "40.0.0",
+    "syndep": "0.1.0",
     "typescript": "npm:typescript-native-bridge@6.0.3-bridge.18.tsgo.7.0.2",
     "wrangler": "4.141.0"
   },
   "overrides": {
     "typescript": "$typescript"
+  },
+  "simple-git-hooks": {
+    "post-merge": "bun run syndep-bun",
+    "post-checkout": "bun run syndep-bun",
+    "post-rewrite": "bun run syndep-bun"
   }
 }
