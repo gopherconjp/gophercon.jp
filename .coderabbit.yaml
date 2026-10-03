@@ -12,9 +12,11 @@ reviews:
     - "!**/*.otf"
     - "!**/*.woff"
     - "!**/*.woff2"
-    - "!.github/skills/**"
+    - "!.agents/skills/**"
     - "!.github/instructions/**"
     - "!.github/copilot-instructions.md"
+    - "!AGENTS.md"
+    - "!.claude/**"
 
   auto_review:
     enabled: true
