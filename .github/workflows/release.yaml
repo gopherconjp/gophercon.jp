@@ -4,12 +4,13 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: release
+  group: release-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
   release:
     name: Release
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     environment: production
@@ -37,6 +38,7 @@ jobs:
           git push "${REMOTE_URL}" "${TAG}"
 
           echo "tag=${TAG}" >> "${GITHUB_OUTPUT}"
+        shell: bash
       - name: Generate release notes
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
@@ -64,7 +66,7 @@ jobs:
           ref: main
           persist-credentials: false
       - name: Setup Bun environment
-        uses: logica0419-oss/actions-toolkit/setup-bun@db11f6a3e98d6c3d75ff55757b670464261a25b1 # main
+        uses: logica-oss/actions-toolkit/setup-bun@3caa6b132a2307a0dcbff102d1d1411a2be4107a # v1.0.1
       - name: Deploy to Cloudflare Workers
         run: bun run deploy
         env:

@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize, reopened, closed]
 
 concurrency:
-  group: preview-${{ github.event.pull_request.number }}
+  group: preview-${{ github.workflow }}-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - name: Setup Bun environment
-        uses: logica0419-oss/actions-toolkit/setup-bun@db11f6a3e98d6c3d75ff55757b670464261a25b1 # main
+        uses: logica-oss/actions-toolkit/setup-bun@3caa6b132a2307a0dcbff102d1d1411a2be4107a # v1.0.1
       - name: Build
         id: build
         run: bun run build
@@ -50,6 +50,7 @@ jobs:
             echo "preview_url=${preview_url}"
             echo "deployment_url=${deployment_url}"
           } >> "${GITHUB_OUTPUT}"
+        shell: bash
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -57,6 +58,7 @@ jobs:
         id: probe
         if: steps.preview.outcome == 'success'
         run: curl --fail --show-error --silent "${PREVIEW_URL}"
+        shell: bash
         env:
           PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
       - name: Prepare comment body
@@ -77,6 +79,7 @@ jobs:
             echo "- [View logs ↗︎](${RUN_URL})"
           } > "${path}"
           echo "path=${path}" >> "${GITHUB_OUTPUT}"
+        shell: bash
         env:
           PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
           DEPLOYMENT_URL: ${{ steps.preview.outputs.deployment_url }}
@@ -86,6 +89,7 @@ jobs:
       - name: Comment Preview URL
         if: always()
         run: gh pr comment "${{ github.event.pull_request.number }}" --body-file "${COMMENT_FILE}"
+        shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMENT_FILE: ${{ steps.comment.outputs.path }}
@@ -105,7 +109,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - name: Setup Bun environment
-        uses: logica0419-oss/actions-toolkit/setup-bun@db11f6a3e98d6c3d75ff55757b670464261a25b1 # main
+        uses: logica-oss/actions-toolkit/setup-bun@3caa6b132a2307a0dcbff102d1d1411a2be4107a # v1.0.1
       - name: Delete Preview
         run: bun run wrangler preview delete --env dev --name "pr-${{ github.event.pull_request.number }}" --skip-confirmation
         env:

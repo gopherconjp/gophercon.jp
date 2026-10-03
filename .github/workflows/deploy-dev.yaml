@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 concurrency:
-  group: deploy-dev
+  group: deploy-dev-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
           ref: main
           persist-credentials: false
       - name: Setup Bun environment
-        uses: logica0419-oss/actions-toolkit/setup-bun@db11f6a3e98d6c3d75ff55757b670464261a25b1 # main
+        uses: logica-oss/actions-toolkit/setup-bun@3caa6b132a2307a0dcbff102d1d1411a2be4107a # v1.0.1
       - name: Deploy to Cloudflare Workers
         run: bun run deploy:dev
         env:
