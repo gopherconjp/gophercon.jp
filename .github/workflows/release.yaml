@@ -66,7 +66,7 @@ jobs:
           ref: main
           persist-credentials: false
       - name: Setup Bun environment
-        uses: logica-oss/actions-toolkit/setup-bun@bd5176306ecb8bed535720b6101fadd3cc14a73e # v1.1.0
+        uses: logica-oss/actions-toolkit/setup-bun@5c92317e3cd93cc23a2c8c25e82e23783b18f186 # v1.1.1
       - name: Deploy to Cloudflare Workers
         run: bun run deploy
         env:
