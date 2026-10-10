@@ -36,9 +36,9 @@
     "astro": "7.3.6",
     "astro-compress": "2.4.3",
     "astro-icon": "1.2.0",
-    "astro-intlayer": "9.6.0",
+    "astro-intlayer": "9.7.0",
     "html-escaper": "3.0.3",
-    "intlayer": "9.6.0",
+    "intlayer": "9.7.0",
     "lightningcss-plugin-css-variables": "0.1.0"
   },
   "devDependencies": {
