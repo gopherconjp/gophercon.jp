@@ -42,11 +42,11 @@ For the open-text sections, please answer in the talk language (the primary lang
 
 ### Session Title
 
-Please provide a title that clearly conveys the content of your session (max 80 characters).
+Please provide a title that clearly conveys the content of your session (up to 80 characters in English or 40 characters in Japanese).
 
 ### Description
 
-Please describe the content of your session, the intended audience, and the takeaways for attendees (max 1000 characters).
+Please describe the content of your session, the intended audience, and the takeaways for attendees (up to 1,000 characters in English or 400 characters in Japanese).
 
 ### Talk Language
 
