@@ -33,7 +33,7 @@
   "dependencies": {
     "@iconify-json/mdi": "1.2.3",
     "@intlayer/core": "9.7.0",
-    "astro": "7.4.0",
+    "astro": "7.4.1",
     "astro-compress": "2.4.3",
     "astro-icon": "1.2.0",
     "astro-intlayer": "9.7.0",
@@ -42,7 +42,7 @@
     "lightningcss-plugin-css-variables": "0.1.0"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.10",
+    "@astrojs/check": "0.9.11",
     "@ianvs/prettier-plugin-sort-imports": "4.7.1",
     "@storybook-astro/framework": "1.12.0",
     "@storybook/builder-vite": "10.6.2",
