@@ -45,3 +45,5 @@ reviews:
     - path: "src/components/2027/contact/content/socials.ts"
       instructions: |
         Intentional; accept by design (do not report): Mastodon `handle` stays short `@gopherconjp`.
+    - path: ".github/workflows/autofix.yaml"
+      instructions: "Accept by design (do not report): the synac step intentionally omits the version input to always use the latest release; do not suggest pinning a version."
