@@ -1,5 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "entry": ["intlayer.config.ts", "src/**/*.content.ts", "scripts/playwright/*.ts"],
+  "ignoreFiles": ["src/components/2027/_common/Markdown.astro", "src/components/2027/cfp/**"],
   "ignoreDependencies": ["@iconify-json/mdi", "oxfmt", "oxlint", "oxlint-tsgolint"]
 }
