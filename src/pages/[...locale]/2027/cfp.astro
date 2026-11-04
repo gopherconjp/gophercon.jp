@@ -6,7 +6,7 @@ import {
   type LocalesValues,
 } from "intlayer";
 
-import Cfp from "../../../components/2027/cfp/index.astro";
+import CfpClosed from "../../../components/2027/cfp-closed/index.astro";
 
 export const getStaticPaths = () =>
   localeMap(({ locale }) => ({
@@ -16,4 +16,4 @@ export const getStaticPaths = () =>
 const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
 ---
 
-<Cfp locale={locale} />
+<CfpClosed locale={locale} />
