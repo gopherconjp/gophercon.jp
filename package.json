@@ -32,13 +32,13 @@
   },
   "dependencies": {
     "@iconify-json/mdi": "1.2.3",
-    "@intlayer/core": "9.7.0",
+    "@intlayer/core": "9.7.1",
     "astro": "7.4.5",
     "astro-compress": "2.4.3",
     "astro-icon": "1.2.0",
-    "astro-intlayer": "9.7.0",
+    "astro-intlayer": "9.7.1",
     "html-escaper": "3.0.3",
-    "intlayer": "9.7.0",
+    "intlayer": "9.7.1",
     "lightningcss-plugin-css-variables": "0.1.0"
   },
   "devDependencies": {
