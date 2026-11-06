@@ -65,7 +65,7 @@
     "storybook": "10.6.5",
     "stylelint": "17.16.0",
     "stylelint-config-html": "2.0.0",
-    "stylelint-config-standard": "40.0.0",
+    "stylelint-config-standard": "41.0.0",
     "syndep": "0.2.0",
     "typescript": "npm:typescript-native-bridge@6.0.3-bridge.19.tsgo.7.0.2",
     "wrangler": "4.157.0"
