@@ -18,6 +18,16 @@
       "description": "Keep intlayer packages in lockstep",
       "matchDepNames": ["intlayer", "astro-intlayer", "@intlayer/*"],
       "groupName": "intlayer"
+    },
+    {
+      "description": "Keep stylelint packages in lockstep",
+      "matchDepNames": [
+        "stylelint",
+        "stylelint-config-html",
+        "stylelint-config-standard",
+        "@stylistic/stylelint-config"
+      ],
+      "groupName": "stylelint"
     }
   ]
 }
