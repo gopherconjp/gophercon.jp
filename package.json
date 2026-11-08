@@ -33,7 +33,7 @@
   "dependencies": {
     "@iconify-json/mdi": "1.2.3",
     "@intlayer/core": "9.7.1",
-    "astro": "7.4.6",
+    "astro": "7.4.7",
     "astro-compress": "2.4.3",
     "astro-icon": "1.2.0",
     "astro-intlayer": "9.7.1",
