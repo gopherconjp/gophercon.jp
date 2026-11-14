@@ -46,7 +46,7 @@
     "@ianvs/prettier-plugin-sort-imports": "4.7.1",
     "@storybook-astro/framework": "1.15.0",
     "@storybook/builder-vite": "10.6.7",
-    "@stylistic/stylelint-config": "6.0.0",
+    "@stylistic/stylelint-config": "6.1.0",
     "@types/bun": "1.4.4",
     "@types/html-escaper": "3.0.4",
     "@typescript-eslint/eslint-plugin": "8.72.2",
