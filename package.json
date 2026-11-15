@@ -56,7 +56,7 @@
     "knip": "6.45.1",
     "oxfmt": "0.78.0",
     "oxlint": "1.93.0",
-    "oxlint-tsgolint": "7.0.2006",
+    "oxlint-tsgolint": "7.0.2007",
     "playwright-core": "1.65.0",
     "postcss-html": "2.0.0",
     "prettier": "3.10.1",
