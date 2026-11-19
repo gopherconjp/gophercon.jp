@@ -32,7 +32,7 @@
         "oxlint": "1.93.0",
         "oxlint-tsgolint": "7.0.2007",
         "playwright-core": "1.65.1",
-        "postcss-html": "2.0.0",
+        "postcss-html": "2.0.1",
         "prettier": "3.10.1",
         "prettier-plugin-astro": "1.1.2",
         "simple-git-hooks": "2.14.0",
@@ -1300,7 +1300,7 @@
 
     "postcss": ["postcss@8.5.28", "", { "dependencies": { "nanoid": "^3.3.18", "picocolors": "^1.1.1", "source-map-js": "^1.2.1" } }, "sha512-RRuzqDtt5Y9h3quz5hWhK+TPnsmVs6WwSU6LkJMeY4HstUEDuYTG8UJSdawMRzmzAtV+KEoG8N3Qg2qLy5vM/A=="],
 
-    "postcss-html": ["postcss-html@2.0.0", "", { "dependencies": { "htmlparser2": "^9.1.0", "js-tokens": "^9.0.0", "postcss-safe-parser": "^7.0.1" }, "peerDependencies": { "postcss": "^8.5.0" } }, "sha512-f2Rvw5FCollEfVj3wfN7JdQb7n2rNIthW+epw2EByio7M6P7RH0BTj8a/ODHrUXd0cmO7ychb6YniymV93182Q=="],
+    "postcss-html": ["postcss-html@2.0.1", "", { "dependencies": { "htmlparser2": "^9.1.0", "js-tokens": "^9.0.0", "postcss-safe-parser": "^7.0.1" }, "peerDependencies": { "postcss": "^8.5.0" } }, "sha512-FqutI3u6D7j28ZgviEFjGCbId174THaVxFAMe/yd6Y/+BSQidYYh2nRCxFk8btwEV64f3TvfNz7ureGnkzqtmA=="],
 
     "postcss-safe-parser": ["postcss-safe-parser@7.1.0", "", { "peerDependencies": { "postcss": "^8.4.31" } }, "sha512-1WzZxRLaAFwEh6Do+zyGpjWV3nGJNxxhuh7Ubu/q1ICImMgZJnLwhoaEpRbG4pJppp2Y1ncL9ffA2f+LhrefQg=="],
 
