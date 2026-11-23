@@ -83,7 +83,7 @@ services:
       PENPOT_REDIS_URI: redis://penpot-valkey/0
 
   penpot-postgres:
-    image: "postgres:18.7-alpine"
+    image: "postgres:19.0-alpine"
     restart: always
     stop_signal: SIGINT
     healthcheck:
