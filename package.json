@@ -47,7 +47,7 @@
     "@storybook-astro/framework": "1.17.0",
     "@storybook/builder-vite": "10.6.7",
     "@stylistic/stylelint-config": "6.1.0",
-    "@types/bun": "1.4.4",
+    "@types/bun": "1.4.5",
     "@types/html-escaper": "3.0.4",
     "@typescript-eslint/eslint-plugin": "8.73.0",
     "@typescript-eslint/parser": "8.73.0",
